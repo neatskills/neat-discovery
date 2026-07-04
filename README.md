@@ -155,13 +155,6 @@ docs/
     ai-architecture-blueprint.md
 ```
 
-## Iterative Discovery
-
-Skills automatically detect and update existing files. Re-run any phase to merge new information:
-
-- File exists → Load and update with new information
-- File missing → Create fresh
-
 ## Contributing
 
 Contributions welcome! Please:
