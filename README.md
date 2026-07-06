@@ -21,6 +21,7 @@ cd neat-discovery/scripts
 ```
 
 This creates symlinks in `~/.claude/skills/`:
+
 - `neat-discovery-scoping`
 - `neat-discovery-analysing`
 - `neat-discovery-estimating`
@@ -35,6 +36,7 @@ This creates symlinks in `~/.claude/skills/`:
 ```
 
 **Outputs:**
+
 - `docs/{project-name}/01-scoping/project-context.md` - Project overview, stakeholders, scope, strategic rationale
 - `docs/{project-name}/01-scoping/knowledge-landscape.md` - Inventory of knowledge sources
 - `docs/{project-name}/01-scoping/knowledge-assessment.md` - Gaps, constraints, inferred knowledge
@@ -49,6 +51,7 @@ This creates symlinks in `~/.claude/skills/`:
 **Inputs:** Requirements list, business context
 
 **Outputs:**
+
 - `docs/{project-name}/02-analysing/requirement-classification.md` - Deterministic vs non-deterministic
 - `docs/{project-name}/02-analysing/executive-report.md` - Strategic business justification
 - `docs/{project-name}/02-analysing/stakeholder-brief.md` - Stakeholder alignment (optional)
@@ -63,6 +66,7 @@ This creates symlinks in `~/.claude/skills/`:
 **Inputs:** Scoped MVP requirements from Phase 2
 
 **Outputs:**
+
 - `docs/{project-name}/03-estimating/mvp-estimates.md` - T-shirt size estimates for MVP vs deferred features
 
 ### Phase 4: Designing
@@ -74,6 +78,7 @@ This creates symlinks in `~/.claude/skills/`:
 **Prerequisites:** Phase 1, Phase 2, and Phase 3 outputs
 
 **Outputs:**
+
 - `docs/{project-name}/04-designing/agent-architecture.md` - Agent infrastructure design
 - `docs/{project-name}/04-designing/app-architecture.md` - Traditional application architecture
 - `docs/{project-name}/04-designing/integration-architecture.md` - Integration between AI and traditional systems
@@ -83,6 +88,7 @@ This creates symlinks in `~/.claude/skills/`:
 ### Discovery for a CRM Enhancement Project
 
 **Phase 1: Scoping**
+
 ```
 $ /neat-discovery-scoping
 
@@ -100,6 +106,7 @@ Generated:
 ```
 
 **Phase 2: Analysing**
+
 ```
 $ /neat-discovery-analysing
 
@@ -123,6 +130,7 @@ Review executive-report.md to decide whether to proceed with Phase 3.
 ```
 
 **Phase 3: Estimating**
+
 ```
 $ /neat-discovery-estimating
 
@@ -152,6 +160,7 @@ Next step (if approved): Run /neat-discovery-designing
 ```
 
 **Phase 4: Designing**
+
 ```
 $ /neat-discovery-designing
 
@@ -215,6 +224,7 @@ docs/
 ```
 
 **Phase folders:**
+
 - `01-scoping/` - Project context, knowledge landscape, and assessment
 - `02-analysing/` - Requirement classification and business case reports
 - `03-estimating/` - MVP effort estimates
@@ -223,6 +233,7 @@ docs/
 ## Contributing
 
 Contributions welcome! Please:
+
 1. Follow the existing SKILL.md structure pattern
 2. Maintain self-contained skills (300-400 lines)
 3. Test with manage-skills.sh before submitting
@@ -231,6 +242,7 @@ Contributions welcome! Please:
 ## Support
 
 For issues or questions:
+
 - Open an issue in the repository
 - Reference the specific skill and phase in your report
 

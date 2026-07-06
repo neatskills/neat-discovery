@@ -9,7 +9,7 @@
 ## Requirement Traceability
 
 | Req ID | Requirement | Classification | Est Story | Estimate | Architecture Reference | Status |
-|--------|-------------|----------------|-----------|----------|----------------------|--------|
+| --- | --- | --- | --- | --- | --- | --- |
 | REQ-001 | {requirement title} | Non-deterministic | Story 1 | XL | agent-architecture.md § 4.2 | Designed |
 | REQ-002 | {requirement title} | Deterministic | Story 5 | M | app-architecture.md § 3.1 | Designed |
 | REQ-003 | {requirement title} | Non-deterministic | Story 2 | L | agent-architecture.md § 4.3, integration § 2.1 | Designed |

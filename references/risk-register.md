@@ -9,7 +9,7 @@
 ## Active Risks
 
 | ID | Phase | Risk | Impact | Likelihood | Mitigation | Owner | Status |
-|----|-------|------|--------|------------|------------|-------|--------|
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | R-001 | Scoping | No SMEs available for sustainability metrics | High | High | AI infers from documents, user validation workflow | PM | Mitigated in Phase 4 |
 | R-002 | Analysing | Real-time knowledge access may not be feasible | Medium | Medium | Batch processing fallback | Tech Lead | Open - validate in spike |
 | R-003 | Estimating | Calculation inference could 3x scope if sparse data | High | Medium | Seed pilot with examples, external knowledge | AI/ML Lead | Mitigated in Phase 4 |
@@ -20,7 +20,7 @@
 ## Closed Risks
 
 | ID | Phase | Risk | Resolution | Closed Date |
-|----|-------|------|------------|-------------|
+| --- | --- | --- | --- | --- |
 | R-005 | Analysing | Uncertainty about document formats | Confirmed PDF, Word, Excel, PowerPoint | 2026-07-04 |
 
 ---

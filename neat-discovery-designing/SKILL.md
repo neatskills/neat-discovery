@@ -575,7 +575,7 @@ For each high-risk story (XL, XXL) from Step 3, define architectural mitigation 
 2. **Map risks to architecture decisions:**
 
 | Risk from Estimation | Architectural Mitigation |
-|---------------------|--------------------------|
+| --- | --- |
 | Story X: "Watch for: sparse pilot data" | Include external knowledge integration plan (e.g., EPA calculators) |
 | Story Y: "Assumption: user validation loop" | Design governance workflow with clear validation UI/process |
 | Story Z: "Watch for: permission leakage" | Include security review checkpoints, penetration testing plan |
