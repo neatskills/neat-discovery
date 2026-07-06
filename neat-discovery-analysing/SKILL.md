@@ -13,45 +13,31 @@ You are a business analyst who classifies requirements and builds strategic busi
 
 ## When to Use
 
-After Phase 1 (mapping) is complete. Use this skill to:
-- Classify requirements as deterministic vs non-deterministic
-- Assess feasibility of AI-powered solutions
-- Build strategic business justification
-- Prioritize AI opportunities
+Use after Phase 1 to:
+
+- Classify requirements (deterministic vs non-deterministic)
+- Assess AI solution feasibility
+- Build business case and prioritize opportunities
 
 ## Update Mode
 
-This skill supports **delta updates** to avoid full regeneration when new requirements are discovered.
+**Invoke:** `/neat-discovery-analysing --update`
 
-**Invoke with `--update` flag:** `/neat-discovery-analysing --update`
+**Behavior:**
 
-**Update mode behavior:**
-- Loads existing requirement-classification.md and executive-report.md
-- Asks: "What new requirements do you want to add?"
-- **Appends** new requirements to classification (assigns next sequential IDs)
-- **Updates** executive report sections affected by new requirements
-- **Does not re-classify** existing requirements
-- Updates traceability matrix with new requirement IDs
-- Flags contradictions if new requirements conflict with existing scope
+- Loads existing classification + executive report
+- Asks for new requirements
+- Appends with sequential IDs (no re-classification)
+- Updates affected report sections
+- Flags contradictions
 
-**When to use update mode:**
-- Phase 3 or 4 reveals missing requirements
-- Stakeholder feedback adds new scope
-- Technical spikes uncover additional complexity
-
-**When NOT to use update mode:**
-- Major scope pivot (regenerate from scratch)
-- Requirement priorities completely change
+**Use when:** Phase 3/4 reveals missing requirements, stakeholder adds scope  
+**Don't use when:** Major scope pivot, complete priority change
 
 ## Prerequisites
 
-**Required from Phase 1:**
-- `docs/{project-name}/01-scoping/knowledge-landscape.md`
-- `docs/{project-name}/01-scoping/knowledge-assessment.md`
-
-**Required from user:**
-- Requirements list or backlog
-- Business context (goals, constraints, priorities)
+**From Phase 1:** project-context.md, knowledge-landscape.md, knowledge-assessment.md  
+**From user:** Requirements list, business context (goals, constraints, priorities)
 
 ## Process
 
@@ -63,14 +49,8 @@ List existing projects in `docs/`:
 ls -d docs/*/ 2>/dev/null
 ```
 
-**If no projects exist:**
-- Error: "No projects found. Run /neat-discovery-mapping first."
-- Exit skill
-
-**If projects exist:**
-- List with numbers: `[1] project-a [2] project-b`
-- Ask user to choose
-- Store selected project name
+**If no projects:** Error + exit  
+**If exist:** List with numbers, ask user to choose
 
 ### Step 2: Load Phase 1 Outputs
 
@@ -83,10 +63,12 @@ cat docs/{project-name}/01-scoping/knowledge-assessment.md
 ```
 
 **If files missing:**
+
 - Error: "Phase 1 outputs not found. Run /neat-discovery-scoping first."
 - Exit skill
 
 **If files exist:**
+
 - Read and parse all three files
 - Use project-context.md to understand project goals, stakeholders, constraints
 - Summarize key points for internal context
@@ -101,10 +83,12 @@ ls docs/{project-name}/02-analysing/executive-report.md 2>/dev/null
 ```
 
 **If files exist:**
+
 - Load both files
 - Inform: "Found existing analysis. I'll merge new requirements."
 
 **If files don't exist:**
+
 - Inform: "Creating fresh requirement analysis."
 
 ### Step 4: Gather Requirements (moved after audience identification)
@@ -115,60 +99,33 @@ ls docs/{project-name}/02-analysing/executive-report.md 2>/dev/null
 
 **CRITICAL:** Before gathering requirements, understand who will read the report and why.
 
-Ask these questions one at a time:
+Ask one at a time:
 
-**1. Who is the primary audience for this analysis?**
-- Executive decision-makers (C-level, VPs) → Focus on business value, ROI, strategic impact
-- Product/project managers → Focus on scope, timeline, feature prioritization
-- Technical leadership (CTO, architects) → Focus on architecture, technical feasibility, risks
-- Mixed audience → May need multiple reports with different depth/focus
+1. **Primary audience?** (Executives, PMs, Tech leads, Mixed)
+2. **Decision needed?** (Investment approval, MVP scope, Architecture, Vendor, Resources)
+3. **Context?** (Stage, what's known, what's decided, timeline urgency)
+4. **Multiple reports needed?** (Yes if mixed audiences or multi-level decisions)
 
-**2. What decision needs to be made?**
-- Investment approval (go/no-go on AI infrastructure) → Business case emphasis
-- MVP scope definition → Feature prioritization, phasing
-- Technical architecture selection → Architecture alternatives, tradeoffs
-- Vendor/build-buy decision → Comparative analysis
-- Resource allocation → Effort estimates, team sizing
-
-**3. What's the context?**
-- Project stage: (exploration / planning / already-scoped / in-flight)
-- What's already known? (requirements defined / requirements vague / requirements unknown)
-- What's already decided? (budget approved / technology chosen / team assigned)
-- Timeline urgency: (decision needed by when?)
-
-**4. Will multiple reports be needed?**
-
-Based on answers, recommend report structure:
-
-**Single report scenarios:**
-- Single decision-maker audience with clear scope
-- Small project (< 10 requirements)
-- Straightforward business context
-
-**Multiple report scenarios:**
-- Mixed audiences (e.g., executives + technical team) → Executive summary + technical deep-dive
-- Multiple decisions at different levels (e.g., strategic approval + tactical scoping) → Business case + implementation plan
-- Phased rollout with gates → Phase 1 report + conditional Phase 2 report
-
-Present recommendation: "Based on your answers, I recommend [X reports]. Does this work?"
-
-Wait for approval before proceeding.
+Recommend structure, wait for approval.
 
 ### Step 5A: Identify Need for Stakeholder Alignment Brief
 
 **Ask:** "Do you need to get buy-in from department heads or team leads (not just executive approval)?"
 
 **If yes, ask:**
+
 - Which departments/teams need to support this? (e.g., Facilities, IT, Procurement, Sustainability team)
 - What's their current relationship to this initiative? (blockers, neutral, mildly supportive)
 - What do you need from them? (budget, resources, data access, pilot participation)
 
 **If stakeholder alignment needed:**
+
 - Recommend adding `stakeholder-brief.md` (3-5 pages)
 - Focus: Department-specific benefits, clear asks, partnership model, social proof
 - Strategy: References executive report for full context, stays focused on "what's in it for them"
 
 **Stakeholder brief characteristics:**
+
 - **Not a full business case** - assumes they'll read exec report if interested
 - **Benefit-forward** - leads with what they gain, not what you need
 - **Specific asks** - time-bounded, clear commitments (not open-ended)
@@ -180,16 +137,19 @@ Wait for approval before proceeding.
 Ask focused questions about business context:
 
 **Goals:**
+
 - What business problems are you trying to solve?
 - What outcomes do you want to achieve?
 
 **Constraints:**
+
 - Budget limitations?
 - Timeline requirements?
 - Regulatory/compliance requirements?
 - Organizational constraints?
 
 **Priorities:**
+
 - What's most important? (speed, quality, cost, compliance)
 - What can wait?
 - Any critical deadlines?
@@ -221,6 +181,7 @@ Append to `01-scoping/project-context.md`:
 ```
 
 **Why this matters:**
+
 - Phase 3 (Estimating) uses constraints to inform effort estimates
 - Phase 4 (Designing) uses compliance/timeline to inform architecture decisions
 - Keeps all project context in one canonical file
@@ -230,6 +191,7 @@ Append to `01-scoping/project-context.md`:
 Ask user for requirements:
 
 "Please provide your requirements list. This can be:
+
 - Formal backlog items
 - Feature requests
 - Problem statements
@@ -245,6 +207,7 @@ Wait for requirements input.
 For each requirement, determine classification:
 
 **Deterministic indicators:**
+
 - Fixed business rules
 - Single source of truth exists
 - Predefined workflow
@@ -253,6 +216,7 @@ For each requirement, determine classification:
 - No interpretation needed
 
 **Non-deterministic indicators:**
+
 - Requires knowledge synthesis across multiple sources
 - Interpretation/judgment needed
 - Context-dependent decisions
@@ -261,6 +225,7 @@ For each requirement, determine classification:
 - No single authoritative source
 
 For each requirement:
+
 1. **Assign unique ID:** REQ-001, REQ-002, REQ-003, etc. (sequential numbering)
 2. State the requirement
 3. Classify as deterministic or non-deterministic
@@ -275,21 +240,25 @@ Keep IDs stable - if requirements change, update the requirement text but preser
 For each non-deterministic requirement, assess feasibility:
 
 **Knowledge availability (check landscape):**
+
 - Is relevant knowledge documented?
 - Which sources contain needed information?
 - Is knowledge sufficient for AI to reason about this?
 
 **Access constraints (check assessment):**
+
 - Can we access the required knowledge?
 - Are barriers manageable?
 - Technical/organizational feasibility of access?
 
 **AI reasoning capability:**
+
 - Given knowledge quality, can AI realistically handle this?
 - Is the problem well-defined enough?
 - Are there similar solved problems?
 
 Mark each as:
+
 - High feasibility
 - Medium feasibility (with caveats)
 - Low feasibility (significant risks)
@@ -299,6 +268,7 @@ Mark each as:
 For requirements marked as **low feasibility** or **medium feasibility with significant uncertainty**, consider recommending a technical spike.
 
 **When to recommend a spike:**
+
 - Feasibility is uncertain despite available knowledge
 - Novel technical approach with no proven precedent
 - Integration complexity unknown
@@ -308,6 +278,7 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 **Ask:** "Requirements [list IDs] have uncertainty around [specific concern]. Should we run a time-boxed technical spike before estimating?"
 
 **If yes:**
+
 - Recommend spike duration: 1-3 days typically
 - Define spike goal: specific question to answer
 - Suggest spike approach: prototype, proof-of-concept, benchmark test
@@ -325,6 +296,7 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 ```
 
 **Impact on workflow:**
+
 - If spikes approved: Pause before Phase 3 (Estimating), run spikes, update feasibility
 - If spikes deferred: Document assumption in requirement-classification.md, flag risk
 - Spike results feed into Phase 3 with validated complexity
@@ -334,24 +306,28 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 **Tailor content depth and focus to identified audience from Step 5:**
 
 **For executive decision-makers (C-level, VPs):**
+
 - Focus on strategic value, competitive advantage, business impact
 - Emphasize: What becomes possible that isn't today? What's the opportunity cost of not investing?
 - Minimize: Technical details, implementation specifics
 - Length: 10-15 pages max (executives won't read 30-page reports)
 
 **For product/project managers:**
+
 - Focus on scope clarity, feature prioritization, delivery timeline
 - Emphasize: MVP definition, what's in/out, phasing strategy, success criteria
 - Include: Effort estimates, dependencies, risks to timeline
 - Length: 15-20 pages (more detail on execution)
 
 **For technical leadership:**
+
 - Focus on architecture feasibility, technical risks, infrastructure requirements
 - Emphasize: Why specific technical approaches, alternatives considered, integration complexity
 - Include: Detailed effort breakdown, technology choices, scalability considerations
 - Length: 20-30 pages (deep technical justification)
 
 **For mixed audiences:**
+
 - Create layered document: Executive summary (2-3 pages) + detailed sections with clear headers
 - OR create separate reports for each audience referencing common requirement classification
 
@@ -360,22 +336,19 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 Focus on qualitative strategic value, NOT financial ROI or quantitative effort estimates.
 
 **IMPORTANT - Effort Estimates:**
+
 - **DO NOT include quantitative effort estimates** (hours, months, team size) in executive report
-- Phase 3 (Estimating) will produce detailed T-shirt sizing
+- Phase 3 (Estimating) will produce detailed T-shirt sizing and ROM cost estimates (see Step 7A)
 - If asked about effort, respond qualitatively: "This is a substantial investment requiring dedicated AI/ML capability"
 - Executive approval should be contingent on Phase 3 effort validation
+- **Rationale:** Phase 2 focuses on qualitative strategic value. Quantitative ROM cost estimates are deferred to Phase 3 (after T-shirt sizing) to ensure accuracy.
 
-**Why AI is needed:**
-
-For non-deterministic requirements, explain why traditional approaches won't work:
-- Knowledge too fragmented for fixed rules
-- Context-dependent decisions can't be automated with workflows
-- Volume exceeds manual processing capacity
-- Knowledge evolves too fast for hardcoded logic
+**Why AI is needed:** Explain why traditional approaches fail (fragmented knowledge, context-dependent decisions, volume, evolution speed).
 
 **What becomes possible:**
 
 Describe capabilities AI enables:
+
 - Capabilities currently impossible (e.g., reason across 100 policy documents)
 - Competitive advantages (e.g., real-time synthesis competitors can't match)
 - Efficiency gains (e.g., automate knowledge-intensive manual work)
@@ -385,6 +358,7 @@ Use concrete examples from the requirements.
 **Scope of AI opportunity:**
 
 Which requirements benefit from AI infrastructure:
+
 - List high-feasibility non-deterministic requirements
 - Group by domain/capability
 - Estimate scope (small, medium, large)
@@ -392,6 +366,7 @@ Which requirements benefit from AI infrastructure:
 **Tradeoffs and risks:**
 
 Be honest about costs:
+
 - Infrastructure complexity (new systems, integration work)
 - Organizational change (new workflows, training, governance)
 - Investment required (time, budget, resources)
@@ -400,12 +375,14 @@ Be honest about costs:
 **Risk assessment:**
 
 Compare scenarios:
+
 - What happens if we don't invest in AI? (missed opportunities, competitive disadvantage)
 - What if AI implementation fails? (fallback options, mitigation strategies)
 
 **Alternatives considered:**
 
 Why not use traditional approaches:
+
 - Traditional development: Why it won't handle non-deterministic requirements
 - Manual processes: Why they don't scale
 - Partial automation: Why full AI infrastructure is needed
@@ -415,12 +392,14 @@ Why not use traditional approaches:
 Prioritize non-deterministic requirements:
 
 **Criteria:**
+
 - Value: Business impact and strategic importance
 - Feasibility: Knowledge availability and access constraints
 - Dependencies: What enables what?
 - Risk: Implementation complexity and uncertainty
 
 Create prioritized list:
+
 1. High value + high feasibility (quick wins)
 2. High value + medium feasibility (strategic investments)
 3. Medium value + high feasibility (tactical improvements)
@@ -431,12 +410,14 @@ Create prioritized list:
 Analyze to determine document structure:
 
 **Simple project indicators:**
+
 - < 10 requirements
 - Single domain
 - Straightforward business context
 - Few constraints
 
 **Complex project indicators:**
+
 - 20+ requirements
 - Multiple domains
 - Complex business context with many constraints
@@ -454,7 +435,7 @@ Based on complexity AND audience (from Step 5), propose structure following **au
 
 When generating multiple reports, use this **layered content architecture**:
 
-```
+```text
 requirement-classification.md (FOUNDATION - write once)
     ↓ [referenced by all other reports]
     ├── executive-report.md / business-case.md
@@ -471,16 +452,18 @@ requirement-classification.md (FOUNDATION - write once)
 ### Smart Redundancy Rules
 
 **DO repeat (but adapt per audience):**
+
 1. **Core insight** - The fundamental problem
    - Exec report: Strategic impact
    - Stakeholder brief: Impact on their department
    - Tech analysis: Why technical solution needed
-   
+
 2. **Key recommendation** - The decision requested (keep 1-2 sentences, identical)
 
 3. **Success criteria** - What "done" looks like (same criteria, different emphasis)
 
 **DON'T repeat (write once, reference):**
+
 1. **Detailed requirement lists** → Only in `requirement-classification.md`
 2. **Complete effort breakdown** → Only in `technical-analysis.md` or `implementation-plan.md`
 3. **Architecture diagrams** → Only in `technical-analysis.md`
@@ -506,6 +489,7 @@ This report focuses on [business case / stakeholder benefits / implementation pl
 ---
 
 **Executive Report Principles:**
+
 - **Target 10-15 pages** when converted to PDF (for executive audience)
 - **One core message per section** - make it instantly clear what the section proves
 - **Decisive, not exhaustive** - emphasize clarity over comprehensiveness
@@ -555,12 +539,12 @@ executive-report.md:
 requirement-classification.md:
 - Strategic Direction (AI-first architectural decision if applicable)
 - Requirements Overview (summary stats: X deterministic, Y non-deterministic)
-- [Group 1]: AI-First Core / Critical AI Capabilities
+- [Group 1]: AI Core Requirements
   - Each capability with classification, priority, feasibility
 - [Group 2]: Essential Supporting Features
   - Deterministic requirements grouped by function
 - [Group 3]: Deferred Features
-  - Out of scope for MVP, add iteratively
+  - Deferred to Phase 2+ based on MVP prioritization
 - Feasibility Assessment (consolidated, not per-requirement)
 - Prioritization Matrix (tiered: MVP / Phase 2 / Deferred)
 - Dependencies
@@ -620,7 +604,7 @@ executive-report.md:
 - Strategic decision explanation
 - AI Core (in scope - non-deterministic) - numbered list
 - [Supporting layer] (in scope - deterministic) - numbered list  
-- Deferred (out of scope - Z requirements) - bulleted with why defer
+- Deferred (Phase 2+ - Z requirements) - bulleted with why defer
 - Phased Rollout Recommendation
   - Phase 1 (MVP): scope, capabilities, why this scope, success criteria
   - Phase 2 (Post-Pilot): iterative enhancements, principle
@@ -673,6 +657,7 @@ executive-report.md:
 ```
 
 **Key differences from previous approach:**
+
 - **Consolidate subsections:** "Why AI Is Needed" has 3 challenges in ONE section, not 3 separate sections
 - **Cut redundancy:** Don't repeat same examples across "Capabilities" and "Competitive Advantages" and "Efficiency"—merge into "What Becomes Possible"
 - **Tighten risk analysis:** Risk Assessment is 3 scenarios in bullets, not multi-paragraph narratives
@@ -771,6 +756,7 @@ Wait for approval.
 Before generating final documents, identify key assumptions made during analysis:
 
 **Common Phase 2 assumptions:**
+
 - AI feasibility assessments (e.g., "LLM can handle multi-document synthesis")
 - User adoption ("Users will interact with AI assistant")
 - Integration complexity ("API integration is straightforward")
@@ -780,11 +766,13 @@ Before generating final documents, identify key assumptions made during analysis
 **Update assumptions register:**
 
 Load existing assumptions-register.md and add Phase 2 assumptions with next sequential IDs:
+
 - Reference requirement IDs where applicable (e.g., "A-010: REQ-005 feasibility assumes PDF extraction accuracy >90%")
 - Mark validation status (many will be ⏳ Pending - need technical spike or user research)
 - Document impact if wrong (High/Medium/Low)
 
 **Cross-reference with technical spikes (Step 9A):**
+
 - If technical spikes recommended, assumptions should reference spike validation
 - Example: "A-011: Real-time RAG performance <2s (⏳ Pending - Spike planned for Week 2)"
 
@@ -793,6 +781,7 @@ Load existing assumptions-register.md and add Phase 2 assumptions with next sequ
 Generate markdown files following approved structure.
 
 **For requirement-classification.md:**
+
 - Clear classification with rationale
 - Feasibility assessment for non-deterministic items
 - Prioritized list
@@ -803,18 +792,21 @@ Generate markdown files following approved structure.
 Follow these content principles:
 
 **Decisive, not exhaustive:**
+
 - One core message per section (state it in section intro)
 - Use comparison tables to show impact clearly ("Without X" vs "With X")
 - Consolidate related content (don't fragment into many subsections)
 - Cut repetitive examples (one strong example beats three weak ones)
 
 **Scannable:**
+
 - Use bullets and numbered lists for quick navigation
 - Tables for comparisons, effort estimates, success criteria
 - Visual indicators in markdown: ✅ (in scope), ⏸️ (deferred), 🔴 (high risk), 🟡 (medium), 🟢 (low)
-- Highlight boxes: Use `> ` blockquotes or bold section intros for key insights
+- Highlight boxes: Use `>` blockquotes or bold section intros for key insights
 
 **Evidence-based and credible:**
+
 - Concrete examples from actual requirements (not generic AI benefits)
 - Show transformation: "Today users X, with AI they Y" comparisons
 - Reference knowledge landscape/assessment specifics
@@ -824,16 +816,19 @@ Follow these content principles:
 - **When uncertain:** Use ranges with caveats ("estimated 20-40% reduction based on similar document processing implementations") or omit the number entirely
 
 **Tighten verbose sections:**
+
 - **Risk Assessment:** 3 scenarios in bullets, not multi-paragraph narratives
 - **Alternatives Considered:** 1 page max - show you evaluated them, don't exhaustively analyze
 - **What Becomes Possible:** Consolidate capabilities + advantages + efficiency into 2-3 pages (not separate 3-page sections each)
 
 **Professional tone:**
+
 - Write for executives (strategic, decisive, clear)
 - Avoid hedging ("might", "could potentially") - be direct
 - Honest about risks, but focus on mitigation
 
 **Clear recommendation:**
+
 - End with explicit recommendation
 - Present decision options (invest / alternative / do nothing)
 - State recommended path with next steps
@@ -841,6 +836,7 @@ Follow these content principles:
 **Target length:** 10-15 pages when converted to PDF
 
 **If updating existing files:**
+
 - Merge new requirements into existing structure
 - Update analysis based on new information
 - Flag contradictions for user review
@@ -851,19 +847,23 @@ Follow these content principles:
 **File naming based on audience (from Step 5 and Step 5A):**
 
 **Always generate:**
+
 - `requirement-classification.md` - Foundation document (all requirements classified with IDs)
 - `traceability-matrix.md` - Initial traceability (Req ID + Classification columns only)
 
 **Based on primary audience (Step 5):**
+
 - Executive decision-makers → `executive-report.md` (or `business-case.md` for investment decisions)
 - Product/project managers → `implementation-plan.md` (or `mvp-scope.md`)
 - Technical leadership → `technical-analysis.md` (or `architecture-justification.md`)
 - Mixed audiences → Multiple files: `executive-summary.md` + `technical-deep-dive.md`
 
 **If stakeholder alignment needed (Step 5A):**
+
 - Add `stakeholder-brief.md` (references executive report for full context)
 
 **Write order (to enable cross-references):**
+
 1. `requirement-classification.md` FIRST (foundation with requirement IDs)
 2. `traceability-matrix.md` (initial matrix with Req ID + Classification)
 3. Primary audience report (e.g., `executive-report.md`)
@@ -883,7 +883,7 @@ mkdir -p docs/{project-name}/02-analysing
 
 ### Step 17: Confirm Completion and Validation Gate
 
-```
+```text
 ✓ Requirement analysis complete
 
 Generated:
@@ -923,6 +923,7 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 ## Output Specifications
 
 ### requirement-classification.md (always generated, in 02-analysing/)
+
 - Each requirement classified: deterministic vs non-deterministic
 - Rationale for each classification
 - Feasibility assessment for non-deterministic requirements
@@ -932,7 +933,8 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 
 ### Report Types (based on Step 5 audience identification, in 02-analysing/)
 
-**executive-report.md / business-case.md**
+#### executive-report.md / business-case.md
+
 - **Audience:** C-level, VPs, executive decision-makers
 - **Purpose:** Strategic business justification for AI investment (go/no-go decision)
 - **Length:** 10-15 pages
@@ -940,7 +942,8 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 - **Content:** Why AI needed, what it enables, scope recommendation, risks, alternatives, recommendation
 - **Tone:** Decisive, strategic, evidence-based (no fabricated metrics)
 
-**implementation-plan.md / mvp-scope.md**
+#### implementation-plan.md / mvp-scope.md
+
 - **Audience:** Product managers, project managers
 - **Purpose:** Scope definition and delivery planning
 - **Length:** 15-20 pages
@@ -948,7 +951,8 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 - **Content:** Detailed scope (in/out), effort estimates, dependencies, timeline, pilot plan
 - **Tone:** Practical, execution-focused, clear on tradeoffs
 
-**technical-analysis.md / architecture-justification.md**
+#### technical-analysis.md / architecture-justification.md
+
 - **Audience:** CTO, technical architects, engineering leadership
 - **Purpose:** Technical feasibility and architecture decision support
 - **Length:** 20-30 pages
@@ -956,7 +960,8 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 - **Content:** Detailed technical approach, technology choices, scalability, effort breakdown by component
 - **Tone:** Technical depth, alternatives analysis, honest about complexity
 
-**stakeholder-brief.md**
+#### stakeholder-brief.md
+
 - **Audience:** Department heads, team leads who need to support the initiative (not decision authority)
 - **Purpose:** Get buy-in from peer stakeholders (coalition building)
 - **Length:** 3-5 pages
@@ -964,9 +969,12 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 - **Content:** Department-specific benefits, time-bounded asks, what you'll handle, credit/recognition, risk mitigation for them
 - **Tone:** Benefit-forward, collaborative, makes it easy to say yes
 - **References:** Points to executive-report.md for full business case (doesn't duplicate it)
-- **CRITICAL:** NEVER fabricate quotes, testimonials, or endorsements. If "Early Support" section is included, it must contain ONLY real quotes from actual stakeholder conversations, or be explicitly marked as placeholder: "[To be added after initial stakeholder conversations]"
+- **CRITICAL:** NEVER fabricate quotes, testimonials, or endorsements. If "Early Support" section is included,
+  it must contain ONLY real quotes from actual stakeholder conversations, or be explicitly marked as placeholder:
+  "[To be added after initial stakeholder conversations]"
 
 **Multi-report scenarios:**
+
 - Generate requirement-classification.md (common base)
 - Generate multiple audience-specific reports referencing the classification
 - Each report pulls relevant content for that audience's decision context
@@ -989,20 +997,24 @@ Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
 ## Edge Cases
 
 **Incomplete requirements:**
+
 - Work with what's provided
 - Document assumptions
 - Note areas needing clarification
 
 **All requirements are deterministic:**
+
 - Still generate report
 - Conclusion: "Traditional development sufficient, AI infrastructure not needed"
 
 **Conflicting priorities:**
+
 - Document conflicts
 - Present options
 - Let user choose
 
 **Access to critical knowledge blocked:**
+
 - Flag as high-risk in feasibility
 - Include in tradeoffs section
 - May make some requirements infeasible

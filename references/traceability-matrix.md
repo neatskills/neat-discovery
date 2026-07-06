@@ -32,14 +32,17 @@ Requirements classified in `requirement-classification.md` are mapped to estimat
 Estimation stories are implemented in architecture blueprints:
 
 **agent-architecture.md:**
+
 - § 4.2 Agent Architecture → Implements REQ-001 (Story 1: Knowledge extraction)
 - § 4.3 Agent Architecture → Implements REQ-003 (Story 2: Calculation inference)
 
 **app-architecture.md:**
+
 - § 3.1 Backend Architecture → Implements REQ-002 (Story 5: Approval workflow)
 - § 5.2 Auth & Authorization → Implements REQ-005 (Story 6: SSO integration)
 
 **integration-architecture.md:**
+
 - § 2.1 Document Upload Flow → Implements REQ-001, REQ-003
 
 ---
@@ -49,6 +52,7 @@ Estimation stories are implemented in architecture blueprints:
 Use this matrix to assess impact of requirement changes:
 
 **Example:** If REQ-001 (Knowledge extraction) changes:
+
 - **Affects Estimate:** Story 1 (XL) - may need re-sizing
 - **Affects Architecture:** agent-architecture.md § 4.2, integration § 2.1
 - **Action:** Review and update affected sections
@@ -58,20 +62,24 @@ Use this matrix to assess impact of requirement changes:
 ## How to Maintain
 
 **Phase 2 (Analysing):**
+
 - Assign unique IDs to all requirements (REQ-001, REQ-002, etc.)
 - Create initial traceability matrix with Req ID + Classification columns
 
 **Phase 3 (Estimating):**
+
 - Map requirements to estimation stories
 - Add Est Story + Estimate columns
 - Reference requirement IDs in mvp-estimates.md
 
 **Phase 4 (Designing):**
+
 - Document which architecture sections implement which requirements
 - Add Architecture Reference column
 - Mark status as Designed
 
 **During Changes:**
+
 - If requirement changes, trace to estimates and architecture
 - Update affected documents
 - Log change in traceability matrix notes

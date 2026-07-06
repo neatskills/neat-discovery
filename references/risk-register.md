@@ -53,6 +53,7 @@
 ## How to Maintain
 
 **Phase 1 (Scoping):**
+
 - Identify risks from knowledge-assessment.md:
   - Access constraints → risks
   - Knowledge gaps → risks
@@ -60,17 +61,20 @@
 - Add to risk register with ID, description, impact assessment
 
 **Phase 2 (Analysing):**
+
 - Identify feasibility risks for non-deterministic requirements
 - Add risks from executive-report.md "Tradeoffs and Risks" section
 - Update risk register
 
 **Phase 3 (Estimating):**
+
 - Identify complexity/effort risks from estimates
 - Document "Watch for:" escalation conditions as risks
 - High-risk stories (XL, XXL) → risk register entries
 - Update mitigation plans
 
 **Phase 4 (Designing):**
+
 - Document how architecture mitigates identified risks
 - Update risk register status (Open → Mitigated)
 - Identify new implementation risks
@@ -92,6 +96,7 @@
 ### From Phase 1 (Scoping)
 
 **R-001:** No SMEs available
+
 - **Source:** knowledge-assessment.md (no standardized metrics)
 - **Impact:** High (can't validate AI-generated calculations)
 - **Mitigation:** AI inference from documents + user validation workflow
@@ -99,6 +104,7 @@
 ### From Phase 2 (Analysing)
 
 **R-002:** AI feasibility uncertain for calculation inference
+
 - **Source:** Feasibility assessment (medium-high with caveats)
 - **Impact:** High (core value proposition)
 - **Mitigation:** Seed pilot with high-quality examples, external knowledge augmentation
@@ -106,6 +112,7 @@
 ### From Phase 3 (Estimating)
 
 **R-003:** Story 2 (Calculation inference) Watch for: sparse pilot data
+
 - **Source:** mvp-estimates.md
 - **Impact:** High (could increase from XL to XXL)
 - **Mitigation:** Seed with 20-30 examples, plan external knowledge integration
@@ -113,6 +120,7 @@
 ### From Phase 4 (Designing)
 
 **R-004:** pgvector may not scale beyond 100k documents
+
 - **Source:** Technology stack decision
 - **Impact:** Medium (performance degradation)
 - **Mitigation:** Monitor performance, migration plan to Pinecone if needed

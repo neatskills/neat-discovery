@@ -44,28 +44,36 @@ This register tracks assumptions made across all discovery phases. Each assumpti
 ## Instructions for Each Phase
 
 ### Phase 1 (Scoping)
+
 Add assumptions about:
+
 - Stakeholder availability
 - Knowledge source accessibility
 - Organizational constraints
 - Timeline expectations
 
 ### Phase 2 (Analysing)
+
 Add assumptions about:
+
 - Feasibility of AI approach
 - Integration complexity
 - User adoption
 - Regulatory/compliance requirements
 
 ### Phase 3 (Estimating)
+
 Add assumptions about:
+
 - Team composition and skills
 - Third-party service availability
 - Infrastructure requirements
 - Development timeline
 
 ### Phase 4 (Designing)
+
 Add assumptions about:
+
 - Technology choices
 - Architecture scalability
 - Performance requirements
@@ -76,17 +84,20 @@ Add assumptions about:
 ## When to Update This Register
 
 **Add new assumption:**
+
 - Whenever you state "Assuming X" in any phase
 - When making a decision based on uncertain information
 - When stakeholders provide constraints that aren't yet validated
 
 **Validate assumption:**
+
 - After stakeholder confirmation
 - After technical spike/proof-of-concept
 - After researching alternatives
 - After pilot/test results
 
 **Invalidate assumption:**
+
 - When evidence contradicts the assumption
 - When stakeholder changes requirements
 - When technical test fails

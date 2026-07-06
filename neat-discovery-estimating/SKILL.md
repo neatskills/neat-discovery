@@ -22,6 +22,7 @@ patterns, recommend build/buy, size effort.
 ## When to Use
 
 After Phase 2 (analysing) is complete. Use this skill to:
+
 - Estimate MVP Core requirements (AI + traditional)
 - Estimate Deferred features
 - Provide total effort ranges for scoped buckets
@@ -29,7 +30,14 @@ After Phase 2 (analysing) is complete. Use this skill to:
 
 ## Prerequisites
 
+**Required from Phase 1:**
+
+- `docs/{project-name}/01-scoping/project-context.md`
+- `docs/{project-name}/01-scoping/knowledge-landscape.md`
+- `docs/{project-name}/01-scoping/knowledge-assessment.md`
+
 **Required from Phase 2:**
+
 - `docs/{project-name}/02-analysing/requirement-classification.md`
 
 **Don't use for:**
@@ -50,10 +58,12 @@ ls -d docs/*/ 2>/dev/null
 ```
 
 **If no projects exist:**
+
 - Error: "No projects found. Run /neat-discovery-scoping first."
 - Exit skill
 
 **If projects exist:**
+
 - List with numbers: `[1] project-a [2] project-b`
 - Ask user to choose
 - Store selected project name
@@ -70,17 +80,20 @@ cat docs/{project-name}/02-analysing/requirement-classification.md
 ```
 
 **If files missing:**
+
 - Error: "Required outputs not found. Run /neat-discovery-scoping and /neat-discovery-analysing first."
 - Exit skill
 
 **If files exist:**
+
 - Read and parse all files
 - **From project-context.md:** Scope, constraints, stakeholders, strategic context
 - **From knowledge-landscape.md:** Integration complexity (how many systems?), data availability, knowledge source ownership
 - **From knowledge-assessment.md:** Access constraints (affects risk), quality issues (affects AI complexity), knowledge gaps (increases uncertainty)
-- **From requirement-classification.md:** MVP Core requirements (AI + traditional), Deferred requirements, Out of Scope items
+- **From requirement-classification.md:** MVP Core requirements (AI + traditional), Deferred requirements (Phase 2+)
 
 **Why knowledge files matter for estimation:**
+
 - **Integration complexity:** More systems to integrate → increases effort
 - **Access constraints:** Permission barriers, technical barriers → adds risk
 - **Knowledge gaps:** Missing data sources → increases uncertainty and risk
@@ -95,10 +108,12 @@ ls docs/{project-name}/03-estimating/mvp-estimates.md 2>/dev/null
 ```
 
 **If file exists:**
+
 - Load existing estimates
 - Inform: "Found existing estimates. I'll update based on refined requirements."
 
 **If file doesn't exist:**
+
 - Inform: "Creating fresh MVP estimates."
 
 ### Step 4: Estimate MVP Core Requirements
@@ -111,10 +126,12 @@ For each MVP Core requirement (from requirement-classification.md):
 4. Note escalation conditions
 
 **Group estimates:**
+
 - AI Core requirements (non-deterministic)
 - Supporting Layer requirements (deterministic)
 
 **IMPORTANT:** Reference requirement IDs in story titles for traceability:
+
 - Story 1 (REQ-001): Knowledge Extraction from Documents
 - Story 2 (REQ-003): Calculation Inference
 
@@ -125,6 +142,11 @@ For each Deferred requirement:
 1. Estimate using same 4-phase process
 2. Note why deferred (from Phase 2 analysis)
 3. Document assumptions
+
+**If no deferred requirements:**
+
+- Document in mvp-estimates.md: "Deferred Features: None - full scope included in MVP"
+- In Effort Summary table: Show "Deferred: 0 stories | N/A | None"
 
 ### Step 6: Detect Patterns
 
@@ -145,14 +167,17 @@ Offer pattern notes when detected with build/buy recommendations.
 Calculate totals:
 
 **MVP Core Total:**
+
 - Count by size: X stories at S, Y at M, Z at L
 - Overall assessment: "Medium project" / "Large project" / etc.
 
 **Deferred Total:**
+
 - Count by size
 - Overall assessment
 
 **Full Scope Total (if all built):**
+
 - MVP + Deferred combined estimate
 
 ### Step 7A: Calculate ROM Cost Estimates
@@ -160,6 +185,7 @@ Calculate totals:
 After sizing effort, provide rough order of magnitude (ROM) cost estimates.
 
 **Ask user for team composition assumptions:**
+
 - "What team composition should I assume? (e.g., 2 AI/ML engineers, 2 full-stack, 1 DevOps)"
 - "What hourly/yearly rates should I use? Or should I use industry averages?"
 - "Any infrastructure costs to account for? (LLM API, hosting, third-party services)"
@@ -167,6 +193,7 @@ After sizing effort, provide rough order of magnitude (ROM) cost estimates.
 **Calculate ROM based on T-shirt sizes:**
 
 **Rough conversion (story points to weeks):**
+
 - XS: 0.5-1 week
 - S: 1-2 weeks
 - M: 2-4 weeks
@@ -175,24 +202,29 @@ After sizing effort, provide rough order of magnitude (ROM) cost estimates.
 - XXL: 16+ weeks (flag as needing breakdown)
 
 **Team cost calculation:**
+
 - Weekly burn rate = (sum of all salaries/52) or (sum of hourly rates × 40)
 - Project duration = max(parallelizable effort) + sequential dependencies
 - Total labor cost = Weekly burn rate × Project duration
 
 **Infrastructure cost:**
+
 - LLM API: estimate requests/month × cost/request
 - Hosting: cloud compute for AI inference + database + app server
 - Third-party services: Auth, storage, monitoring
 
 **Add buffers:**
+
 - 20-30% for unknowns (higher if more XXL stories or high-risk items)
 - 10-15% for overhead (meetings, planning, deployment)
 
 **Output ROM ranges:**
+
 - **Low estimate:** Assumes all stories hit lower bound, no significant blockers
 - **High estimate:** Assumes stories hit upper bound, some scope creep
 
 **CRITICAL - Assumptions documentation:**
+
 - Document ALL assumptions in ROM section
 - Make it clear this is NOT a formal quote
 - Reference what's excluded (ongoing maintenance, support, change requests)
@@ -200,9 +232,15 @@ After sizing effort, provide rough order of magnitude (ROM) cost estimates.
 
 ### Step 8: Analyze Dependencies
 
-Identify blocking relationships between requirements:
+Identify blocking relationships between requirements.
+
+**Document dependencies in two places:**
+
+1. **traceability-matrix.md** - For requirement tracking (Req ID → Blocks → Blocked By columns)
+2. **mvp-estimates.md** - For estimation context (Dependency Map section)
 
 **Look for technical dependencies:**
+
 - Authentication before user features
 - Database schema before data operations
 - Knowledge base before AI features
@@ -210,23 +248,28 @@ Identify blocking relationships between requirements:
 - Infrastructure before services
 
 **Document prerequisites:**
+
 - "REQ-XXX must be completed before REQ-YYY can start"
 - Use requirement IDs from Phase 2 classification
 
 **Identify parallelizable work:**
+
 - Which requirements have no dependencies and can be built concurrently?
 - Helps inform team sizing and timeline
 
 **Find critical path:**
+
 - Longest sequence of dependent requirements
 - Determines minimum project duration even with infinite team size
 
 **Phasing implications:**
+
 - Foundation requirements (no dependencies) → Phase 1
 - Dependent requirements → Phase 2 or later
 - Helps validate MVP scope from Phase 2
 
 **Add to traceability matrix:**
+
 - Update `docs/{project-name}/traceability-matrix.md` with dependency column
 - Shows: Req ID → Blocks → Blocked By
 
@@ -322,6 +365,7 @@ Wait for approval.
 Scan requirements for common patterns that have mature SaaS/open-source solutions:
 
 **Infrastructure patterns:**
+
 - **Auth/Identity** (3+ stories): Auth0, Firebase Auth, AWS Cognito, Clerk
 - **Payment** (2+ stories): Stripe, PayPal, Square
 - **Email** (3+ stories): SendGrid, AWS SES, Postmark
@@ -331,6 +375,7 @@ Scan requirements for common patterns that have mature SaaS/open-source solution
 - **CMS** (4+ stories): Contentful, Sanity, Strapi
 
 **AI-specific patterns:**
+
 - **Vector database** (1+ story): Pinecone, Weaviate, pgvector, Qdrant
 - **LLM API** (1+ story): OpenAI, Anthropic, Together AI, Fireworks
 - **Document processing** (2+ stories): Unstructured.io, Azure Document Intelligence, AWS Textract
@@ -341,21 +386,25 @@ Scan requirements for common patterns that have mature SaaS/open-source solution
 For each detected pattern, analyze:
 
 **1. Effort Impact:**
+
 - Build: {current estimate} (e.g., L + M + M = 3 stories, ~8-14 weeks)
 - Buy: {reduced estimate} (e.g., S for integration = 1-2 weeks)
 - **Savings:** {X weeks reduction}
 
 **2. Cost Comparison:**
+
 - Build: {ROM from labor estimate} (e.g., $50k-$80k for auth system)
 - Buy: {SaaS pricing} (e.g., Auth0 $240/month + $0.05/MAU = ~$5k/year)
 - **Breakeven:** {when build pays off} (e.g., "10+ years at current scale")
 
 **3. Risk Assessment:**
+
 - Build risks: {security, maintenance, expertise, time-to-market}
 - Buy risks: {vendor lock-in, pricing changes, feature limitations}
 - **Recommendation:** {build or buy with rationale}
 
 **4. Strategic Alignment:**
+
 - Is this core to our value proposition? (Build favored)
 - Is this commodity infrastructure? (Buy favored)
 - Do we have unique requirements? (May need build)
@@ -570,12 +619,12 @@ refunds/disputes → XL. Consider spike story.
 
 ---
 
-
 ### Step 10: Generate Estimation Document
 
 Generate markdown file following approved structure.
 
 **Content guidelines:**
+
 - Clear size with rationale (2-3 sentences per section)
 - Explicit assumptions
 - Risk expressed as size ranges
@@ -584,6 +633,7 @@ Generate markdown file following approved structure.
 - Executive summary for quick scanning
 
 **If updating existing file:**
+
 - Merge new requirements into structure
 - Update estimates based on refined information
 - Flag changes: "Updated: [previous estimate] → [new estimate]. Reason: [rationale]"
@@ -603,9 +653,9 @@ mkdir -p docs/{project-name}/03-estimating
 # Map: REQ-001 → Story 1 → XL → Blocks: REQ-005, REQ-007
 ```
 
-### Step 12: Confirm Completion and Decision Gate
+### Step 12: Confirm Completion and Validation Gate
 
-```
+```text
 ✓ MVP estimation complete
 
 Generated:
@@ -614,7 +664,7 @@ Generated:
 
 ---
 
-DECISION GATE: Review Scope vs Effort
+VALIDATION GATE: Review Scope vs Effort
 
 Review the MVP effort estimate before proceeding to Phase 4 (Designing):
 
@@ -635,6 +685,7 @@ Next step (if approved): Run /neat-discovery-designing to create architecture bl
 ## Output Specifications
 
 ### mvp-estimates.md (in 03-estimating/)
+
 - Executive summary (MVP vs Deferred vs Full Scope totals)
 - MVP Core estimates (AI + traditional, grouped)
 - Deferred feature estimates
