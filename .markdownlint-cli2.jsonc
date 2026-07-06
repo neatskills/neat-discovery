@@ -2,8 +2,7 @@
   "config": {
     "default": true,
     "MD013": {
-      "line_length": 180,
-      "tables": false
+      "line_length": 180
     }
   },
   "globs": ["**/*.md"],

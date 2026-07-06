@@ -18,7 +18,7 @@ This register tracks assumptions made across all discovery phases. Each assumpti
 | ID | Phase | Assumption | Validation Status | Impact if Wrong | Notes |
 | --- | --- | --- | --- | --- | --- |
 | A-001 | Scoping | 5 SMEs available for knowledge interviews | ✅ Validated (2026-XX-XX) | High - would delay knowledge mapping by 2-3 weeks | Confirmed via stakeholder meeting |
-| A-002 | Analysing | Real-time API access to knowledge base is feasible | ⏳ Pending validation | Medium - may require batch processing instead | Waiting for IT architecture review |
+| A-002 | Analysing | Real-time API access to knowledge base is feasible | ⏳ Pending validation | Medium - may need batch processing | Waiting for IT architecture review |
 | A-003 | Estimating | Team has Python ML/NLP experience | ⚠️ Unvalidated | Medium - may need training or external hiring | Assumption based on job descriptions |
 | A-004 | Designing | LLM API costs ~$0.002/request | ✅ Validated (2026-XX-XX) | Low - budget includes buffer | Confirmed via OpenAI pricing, Claude pricing |
 
