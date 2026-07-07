@@ -131,7 +131,7 @@ Document project context in project-context.md (separate file).
 
 ### Step 5: Current State Assessment
 
-Interview the user to map the current state landscape. Ask focused questions:
+Interview the user to understand the current state landscape. Ask focused questions:
 
 **About architecture:**
 
@@ -405,7 +405,7 @@ Generate three markdown files following the approved structure.
 
 **For knowledge-landscape.md:**
 
-- Map current state landscape (architecture, dependencies, knowledge, systems, people, flows)
+- Understand current state landscape (architecture, dependencies, knowledge, systems, people, flows)
 - Use clear section headings
 - Lists and tables for elements
 - Include architecture diagrams if available
