@@ -154,7 +154,7 @@ Apply the pattern with these values:
 | Phase folder | `04-designing/` |
 | Artifact type | `architecture` |
 | Update action | `refine based on new insights` |
-| Files to load | `agent-architecture.md, app-architecture.md, integration-architecture.md, value-optimization.md` |
+| Files to load | `agent-architecture.md, app-architecture.md, integration-architecture.md` |
 | Update question | "What changed in requirements, constraints, or approach?" |
 
 **Special consideration for Update mode:**
@@ -839,14 +839,6 @@ All artifacts:
 - **Defer to planning:** Specific message queue product, API contracts, monitoring tools
 - **Purpose:** High-level integration architecture for validation and planning input
 
-### value-optimization.md (in 04-designing/)
-
-- How architecture balances AI agents and applications for maximum value
-- Trade-offs made and rationale (cost vs capability, speed vs quality)
-- Risk mitigation strategies (how architecture addresses Phase 3 risks)
-- Decision points for implementation planning (what needs to be decided later)
-- **Purpose:** Demonstrates value-optimized design thinking
-
 ## Common Mistakes
 
 | Mistake | Rule |
@@ -857,7 +849,7 @@ All artifacts:
 | Ignoring constraints | Reference Phase 1 assessment barriers |
 | Missing risk identification | Flag feasibility concerns, unknowns, scalability risks |
 | Vague patterns | "Use a database" - too vague. "Relational DB for ACID, evaluate PostgreSQL for vector support" - right level |
-| **Only designing AI architecture** | **CRITICAL: Must generate all four documents (AI, app, integration, value optimization)** |
+| **Only designing AI architecture** | **CRITICAL: Must generate all three documents (AI, app, integration)** |
 | Missing trade-off analysis | Show what you're trading off (cost vs capability, speed vs quality) |
 | No "defer to planning" guidance | Be explicit about what gets decided later |
 
