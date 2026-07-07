@@ -1,26 +1,40 @@
 ---
 name: neat-discovery-designing
-description: Design complete system architecture - Agent infrastructure, application architecture, and integration patterns between them
+description: Design high-level architecture validating feasibility and identifying risks - defines patterns, integration strategy, and trade-offs for AI agent and application components
 ---
 
 # neat-discovery-designing
 
 ## Overview
 
-Design complete system architecture - Agent infrastructure, application architecture, and integration patterns between them.
+**This is discovery-level design** - high-level architecture that validates feasibility, identifies risks, and defines integration patterns. Not detailed implementation planning.
+
+**Focus:** Patterns, trade-offs, risk mitigation, and decision points for later phases.
 
 ## Role
 
-**Role:** You are a Solution Architect who designs both Agent infrastructure and application architecture, along with their integration patterns.
+**Role:** You are a Solution Architect conducting discovery-level design to validate feasibility and identify architectural risks.
 
 ## When to Use
 
-After Phase 3 (estimating) is complete. Use this skill to:
+After Phase 3 (scoping) is complete. Use this skill to:
 
-- Design Agent infrastructure (ontology, knowledge system, agent architecture, governance)
-- Design application architecture (frontend, backend, database, deployment)
-- Design integration architecture (how AI and traditional components work together)
-- Create implementation blueprints
+- Validate architectural feasibility given constraints and risks
+- Define high-level patterns for AI agent and application components
+- Design integration strategy between AI and application layers
+- Identify architectural risks and mitigation approaches
+- Document trade-offs and decisions deferred to implementation planning
+
+## What This Is NOT
+
+**Don't do in discovery design:**
+- ❌ Choose specific frameworks/libraries (React vs Vue, Django vs Flask)
+- ❌ Design detailed APIs, schemas, or data models
+- ❌ Make build vs buy decisions (already decided in Phase 3)
+- ❌ Create implementation-ready specifications
+- ❌ Evaluate vendors or products in detail
+
+**These happen during implementation planning** (post-discovery).
 
 ## Prerequisites
 
@@ -330,49 +344,47 @@ Define ownership and accountability:
 - Decision-making authority
 - Audit and compliance roles
 
-### Step 11: Application Architecture Design
+### Step 11: Application Architecture Patterns
 
-Design the non-AI components of the system (web application, databases, infrastructure).
+**Define high-level patterns** for non-AI components (web application, databases, infrastructure).
 
 **Analyze deterministic requirements:**
 
 - Review requirement-classification.md for deterministic requirements
-- Identify traditional web application needs (forms, CRUD, workflows, reporting)
-- Database requirements (SQL metadata, user management, project tracking)
+- Identify application needs (forms, CRUD, workflows, reporting)
+- Database requirements (metadata, user management, project tracking)
 
-**Frontend Architecture:**
+**Frontend pattern:**
 
-- Framework choice (React, Vue, Angular, server-rendered)
-- Component structure
-- State management approach
-- UI/UX patterns
-- Responsive design requirements
-- Accessibility requirements
+- SPA vs server-rendered (evaluate based on interactivity needs)
+- Component organization approach
+- State management pattern needed
+- Responsive and accessibility requirements
+- **Defer to planning:** Specific framework, UI library selection
 
-**Backend Architecture:**
+**Backend pattern:**
 
-- Framework/language choice (Node.js, Python/Django/Flask, Java/Spring, .NET)
-- Monolith vs microservices decision
-- API design (REST, GraphQL, gRPC)
-- Background job processing (if needed)
-- Caching strategy
-- Session management
+- API-first architecture (monolith vs microservices trade-off)
+- API protocol pattern (REST/GraphQL/gRPC - evaluate based on client needs)
+- Background job processing pattern (if async work needed)
+- Caching strategy (what needs caching, where)
+- **Defer to planning:** Specific language/framework choice
 
-**Database Design:**
+**Database pattern:**
 
-- Relational database schema (expand beyond minimal SQL shown in AI architecture)
-- Full table definitions with relationships
-- Indexing strategy
-- Migration approach
-- Backup and recovery
+- Relational schema approach (normalized vs denormalized trade-offs)
+- Key entities and relationships (high-level)
+- Indexing considerations (what queries need optimization)
+- Migration strategy (how to evolve schema safely)
+- **Defer to planning:** Detailed table definitions, constraints
 
-**Authentication & Authorization:**
+**Authentication & Authorization pattern:**
 
-- SSO integration details (SAML, OAuth, OIDC)
-- User directory sync mechanism (LDAP, Active Directory, Okta)
-- RBAC implementation
-- Session management
-- Token strategy (JWT, session cookies)
+- SSO integration approach (validate with existing identity provider)
+- Role-based access pattern (how roles map to permissions)
+- Session vs token strategy trade-offs
+- **Build/buy from Phase 3:** e.g., "Use Auth0" (already decided)
+- **Defer to planning:** Specific protocols (SAML vs OIDC), token formats
 
 **File Storage Architecture:**
 
@@ -486,43 +498,34 @@ Design how AI components and traditional components work together.
 - Network latency between web app and AI service
 - Health checks and circuit breakers (prevent cascading failures)
 
-### Step 13: Technology Stack Selection
+### Step 13: Technology Pattern Validation
 
-**IMPORTANT:** Reference Pattern Analysis from mvp-scope.md (Step 3) and adopt build/buy recommendations.
+**Reference build/buy decisions from Phase 3 (scoping)** - those are already decided.
 
-Based on requirements AND estimation insights, recommend specific technologies.
+**Discovery-level guidance (defer specifics to planning):**
 
-**Apply Build/Buy Recommendations from Estimation:**
+**Frontend pattern:**
+- SPA framework needed (decide specific one during planning: React/Vue/Angular)
+- State management approach (evaluate Redux vs simpler alternatives)
+- Component library (assess accessibility requirements)
+- **Build/buy from Phase 3:** e.g., "Use TipTap for markdown editing" (already decided)
 
-- If estimates say "Use Auth0" → adopt it (don't design custom auth)
-- If estimates say "Start with pgvector" → default to it (document rationale)
-- If estimates say "Use TipTap for markdown editor" → adopt it
-- **If deviating from estimation recommendations** → document WHY (must have strong justification)
+**Backend pattern:**
+- API-first architecture (REST/GraphQL/gRPC - decide protocol during planning)
+- Background job processing needed (evaluate queue vs cron patterns)
+- Language/framework choice deferred to planning (align with team skills)
+- **Build/buy from Phase 3:** e.g., "Use Auth0 for authentication" (already decided)
 
-**Frontend:**
+**Database pattern:**
+- Relational database required (PostgreSQL recommended for JSON + vector support)
+- Vector storage needed for AI features (validate pgvector feasibility vs dedicated DB)
+- **Risk:** Vector search at scale - plan load testing during implementation
 
-- Framework: React (most common, large ecosystem), Vue (simpler), Angular (enterprise)
-- State management: Redux, Zustand, Context API
-- UI library: Material-UI, Ant Design, Tailwind CSS
-- **Markdown editor:** TipTap or react-markdown-editor (per estimation pattern analysis)
-
-**Backend:**
-
-- Language/Framework:
-  - Python: Django (full-featured), Flask (lightweight), FastAPI (async, modern)
-  - Node.js: Express (simple), NestJS (structured), Fastify (performance)
-  - Java: Spring Boot (enterprise standard)
-  - .NET: ASP.NET Core (Microsoft stack)
-- Background jobs: Celery (Python), Bull (Node.js), Hangfire (.NET)
-
-**Database:**
-
-- Relational: PostgreSQL (recommended: rich features, JSON support, pgvector extension)
-- Alternative: MySQL, SQL Server, Oracle
-
-**Vector Database:**
-
-- **Check estimation recommendation** (Step 3): If estimates say "Start with pgvector," adopt it for MVP
+**Defer to implementation planning:**
+- Specific framework/library versions
+- Detailed API contracts and schemas
+- Vendor selection (within build/buy categories)
+- Performance optimization strategies
 - Managed: Pinecone (easy, expensive), Weaviate (flexible), Qdrant (open-source option)
 - Self-hosted: pgvector (PostgreSQL extension - same DB as SQL metadata), Chroma (lightweight)
 - Default: pgvector if small-medium scale (one less service), Pinecone/Weaviate if large scale
@@ -664,9 +667,9 @@ Analyze to determine document structure:
   - Full schema (tables, relationships, indexes)
   - Migration strategy
 - Authentication & Authorization
-  - SSO integration (build vs buy decision)
-  - RBAC implementation
-  - Session management
+  - SSO integration pattern (validate with existing identity provider)
+  - RBAC approach (role structure, permission model)
+  - Session vs token strategy
 - File Storage Architecture
 - Deployment Architecture
   - Containerization
@@ -736,9 +739,10 @@ Generate **three separate markdown files** following approved structures.
   - Build/buy decisions from pattern analysis
   - High-risk stories (XL/XXL) → architectural mitigations
 - Clear rationale for all architectural choices
-- Specific enough for delivery teams to implement
+- **Discovery-level detail:** Patterns with trade-offs, not implementation specs
+- Explicit about what's deferred to planning
 - Professional tone
-- Diagrams where helpful (use clean HTML/CSS boxes in PDFs, not ASCII art)
+- Diagrams where helpful (high-level boxes and flows, not detailed schemas)
 
 **Generate in this order:**
 
@@ -781,7 +785,7 @@ Generated:
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
 
-Discovery process complete. Architectures ready for handoff to delivery teams.
+Discovery process complete. High-level architecture defined for implementation planning.
 
 All artifacts:
 - docs/{project-name}/01-scoping/knowledge-landscape.md
@@ -796,52 +800,66 @@ All artifacts:
 
 ## Output Specifications
 
+**Discovery-level design = High-level patterns + Feasibility + Risks + Trade-offs**
+
 ### agent-architecture.md (in 04-designing/)
 
-- Ontology decision and design (if needed)
-- Knowledge system architecture (vector DB, storage patterns)
-- AI agent architecture (agents, orchestration, knowledge access)
-- Knowledge flow design (within AI system)
-- AI governance model (quality control, monitoring, accountability)
-- Technology choices (LLM provider, vector DB, embedding model)
-- **Purpose:** Agent infrastructure design for ML/AI engineers
+- Ontology decision and rationale (needed vs not needed, why)
+- Knowledge system pattern (vector storage approach, trade-offs)
+- AI agent pattern (single vs multi-agent, orchestration approach)
+- Knowledge flow pattern (how knowledge moves through system)
+- AI governance approach (quality control, monitoring, accountability)
+- Technology pattern guidance (LLM provider considerations, vector DB options)
+- **Risks identified:** Feasibility concerns, scalability unknowns
+- **Defer to planning:** Specific embedding models, prompt templates, fine-tuning strategy
+- **Purpose:** High-level AI architecture for validation and planning input
 
 ### app-architecture.md (in 04-designing/)
 
-- Frontend architecture (framework, components, state management)
-- Backend architecture (framework, API design, background jobs)
-- Database design (full schema, migrations, indexing)
-- Authentication & authorization (SSO, RBAC, session management)
-- File storage architecture
-- Deployment architecture (containers, cloud, CI/CD, monitoring)
-- Performance & scalability
-- Technology stack summary
-- **Purpose:** Web application design for full-stack developers
+- Frontend pattern (SPA vs server-rendered, state management approach)
+- Backend pattern (monolith vs microservices, API protocol)
+- Database pattern (schema approach, key entities/relationships)
+- Auth pattern (SSO integration, RBAC approach)
+- Storage pattern (file/blob storage strategy)
+- Deployment pattern (cloud approach, containerization)
+- Performance considerations (caching needs, async processing)
+- **Risks identified:** Scalability concerns, integration challenges
+- **Defer to planning:** Specific frameworks, detailed schemas, vendor selection
+- **Purpose:** High-level application architecture for validation and planning input
 
 ### integration-architecture.md (in 04-designing/)
 
-- Critical integration points (document upload, AI assistance, approval workflow, RAG search)
-- API contract design (endpoints, formats, authentication)
-- Communication patterns (sync/async, message queues, events)
-- Error handling strategy (timeouts, retries, fallbacks)
-- Performance considerations (async processing, caching, rate limiting)
-- Security & privacy (inter-service auth, data encryption, PII handling)
-- Deployment considerations (service separation, health checks)
-- Technology choices (message queue, API protocol, streaming)
-- **Purpose:** Integration design for DevOps/platform engineers
+- Integration points (where AI and application connect)
+- Communication patterns (sync/async, event-driven vs direct calls)
+- Error handling approach (timeouts, retries, fallback strategies)
+- Performance pattern (async processing, caching, rate limiting)
+- Security approach (inter-service auth, data flow encryption)
+- Deployment pattern (service separation, health check strategy)
+- **Risks identified:** Latency concerns, failure scenarios, complexity
+- **Defer to planning:** Specific message queue product, API contracts, monitoring tools
+- **Purpose:** High-level integration architecture for validation and planning input
+
+### value-optimization.md (in 04-designing/)
+
+- How architecture balances AI agents and applications for maximum value
+- Trade-offs made and rationale (cost vs capability, speed vs quality)
+- Risk mitigation strategies (how architecture addresses Phase 3 risks)
+- Decision points for implementation planning (what needs to be decided later)
+- **Purpose:** Demonstrates value-optimized design thinking
 
 ## Common Mistakes
 
 | Mistake | Rule |
 | --- | --- |
-| Skipping prerequisite load | Must load all Phase 1 and Phase 2 outputs |
-| Vague architecture | Be specific enough for implementation |
-| Missing rationale | Every decision needs evidence-based justification |
-| Ignoring constraints | Reference knowledge assessment barriers |
-| Generic governance | Define actual roles and processes |
-| **Only designing AI architecture** | **CRITICAL: Must generate all three blueprints (AI, Traditional, Integration) for complete system design** |
-| Missing integration design | AI and traditional systems don't work together without explicit integration architecture |
-| Unreadable diagrams | Use clean HTML/CSS boxes in PDFs, not ASCII art (reference neat-sdd examples if available) |
+| Skipping prerequisite load | Must load all Phase 1, 2, and 3 outputs |
+| Too detailed (choosing frameworks) | Discovery = patterns, not products. Defer specifics to planning |
+| Missing rationale | Every pattern needs evidence-based justification |
+| Ignoring constraints | Reference Phase 1 assessment barriers |
+| Missing risk identification | Flag feasibility concerns, unknowns, scalability risks |
+| Vague patterns | "Use a database" - too vague. "Relational DB for ACID, evaluate PostgreSQL for vector support" - right level |
+| **Only designing AI architecture** | **CRITICAL: Must generate all four documents (AI, app, integration, value optimization)** |
+| Missing trade-off analysis | Show what you're trading off (cost vs capability, speed vs quality) |
+| No "defer to planning" guidance | Be explicit about what gets decided later |
 
 ## Edge Cases
 
