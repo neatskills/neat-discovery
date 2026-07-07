@@ -129,24 +129,42 @@ From `mvp-scope.md`, extract critical insights that inform architecture:
 
 Summarize findings internally for use in architecture decisions.
 
-### Step 4: Check Existing Architectures
+### Step 4: Detect Mode (Update or New)
 
-Check if blueprints exist:
+Check if architecture blueprints exist:
 
 ```bash
-ls docs/{project-name}/04-designing/agent-architecture.md 2>/dev/null
-ls docs/{project-name}/04-designing/app-architecture.md 2>/dev/null
-ls docs/{project-name}/04-designing/integration-architecture.md 2>/dev/null
+ls docs/{project-name}/04-designing/*.md 2>/dev/null
 ```
 
-**If any exist:**
+**If files exist:**
 
-- Load existing files
-- Inform: "Found existing architecture documents. I'll refine based on new insights."
+Ask user to choose approach:
 
-**If none exist:**
+```
+Found existing architecture from [date].
 
-- Inform: "Creating fresh architecture documents (AI, Traditional, Integration)."
+[1] Update it (refine based on new insights)
+[2] Regenerate (start fresh)
+
+Choose [1]:
+```
+
+- **User chooses [1] Update:**
+  - Load existing files (agent-architecture.md, app-architecture.md, integration-architecture.md)
+  - Ask: "What changed in requirements, constraints, or approach?"
+  - Refine affected architecture sections
+  - Preserve unchanged design decisions
+
+- **User chooses [2] Regenerate:**
+  - Inform: "Starting fresh architecture design."
+  - Proceed with full design process
+  - Overwrite all architecture files
+
+**If files don't exist:**
+
+- Inform: "Creating new architecture documents (AI agent, application, integration)."
+- Proceed with full design process
 
 ### Step 5: Analyze Requirements for Patterns
 

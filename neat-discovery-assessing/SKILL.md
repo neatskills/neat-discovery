@@ -27,31 +27,14 @@ Start of AI discovery. Use this skill to create a comprehensive project assessme
 
 None - this is Phase 1 of the discovery process.
 
-## Update Mode
+## Smart Mode Detection
 
-This skill supports **delta updates** to avoid full regeneration when new information is discovered.
+This skill **automatically detects** whether you're starting fresh or updating existing work:
 
-**Invoke with `--update` flag:** `/neat-discovery-assessing --update`
+- **No existing files** → Creates new assessment
+- **Files exist** → Asks user to choose update or regenerate
 
-**Update mode behavior:**
-
-- Loads existing files (project-context.md, current-state.md, assessment.md)
-- Asks: "What new information do you want to add?" (knowledge sources, constraints, context)
-- **Appends** new information to appropriate sections
-- **Does not regenerate** entire document
-- Flags contradictions if detected (doesn't auto-resolve)
-
-**When to use update mode:**
-
-- Phase 3 or 4 reveals new knowledge sources
-- Access constraints change during project
-- New stakeholder information discovered
-- Gaps filled through investigation
-
-**When NOT to use update mode:**
-
-- Starting a new project (use normal mode)
-- Major project pivot (regenerate from scratch)
+**No flags needed** - the skill is conversational and guides you through the right choice.
 
 ## Process
 
@@ -75,29 +58,43 @@ ls -d docs/*/ 2>/dev/null
 - Ask user to choose
 - If new: Ask for project name and create `docs/{project-name}/01-assessing/` directory
 
-### Step 2: Check Existing Files
+### Step 2: Detect Mode (Update or New)
 
 Check if output files exist:
 
 ```bash
-ls docs/{project-name}/01-assessing/project-context.md 2>/dev/null
-ls docs/{project-name}/01-assessing/knowledge-landscape.md 2>/dev/null
-ls docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
+ls docs/{project-name}/01-assessing/*.md 2>/dev/null
 ```
 
 **If files exist:**
 
-- Load all three files
-- Inform user: "Found existing project assessment from [date]. I'll merge new information."
-- **Check project-context.md Strategic Context section:**
-  - If contains real data from Phase 2 (timeline, budget, compliance), preserve it - this section is Phase 2 owned
-  - If still placeholder ("Will be updated in Phase 2"), it will be overwritten by Phase 2 when run
-- Continue with discovery, merging new insights into existing structure
+Ask user to choose approach:
+
+```
+Found existing assessment from [date].
+
+[1] Update it (append new information)
+[2] Regenerate (start fresh)
+
+Choose [1]:
+```
+
+- **User chooses [1] Update:**
+  - Load all existing files (project-context.md, current-state.md, assessment.md)
+  - Ask: "What new information do you want to add?"
+  - **Append** new information to appropriate sections
+  - **Preserve** existing content (especially Phase 2-owned Strategic Context in project-context.md)
+  - Flag contradictions if detected (don't auto-resolve)
+
+- **User chooses [2] Regenerate:**
+  - Inform: "Starting fresh assessment."
+  - Proceed with full discovery conversation
+  - Overwrite all files with new assessment
 
 **If files don't exist:**
 
-- Inform user: "Creating fresh project assessment."
-- Continue with discovery
+- Inform: "Creating new project assessment."
+- Proceed with full discovery conversation
 
 ### Step 3: Project Context Assessment
 

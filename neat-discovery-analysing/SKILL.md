@@ -21,20 +21,14 @@ Use after Phase 1 to:
 - Assess AI solution feasibility
 - Build business case and prioritize opportunities
 
-## Update Mode
+## Smart Mode Detection
 
-**Invoke:** `/neat-discovery-analysing --update`
+This skill **automatically detects** whether you're starting fresh or updating existing work:
 
-**Behavior:**
+- **No existing files** → Creates new analysis
+- **Files exist** → Asks user to choose update or regenerate
 
-- Loads existing classification + executive report
-- Asks for new requirements
-- Appends with sequential IDs (no re-classification)
-- Updates affected report sections
-- Flags contradictions
-
-**Use when:** Phase 3/4 reveals missing requirements, stakeholder adds scope  
-**Don't use when:** Major scope pivot, complete priority change
+**No flags needed** - the skill is conversational and guides you through the right choice.
 
 ## Prerequisites
 
@@ -75,23 +69,43 @@ cat docs/{project-name}/01-assessing/knowledge-assessment.md
 - Use project-context.md to understand project goals, stakeholders, constraints
 - Summarize key points for internal context
 
-### Step 3: Check Existing Files
+### Step 3: Detect Mode (Update or New)
 
 Check if Phase 2 output files exist:
 
 ```bash
-ls docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
-ls docs/{project-name}/02-analysing/executive-report.md 2>/dev/null
+ls docs/{project-name}/02-analysing/*.md 2>/dev/null
 ```
 
 **If files exist:**
 
-- Load both files
-- Inform: "Found existing analysis. I'll merge new requirements."
+Ask user to choose approach:
+
+```
+Found existing analysis from [date].
+
+[1] Update it (add new requirements)
+[2] Regenerate (start fresh)
+
+Choose [1]:
+```
+
+- **User chooses [1] Update:**
+  - Load existing files (requirement-classification.md, executive-report.md)
+  - Ask: "What new requirements do you want to add?"
+  - **Append** new requirements with sequential IDs (no re-classification)
+  - Update affected report sections
+  - Flag contradictions if detected
+
+- **User chooses [2] Regenerate:**
+  - Inform: "Starting fresh analysis."
+  - Proceed with full classification and reporting
+  - Overwrite all files
 
 **If files don't exist:**
 
-- Inform: "Creating fresh requirement analysis."
+- Inform: "Creating new requirement analysis."
+- Proceed with full classification
 
 ### Step 4: Gather Requirements (moved after audience identification)
 

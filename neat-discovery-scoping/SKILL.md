@@ -95,22 +95,42 @@ cat docs/{project-name}/02-analysing/requirement-classification.md
 - **Knowledge gaps:** Missing data sources → increases uncertainty and risk
 - **Data quality issues:** Poor quality → AI stories become more complex
 
-### Step 3: Check Existing Scope
+### Step 3: Detect Mode (Update or New)
 
 Check if scoping file exists:
 
 ```bash
-ls docs/{project-name}/03-scoping/mvp-scope.md 2>/dev/null
+ls docs/{project-name}/03-scoping/*.md 2>/dev/null
 ```
 
 **If file exists:**
 
-- Load existing scope document
-- Inform: "Found existing MVP scope. I'll update based on refined requirements."
+Ask user to choose approach:
+
+```
+Found existing MVP scope from [date].
+
+[1] Update it (re-estimate based on refined requirements)
+[2] Regenerate (start fresh)
+
+Choose [1]:
+```
+
+- **User chooses [1] Update:**
+  - Load existing mvp-scope.md
+  - Ask: "What changed in requirements or constraints?"
+  - Re-estimate affected requirements
+  - Update scope document preserving unchanged estimates
+
+- **User chooses [2] Regenerate:**
+  - Inform: "Starting fresh MVP scoping."
+  - Proceed with full estimation
+  - Overwrite scope document
 
 **If file doesn't exist:**
 
-- Inform: "Creating fresh MVP scope document."
+- Inform: "Creating new MVP scope document."
+- Proceed with full estimation
 
 ### Step 4: Estimate MVP Core Requirements
 
