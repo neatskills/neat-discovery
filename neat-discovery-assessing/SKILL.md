@@ -60,41 +60,21 @@ ls -d docs/*/ 2>/dev/null
 
 ### Step 2: Detect Mode (Update or New)
 
-Check if output files exist:
+**See:** [Mode Detection Pattern](../references/mode-detection.md)
 
-```bash
-ls docs/{project-name}/01-assessing/*.md 2>/dev/null
-```
+Apply the pattern with these values:
 
-**If files exist:**
+| Parameter | Value |
+|-----------|-------|
+| Phase folder | `01-assessing/` |
+| Artifact type | `assessment` |
+| Update action | `append new information` |
+| Files to load | `project-context.md, current-state.md, assessment.md` |
+| Update question | "What new information do you want to add?" |
 
-Ask user to choose approach:
+**Special consideration for Update mode:**
 
-```
-Found existing assessment from [date].
-
-[1] Update it (append new information)
-[2] Regenerate (start fresh)
-
-Choose [1]:
-```
-
-- **User chooses [1] Update:**
-  - Load all existing files (project-context.md, current-state.md, assessment.md)
-  - Ask: "What new information do you want to add?"
-  - **Append** new information to appropriate sections
-  - **Preserve** existing content (especially Phase 2-owned Strategic Context in project-context.md)
-  - Flag contradictions if detected (don't auto-resolve)
-
-- **User chooses [2] Regenerate:**
-  - Inform: "Starting fresh assessment."
-  - Proceed with full discovery conversation
-  - Overwrite all files with new assessment
-
-**If files don't exist:**
-
-- Inform: "Creating new project assessment."
-- Proceed with full discovery conversation
+When loading `project-context.md`, preserve Phase 2-owned Strategic Context section if it contains real data (timeline, budget, compliance). If still placeholder ("Will be updated in Phase 2"), it will be overwritten when Phase 2 runs.
 
 ### Step 3: Project Context Assessment
 

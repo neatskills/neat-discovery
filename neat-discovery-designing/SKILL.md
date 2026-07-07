@@ -131,40 +131,21 @@ Summarize findings internally for use in architecture decisions.
 
 ### Step 4: Detect Mode (Update or New)
 
-Check if architecture blueprints exist:
+**See:** [Mode Detection Pattern](../references/mode-detection.md)
 
-```bash
-ls docs/{project-name}/04-designing/*.md 2>/dev/null
-```
+Apply the pattern with these values:
 
-**If files exist:**
+| Parameter | Value |
+|-----------|-------|
+| Phase folder | `04-designing/` |
+| Artifact type | `architecture` |
+| Update action | `refine based on new insights` |
+| Files to load | `agent-architecture.md, app-architecture.md, integration-architecture.md, value-optimization.md` |
+| Update question | "What changed in requirements, constraints, or approach?" |
 
-Ask user to choose approach:
+**Special consideration for Update mode:**
 
-```
-Found existing architecture from [date].
-
-[1] Update it (refine based on new insights)
-[2] Regenerate (start fresh)
-
-Choose [1]:
-```
-
-- **User chooses [1] Update:**
-  - Load existing files (agent-architecture.md, app-architecture.md, integration-architecture.md)
-  - Ask: "What changed in requirements, constraints, or approach?"
-  - Refine affected architecture sections
-  - Preserve unchanged design decisions
-
-- **User chooses [2] Regenerate:**
-  - Inform: "Starting fresh architecture design."
-  - Proceed with full design process
-  - Overwrite all architecture files
-
-**If files don't exist:**
-
-- Inform: "Creating new architecture documents (AI agent, application, integration)."
-- Proceed with full design process
+Refine only affected architecture sections. Preserve unchanged design decisions to maintain architectural consistency.
 
 ### Step 5: Analyze Requirements for Patterns
 

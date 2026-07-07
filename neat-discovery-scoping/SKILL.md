@@ -97,40 +97,21 @@ cat docs/{project-name}/02-analysing/requirement-classification.md
 
 ### Step 3: Detect Mode (Update or New)
 
-Check if scoping file exists:
+**See:** [Mode Detection Pattern](../references/mode-detection.md)
 
-```bash
-ls docs/{project-name}/03-scoping/*.md 2>/dev/null
-```
+Apply the pattern with these values:
 
-**If file exists:**
+| Parameter | Value |
+|-----------|-------|
+| Phase folder | `03-scoping/` |
+| Artifact type | `MVP scope` |
+| Update action | `re-estimate based on refined requirements` |
+| Files to load | `mvp-scope.md` |
+| Update question | "What changed in requirements or constraints?" |
 
-Ask user to choose approach:
+**Special consideration for Update mode:**
 
-```
-Found existing MVP scope from [date].
-
-[1] Update it (re-estimate based on refined requirements)
-[2] Regenerate (start fresh)
-
-Choose [1]:
-```
-
-- **User chooses [1] Update:**
-  - Load existing mvp-scope.md
-  - Ask: "What changed in requirements or constraints?"
-  - Re-estimate affected requirements
-  - Update scope document preserving unchanged estimates
-
-- **User chooses [2] Regenerate:**
-  - Inform: "Starting fresh MVP scoping."
-  - Proceed with full estimation
-  - Overwrite scope document
-
-**If file doesn't exist:**
-
-- Inform: "Creating new MVP scope document."
-- Proceed with full estimation
+Re-estimate only affected requirements. Preserve unchanged estimates to maintain consistency.
 
 ### Step 4: Estimate MVP Core Requirements
 

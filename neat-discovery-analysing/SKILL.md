@@ -71,41 +71,21 @@ cat docs/{project-name}/01-assessing/knowledge-assessment.md
 
 ### Step 3: Detect Mode (Update or New)
 
-Check if Phase 2 output files exist:
+**See:** [Mode Detection Pattern](../references/mode-detection.md)
 
-```bash
-ls docs/{project-name}/02-analysing/*.md 2>/dev/null
-```
+Apply the pattern with these values:
 
-**If files exist:**
+| Parameter | Value |
+|-----------|-------|
+| Phase folder | `02-analysing/` |
+| Artifact type | `analysis` |
+| Update action | `add new requirements` |
+| Files to load | `requirement-classification.md, executive-report.md` |
+| Update question | "What new requirements do you want to add?" |
 
-Ask user to choose approach:
+**Special consideration for Update mode:**
 
-```
-Found existing analysis from [date].
-
-[1] Update it (add new requirements)
-[2] Regenerate (start fresh)
-
-Choose [1]:
-```
-
-- **User chooses [1] Update:**
-  - Load existing files (requirement-classification.md, executive-report.md)
-  - Ask: "What new requirements do you want to add?"
-  - **Append** new requirements with sequential IDs (no re-classification)
-  - Update affected report sections
-  - Flag contradictions if detected
-
-- **User chooses [2] Regenerate:**
-  - Inform: "Starting fresh analysis."
-  - Proceed with full classification and reporting
-  - Overwrite all files
-
-**If files don't exist:**
-
-- Inform: "Creating new requirement analysis."
-- Proceed with full classification
+Append new requirements with sequential IDs (no re-classification of existing requirements). Update affected executive report sections.
 
 ### Step 4: Gather Requirements (moved after audience identification)
 
