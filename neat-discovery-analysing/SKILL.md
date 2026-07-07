@@ -104,29 +104,29 @@ Ask one at a time:
 
 Recommend structure, wait for approval.
 
-### Step 6: Identify Need for Stakeholder Alignment Brief (Optional)
+### Step 6: Identify Need for Operational Report (Optional)
 
-**Ask:** "Do you need to get buy-in from department heads or team leads (not just executive approval)?"
+**Ask:** "Do you need to get buy-in from department heads, operations managers, or team leads (not just executive approval)?"
 
 **If yes, ask:**
 
-- Which departments/teams need to support this? (e.g., Facilities, IT, Procurement, Sustainability team)
+- Which departments/teams need to support this? (e.g., Facilities, IT, Procurement, Sustainability team, Operations)
 - What's their current relationship to this initiative? (blockers, neutral, mildly supportive)
-- What do you need from them? (budget, resources, data access, pilot participation)
+- What do you need from them? (budget, resources, data access, pilot participation, operational support)
 
-**If stakeholder alignment needed:**
+**If operational stakeholder alignment needed:**
 
-- Recommend adding `stakeholder-brief.md` (3-5 pages)
-- Focus: Department-specific benefits, clear asks, partnership model, social proof
-- Strategy: References executive report for full context, stays focused on "what's in it for them"
+- Recommend adding `operational-report.md` (8-10 pages)
+- Focus: Operational impact, departmental benefits, detailed use cases, change management, implementation detail
+- Strategy: References executive report for strategic context, provides operational depth exec report doesn't cover
 
-**Stakeholder brief characteristics:**
+**Operational report characteristics:**
 
-- **Not a full business case** - assumes they'll read exec report if interested
-- **Benefit-forward** - leads with what they gain, not what you need
-- **Specific asks** - time-bounded, clear commitments (not open-ended)
-- **Social proof** - who else already supports this
-- **Generic template** - one brief works for multiple departments (customize benefits section)
+- **Operational depth** - How this works in practice, impact on day-to-day operations, detailed use case examples
+- **Departmental benefits** - What's in it for facilities teams, sustainability coordinators, IT support, operations managers
+- **Change management** - Training needs, workflow changes, adoption support
+- **Implementation detail** - Moved from executive report appendix (exec report stays 2 pages, detail goes here)
+- **Coalition building** - Social proof, partnership model, how departments get credit for supporting this
 
 ### Step 7: Gather Business Context
 
@@ -310,6 +310,18 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 - Minimize: Technical details, implementation specifics
 - Length: 10-15 pages max (executives won't read 30-page reports)
 
+**For enterprise executive audiences (C-suite, VPs, Global leadership):**
+
+- **Strategic framing:** Enterprise-wide capability gaps, organizational scaling bottlenecks, ESG/compliance mandates
+- **Value language:** Global knowledge sharing, capital efficiency, OpEx avoidance, asset utilization
+- **Problem framing:** "Strategic disconnect" / "Enterprise blind to wins" / "Systemic bottleneck" (NOT "users resist forms")
+- **Solution framing:** "Intelligence layer" / "Knowledge synthesis platform" / "Institutional memory" (NOT "tracking tool")
+- **Scope framing:** "Lean execution avoiding IT bloat" (emphasize speed to value, not feature richness)
+- **Business case structure:** Enterprise metric tables (Old Way vs AI Way → Strategic Benefit)
+- **Tone:** Organizational transformation, competitive positioning, governance, capital allocation
+- **Length:** 10-12 pages (enterprise executives have less time than PMs)
+- **Recommendation:** Low-risk pilot with specific scope, metrics, duration, decision gate
+
 **For product/project managers:**
 
 - Focus on scope clarity, feature prioritization, delivery timeline
@@ -488,10 +500,223 @@ This report focuses on [business case / stakeholder benefits / implementation pl
 
 **Executive Report Principles:**
 
-- **Target 10-15 pages** when converted to PDF (for executive audience)
+- **Target length based on audience:**
+  - **Enterprise C-suite/VP:** 2-page Executive Summary + Appendix (research shows executives judge by visual density—if it looks exhausting, it won't get read)
+  - **Product/Project managers:** 6-8 pages (more execution detail)
+  - **Technical leadership:** 8-12 pages (deep technical justification)
 - **One core message per section** - make it instantly clear what the section proves
 - **Decisive, not exhaustive** - emphasize clarity over comprehensiveness
 - **Logical flow:** Context → Opportunity → Approach → Risks → Recommendation → Bottom Line
+- **Executive Summary best practices (based on 2026 industry research):**
+  - Lead with recommendation in first sentence
+  - Three supporting points maximum
+  - One visual (table/diagram) if it adds clarity
+  - Clear ask and next step
+  - Under 500 words with significant white space
+
+**Enterprise Executive Report Patterns:**
+
+When writing for C-suite/VPs/Global leadership, use these framing patterns:
+
+**1. Two-Page Executive Summary Structure (REQUIRED for Enterprise Audiences):**
+
+Based on 2026 best practices: executives judge documents by visual density before reading a word. Keep to 2 pages maximum.
+
+```markdown
+# [Project] Executive Report: [Title]
+
+**Date:** [Date]  
+**Organization:** [Org]  
+**Strategic Goal:** [One-line org mandate]  
+**Prepared For:** [C-suite titles]  
+**Decision Requested:** [Investment approval / Pilot authorization / Budget allocation]
+
+---
+
+## Executive Summary
+
+**Recommendation:** Invest in [Platform] [MVP/pilot]. [One sentence: why this addresses strategic goal]
+
+**Strategic Problem:** [2-3 sentences: Enterprise-level failure mode—what's broken at organizational scale]
+
+**Solution:** [Platform] is an AI-powered [intelligence layer/knowledge synthesis platform] that [how it removes organizational friction in 2-3 sentences].
+
+**Business Case:**
+
+| Enterprise Metric | Old Way | AI-First Way | Strategic Benefit |
+|-------------------|---------|--------------|-------------------|
+| **Speed to Value** | [Blocked/slow] | [Enabled/fast] | [Capability unlock] |
+| **OpEx Avoidance** | [Hire specialists] | [AI scales without headcount] | Capital Efficiency |
+| **Asset Utilization** | [Duplicate spending] | [Discover & reuse] | Accelerated Execution |
+
+**Scope (Lean Execution):**
+
+We are avoiding bloated IT programs. [Platform] is a lean, high-impact intelligence layer.
+
+**Building (MVP):**
+- ✅ [AI capability 1] (CRITICAL - [value])
+- ✅ [AI capability 2] (CRITICAL - [value])
+- ✅ [Minimal infrastructure] (ESSENTIAL)
+
+**Deferring (Rapid deployment):**
+- ⏸️ [Complex feature type] (contradicts lean approach)
+
+**Pilot Proposal:**
+
+- **Duration:** [90 days typical]
+- **Scope:** [Deploy to N sites/teams]
+- **Prove:** [AI quality metric - e.g., >85% extraction accuracy]
+- **Measure:** [Adoption metric, reuse instances]
+- **Decision Gate:** Validate quality + adoption → Scale / iterate / cancel
+
+**Risk Mitigation:**
+
+- **If pilot fails:** [Minimal sunk cost, decision gate limits exposure]
+- **Data quality dependency:** [Seed with curated examples, user validation workflow]
+- **Technical delivery:** [Use managed services, proven patterns]
+
+**Next Step:** Approve seed funding for 90-day pilot. [Specific $ if known, or "budget TBD pending Phase 3 estimation"]
+
+---
+
+**For full analysis:** See Appendix (supporting detail for stakeholders who need depth)
+
+---
+
+## Appendix
+
+[Full sections for those who need detail - this is where 8-10 pages of supporting content goes]
+
+### A. The Enterprise Bottleneck (Detail)
+[Full problem analysis]
+
+### B. The [Solution] Approach (Detail)
+[Technical approach, how it works]
+
+### C. Enterprise Use Case Examples
+[Concrete examples with before/after]
+
+### D. Risk Assessment (Scenarios)
+[Full scenario analysis]
+
+### E. Alternatives Considered
+[Why other approaches won't work]
+
+### F. Technical Feasibility
+[Architecture considerations, if needed for technical stakeholders]
+```
+
+**Key Pattern Changes from Research:**
+
+- **Lead with recommendation** (first sentence of Executive Summary)
+- **Visual density matters** (use tables, bullets, white space)
+- **2 pages for decision** (executives won't read 10+ pages)
+- **Appendix for depth** (those who need detail can dive in)
+- **Clear ask** (specific pilot scope, metrics, budget)
+
+**2. Problem Statement Pattern (Enterprise Framing):**
+
+Use this for "Why This Matters" / "The Strategic Disconnect" sections:
+
+```markdown
+## [Number]. The [Strategic Disconnect / Enterprise Bottleneck]
+
+[Organization-level description - what's broken at scale]
+
+**The Core Problem:** [Enterprise is blind to X / Cannot scale Y without Z / Knowledge trapped and lost]
+
+**This is not** a technology problem, budget constraint, or individual pain point.
+**This is** an organizational capability gap / systemic scaling bottleneck.
+
+**Without AI (Enterprise-Level Consequences):**
+- [Global blindness - enterprise can't see local wins]
+- [Reinventing the wheel - sites solve same problem independently]
+- [SME bottleneck - can't validate/scale without hiring expensive specialists]
+- [Capital waste - paying twice for same solution]
+
+**With AI (Enterprise Capability Unlock):**
+- [Global knowledge sharing - local wins become enterprise intelligence]
+- [Scales without headcount - AI validates, no SME army needed]
+- [Transforms isolated work → enterprise standards]
+
+### Enterprise Use Case: [Concrete Domain Example]
+
+[Show GLOBAL impact across sites/regions, NOT individual efficiency]
+
+**Before (Old Way):**
+- [Site A achieves optimization win]
+- [Knowledge stays in local documents]
+- [Site B tackles same problem 6 months later, starts from scratch]
+- [Enterprise pays twice - duplicate vendor research, duplicate implementation]
+
+**After ([Platform] Way):**
+- [Site A uploads project documents]
+- [AI extracts methodology, validates approach]
+- [Globally searchable - any site queries platform]
+- [Site B discovers proven solution, replicates with exact blueprint]
+```
+
+**3. Business Case Structure (Enterprise Metrics):**
+
+```markdown
+## [Number]. The Business Case & Strategic ROI
+
+| Enterprise Metric | The "Old Way" (Form-Based/Manual) | The [Platform] Way (AI-First) | Strategic Benefit |
+|-------------------|-----------------------------------|-------------------------------|-------------------|
+| **Speed to Value** | [Manual entry → low adoption → incomplete data] | [Document upload → AI validation → integrates with workflow] | **High Compliance**: Captures real-time data with zero pushback |
+| **OpEx Avoidance** | [Hire ESG analysts/SMEs per site] | [AI infers calculations; validated projects become templates] | **Capital Efficiency**: Scales global ESG intelligence without expanding specialized payroll |
+| **Asset Utilization** | [Knowledge localized; wasted capital on duplicate research] | [AI-powered semantic search connects users to proven solutions] | **Accelerated Execution**: Stop paying to solve same problem twice |
+```
+
+**4. Scope Framing (Lean Execution Pattern):**
+
+```markdown
+## [Number]. Scope & Lean Execution Plan
+
+We are avoiding the trap of building a bloated, multi-year IT implementation.
+
+**[Platform] is designed as:** A lean, high-impact [intelligence layer / knowledge synthesis platform / institutional memory system].
+
+### What We Are Building (MVP Focus)
+
+**[AI Core / Intelligence Engine / Synthesis Capability]:**
+1. ✅ **[Capability 1]:** [Description] (CRITICAL - [strategic value])
+2. ✅ **[Capability 2]:** [Description] (HIGH - [strategic value])
+
+**[Thin Supporting Layer / Minimal Infrastructure]:**
+1. ✅ **[Infrastructure 1]:** [What's needed] (ESSENTIAL - [why])
+
+### What We Are Deliberately Deferring (To Ensure Rapid Deployment)
+
+- ⏸️ **Complex [feature type]:** [Why this contradicts lean approach / bloats timeline]
+- ⏸️ **[Another feature]:** [Why defer to post-pilot]
+
+**Why defer:** Contradicts AI-first lean approach. Can be captured in [flexible format] initially. Add iteratively based on pilot feedback—don't build until users ask.
+```
+
+**5. Recommendation Structure (Enterprise Action Pattern):**
+
+```markdown
+## [Number]. Executive Recommendation
+
+[One-sentence investment ask - be direct]
+
+**Why This Matters:**
+
+[Connect to strategic org goal - ESG targets, competitive position, governance. 2-3 sentences.]
+
+**Proposed Next Step:**
+
+Greenlight [seed funding / pilot program / MVP development] for [duration - typically 90 days].
+
+**Pilot Scope:**
+- **Deploy to:** [Cross-functional group of N sites / specific business unit / targeted use case]
+- **Prove:** [Data extraction accuracy / AI quality metric / methodology inference capability]
+- **Measure:** [User adoption rate / knowledge reuse instances / efficiency gain]
+- **Demonstrate:** [Immediate ROI metric / strategic unlock / capability proof to Executive Committee]
+
+**Decision Gate:** [When complete, what gets decided - scale globally / iterate scope / cancel if pilot fails]
+```
 
 **For simple projects (< 10 requirements):**
 
@@ -664,83 +889,197 @@ executive-report.md:
 
 ---
 
-**For stakeholder alignment brief (if identified in Step 5A):**
+**For operational stakeholder report (if identified in Step 6):**
 
 ```markdown
-stakeholder-brief.md:
-# [Initiative]: Partnership with [Primary Stakeholder Type] Teams
+operational-report.md:
+# [Project] Operational Report: [Title]
 
-**Audience:** [Department heads / team leads who need to support this]  
-**Your time investment:** [Specific, time-bounded commitment needed]  
-**Full business case:** See executive-report.md
+**Date:** [Date]  
+**Audience:** Department Heads, Operations Managers, Team Leads  
+**Purpose:** Operational impact, departmental benefits, implementation guidance  
+**Strategic Context:** See executive-report.md for business case and investment decision
 
-## What's In It For Your Team
+---
 
-[3-5 specific benefits for THEIR department - not generic org benefits]
-[Focus on: time savings, pain points solved, strategic advantages for their domain]
+## Overview
 
-### Benefit 1: [Tangible improvement to their work]
-[Concrete example of how this helps them specifically]
+[2-3 paragraphs: What this platform does, why it matters operationally, who it affects]
 
-### Benefit 2: [Problem they currently have that this solves]
-[Show you understand their challenges]
+**For strategic business case and investment decision:** See executive-report.md
 
-### Benefit 3: [Strategic advantage for their domain]
-[How this strengthens their position/capabilities]
+This report focuses on operational impact: how [Platform] works in practice, what changes for your teams, benefits by department, and implementation support.
 
-## What We're Asking From You
+---
 
-[Be specific and time-bounded - not open-ended commitments]
+## How It Works (Operational Detail)
 
-**Phase 1 (Pilot - 4 weeks):**
+[Moved from executive report appendix - detailed operational flow]
+
+### Step 1: [Process step]
+[What users do, what happens, screenshots/examples if helpful]
+
+### Step 2: [Process step]
+[Detailed workflow, edge cases, what to expect]
+
+### Step 3: [Process step]
+[Validation, approval, how knowledge becomes discoverable]
+
+---
+
+## Operational Use Cases
+
+### Use Case 1: [Concrete example - specific department/workflow]
+
+**Current state (before [Platform]):**
+- [Pain point 1 - operational friction]
+- [Pain point 2 - duplicate work, knowledge loss]
+- [Impact on department]
+
+**Future state (with [Platform]):**
+- [How workflow changes]
+- [Operational improvement]
+- [Time/effort saved, quality improvement]
+
+### Use Case 2: [Another department/workflow]
+[Same structure]
+
+---
+
+## Departmental Benefits
+
+### For [Department 1 - e.g., Facilities Operations]
+
+**Benefits:**
+1. [Specific operational improvement for facilities teams]
+2. [Pain point solved - e.g., reduce duplicate vendor research]
+3. [Strategic advantage - e.g., share best practices globally]
+
+**What changes for your team:**
+- [Workflow change 1]
+- [New responsibility/capability]
+
+**Support provided:**
+- [Training, tools, help we'll provide]
+
+### For [Department 2 - e.g., Sustainability Coordinators]
+
+[Same structure - 3-5 benefits, what changes, support]
+
+### For [Department 3 - e.g., IT/Digital]
+
+[Same structure]
+
+---
+
+## Change Management & Adoption
+
+### Training & Onboarding
+
+**For pilot participants:**
+- [Training timeline, duration, format]
+- [What they'll learn]
+- [Ongoing support available]
+
+**For broader rollout (post-pilot):**
+- [Scaled training approach]
+- [Self-service resources]
+
+### Workflow Changes
+
+**What stays the same:**
+- [Reassure - document creation process unchanged]
+- [No disruption to existing tools]
+
+**What's new:**
+- [Upload step - how long it takes]
+- [Validation step - what users review]
+- [Discovery capability - how teams search]
+
+**Time investment:**
+- **Pilot phase:** [X hours for initial training, Y hours ongoing per month]
+- **Steady state:** [Z minutes per project submission]
+
+---
+
+## Implementation Support
+
+### What We'll Handle (So Departments Don't Have To)
+
+- [Infrastructure setup, integration work]
+- [SSO configuration, RBAC setup]
+- [Training material creation]
+- [Help desk support during pilot]
+
+### What We Need From Departments
+
+**Phase 1 (Pilot - 90 days):**
+
+**[Department 1]:**
 - [Specific ask 1]: ~[X hours] - [When needed]
 - [Specific ask 2]: ~[Y hours] - [When needed]
-- **Total time:** ~[Z hours over 4 weeks]
 
-**If pilot succeeds:**
+**[Department 2]:**
+- [Specific asks with time bounds]
+
+**If pilot succeeds → Phase 2:**
 - [What ongoing involvement looks like]
-- [Exit option if doesn't work for your team]
+- [Exit option if doesn't work for a department]
 
-## What We'll Handle (So You Don't Have To)
+---
 
-[Show you're not dumping work on them]
-- [Infrastructure/setup they might expect to do, that you'll own]
-- [Training/support you're providing]
-- [Integration work you'll handle]
+## Coalition Building
 
-## Early Support
+### Early Support
 
-**CRITICAL:** Only include this section if you have REAL stakeholder quotes from actual conversations. Otherwise, use placeholder text.
+**CRITICAL:** Only include if you have REAL stakeholder quotes from actual conversations. Otherwise, use placeholder.
 
 **If you have real endorsements:**
 - **[Department/Name]:** "[Actual quote from stakeholder conversation]"
-- **[Department/Name]:** "[Actual quote from stakeholder conversation]"
 
-**If no endorsements yet (use this placeholder):**
-- **Stakeholder engagement pending:** Initial conversations scheduled with [list departments]. This section will be updated after stakeholder feedback is collected.
+**If no endorsements yet:**
+- **Stakeholder engagement pending:** Initial conversations scheduled with [list departments]. This section will be updated after feedback is collected.
 
-## How Your Team Gets Credit
+### How Departments Get Credit
 
-[Recognition matters to peer stakeholders]
-- [Visibility opportunity 1 - where their contribution will be recognized]
-- [Credit mechanism 2 - how success gets attributed]
-- [Impact on their team's reputation/standing]
+[Recognition matters to operational leaders]
+- [Where contributions will be visible - exec presentations, company-wide comms]
+- [How success gets attributed to participating teams]
+- [Impact on department reputation/standing]
 
-## Risks We've Mitigated For Your Team
+---
 
-[Address their concerns proactively]
-- **If this initiative fails:** [How we protect their goals/roadmap]
-- **If timelines slip:** [Fallback plan that doesn't impact them]
-- **If scope changes:** [How we'll communicate and adjust asks]
+## Risk Mitigation (For Operational Stakeholders)
+
+### If This Initiative Fails
+
+[How we protect department goals/roadmaps]
+- [Pilot bounded at 90 days - limited exposure]
+- [No disruption to existing workflows during pilot]
+- [Decision gate - departments can exit if not working]
+
+### If Timelines Slip
+
+[Fallback plan that doesn't impact departments]
+
+### If Scope Changes
+
+[How we'll communicate and adjust asks from departments]
+
+---
 
 ## Next Steps
 
-[Make it easy to say yes - lightweight first step]
-1. [Initial engagement - not full commitment] - [Date]
-2. [Decision point with clear exit option] - [Date]
-3. [If yes, what happens next] - [Date]
+1. **[Date]:** [Initial engagement - lightweight, not full commitment]
+2. **[Date]:** [Decision point with clear exit option]
+3. **[Date]:** [If yes, what happens next - pilot kickoff]
 
 **Questions or concerns?** [Contact person + method]
+
+---
+
+**For strategic business case:** See executive-report.md  
+**For technical architecture:** See technical-analysis.md (if applicable)
 ```
 
 ---
@@ -852,22 +1191,22 @@ Follow these content principles:
 
 **Based on primary audience (Step 5):**
 
-- Executive decision-makers → `executive-report.md` (or `business-case.md` for investment decisions)
+- Executive decision-makers → `executive-report.md` (2-page summary + appendix for investment decisions)
 - Product/project managers → `implementation-plan.md` (or `mvp-scope.md`)
 - Technical leadership → `technical-analysis.md` (or `architecture-justification.md`)
-- Mixed audiences → Multiple files: `executive-summary.md` + `technical-deep-dive.md`
+- Mixed audiences → Multiple files: `executive-report.md` + `technical-analysis.md`
 
-**If stakeholder alignment needed (Step 5A):**
+**If operational stakeholder alignment needed (Step 6):**
 
-- Add `stakeholder-brief.md` (references executive report for full context)
+- Add `operational-report.md` (8-10 pages: operational impact, departmental benefits, implementation detail)
 
 **Write order (to enable cross-references):**
 
 1. `requirement-classification.md` FIRST (foundation with requirement IDs)
 2. `traceability-matrix.md` (initial matrix with Req ID + Classification)
-3. Primary audience report (e.g., `executive-report.md`)
-4. `stakeholder-brief.md` LAST (can reference both above)
-5. Any additional reports (reference earlier ones)
+3. Primary audience report (e.g., `executive-report.md` - 2 pages + appendix)
+4. `operational-report.md` LAST if needed (can reference executive-report.md for strategic context, includes operational depth)
+5. Any additional reports (e.g., `technical-analysis.md` if technical stakeholders need architecture detail)
 
 ```bash
 # Create Phase 2 directory
@@ -959,18 +1298,19 @@ Next step (if approved): Run /neat-discovery-scoping to scope and size MVP requi
 - **Content:** Detailed technical approach, technology choices, scalability, effort breakdown by component
 - **Tone:** Technical depth, alternatives analysis, honest about complexity
 
-#### stakeholder-brief.md
+#### operational-report.md
 
-- **Audience:** Department heads, team leads who need to support the initiative (not decision authority)
-- **Purpose:** Get buy-in from peer stakeholders (coalition building)
-- **Length:** 3-5 pages
-- **Focus:** What's in it for their team, specific asks, partnership model
-- **Content:** Department-specific benefits, time-bounded asks, what you'll handle, credit/recognition, risk mitigation for them
-- **Tone:** Benefit-forward, collaborative, makes it easy to say yes
-- **References:** Points to executive-report.md for full business case (doesn't duplicate it)
+- **Audience:** Department heads, operations managers, team leads who need to support the initiative
+- **Purpose:** Operational alignment and coalition building (get buy-in from peer stakeholders)
+- **Length:** 8-10 pages
+- **Focus:** Operational impact, departmental benefits, implementation detail, change management
+- **Content:** How it works in practice, detailed use cases, workflow changes, training needs, what you'll handle vs what departments provide, credit/recognition, risk mitigation for operational teams
+- **Tone:** Operational depth, benefit-forward, collaborative, addresses "how this affects my day-to-day work"
+- **References:** Points to executive-report.md for strategic business case (doesn't duplicate it)
+- **Note:** Operational report contains detail moved from executive report appendix (keeps executive report at 2 pages)
 - **CRITICAL:** NEVER fabricate quotes, testimonials, or endorsements. If "Early Support" section is included,
   it must contain ONLY real quotes from actual stakeholder conversations, or be explicitly marked as placeholder:
-  "[To be added after initial stakeholder conversations]"
+  "Stakeholder engagement pending: [details]"
 
 **Multi-report scenarios:**
 
