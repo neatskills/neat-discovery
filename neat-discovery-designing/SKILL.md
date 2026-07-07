@@ -3,13 +3,15 @@ name: neat-discovery-designing
 description: Design complete system architecture - Agent infrastructure, application architecture, and integration patterns between them
 ---
 
-# Discovery Designing
+# neat-discovery-designing
 
-Design the complete system architecture for AI-enabled platforms.
+## Overview
+
+Design complete system architecture - Agent infrastructure, application architecture, and integration patterns between them.
 
 ## Role
 
-You are a solution architect who designs both Agent infrastructure and application architecture, along with their integration patterns.
+**Role:** You are a Solution Architect who designs both Agent infrastructure and application architecture, along with their integration patterns.
 
 ## When to Use
 
@@ -24,7 +26,7 @@ After Phase 3 (estimating) is complete. Use this skill to:
 
 **Required from Phase 3:**
 
-- `docs/{project-name}/03-estimating/mvp-estimates.md`
+- `docs/{project-name}/03-scoping/mvp-scope.md`
 
 **Required from Phase 2:**
 
@@ -32,8 +34,8 @@ After Phase 3 (estimating) is complete. Use this skill to:
 
 **Required from Phase 1:**
 
-- `docs/{project-name}/01-scoping/knowledge-landscape.md`
-- `docs/{project-name}/01-scoping/knowledge-assessment.md`
+- `docs/{project-name}/01-assessing/knowledge-landscape.md`
+- `docs/{project-name}/01-assessing/knowledge-assessment.md`
 
 **Assumed:** Executive approval to proceed with design
 
@@ -63,16 +65,16 @@ ls -d docs/*/ 2>/dev/null
 Load all required files:
 
 ```bash
-cat docs/{project-name}/01-scoping/project-context.md
-cat docs/{project-name}/01-scoping/knowledge-landscape.md
-cat docs/{project-name}/01-scoping/knowledge-assessment.md
+cat docs/{project-name}/01-assessing/project-context.md
+cat docs/{project-name}/01-assessing/knowledge-landscape.md
+cat docs/{project-name}/01-assessing/knowledge-assessment.md
 cat docs/{project-name}/02-analysing/requirement-classification.md
-cat docs/{project-name}/03-estimating/mvp-estimates.md
+cat docs/{project-name}/03-scoping/mvp-scope.md
 ```
 
-**If mvp-estimates.md missing:**
+**If mvp-scope.md missing:**
 
-- Error: "Phase 3 outputs not found. Run /neat-discovery-estimating first."
+- Error: "Phase 3 outputs not found. Run /neat-discovery-scoping first."
 - Exit skill
 
 **If requirement-classification.md missing:**
@@ -82,7 +84,7 @@ cat docs/{project-name}/03-estimating/mvp-estimates.md
 
 **If Phase 1 files missing:**
 
-- Error: "Phase 1 outputs not found. Run /neat-discovery-scoping first."
+- Error: "Phase 1 outputs not found. Run /neat-discovery-assessing first."
 - Exit skill
 
 **If all files exist:**
@@ -94,7 +96,7 @@ cat docs/{project-name}/03-estimating/mvp-estimates.md
 
 ### Step 3: Extract Estimation Insights
 
-From `mvp-estimates.md`, extract critical insights that inform architecture:
+From `mvp-scope.md`, extract critical insights that inform architecture:
 
 **High-Risk Stories (XL, XXL):**
 
@@ -487,7 +489,7 @@ Design how AI components and traditional components work together.
 
 ### Step 13: Technology Stack Selection
 
-**IMPORTANT:** Reference Pattern Analysis from mvp-estimates.md (Step 3) and adopt build/buy recommendations.
+**IMPORTANT:** Reference Pattern Analysis from mvp-scope.md (Step 3) and adopt build/buy recommendations.
 
 Based on requirements AND estimation insights, recommend specific technologies.
 
@@ -723,7 +725,7 @@ Show to user: "I'll generate three architecture documents: Agent infrastructure,
 
 Wait for approval.
 
-### Step 16: Propose Document Structure
+### Step 16: Generate Architecture Blueprints
 
 Generate **three separate markdown files** following approved structures.
 
@@ -758,7 +760,7 @@ Generate **three separate markdown files** following approved structures.
 - Flag changes: "Updated: [previous approach] → [new approach]. Reason: [rationale]"
 - Don't auto-resolve conflicts
 
-### Step 17: Generate Architecture Blueprints
+### Step 17: Write Files
 
 ```bash
 # Create Phase 4 directory
@@ -770,22 +772,10 @@ mkdir -p docs/{project-name}/04-designing
 # (Use Write tool for integration-architecture.md)
 ```
 
-### Step 18: Write Files
-
-```bash
-# Create Phase 4 directory
-mkdir -p docs/{project-name}/04-designing
-
-# Generate three blueprints
-# (Use Write tool for agent-architecture.md)
-# (Use Write tool for app-architecture.md)
-# (Use Write tool for integration-architecture.md)
-```
-
-### Step 19: Confirm Completion
+### Step 18: Confirm Completion
 
 ```text
-✓ Architecture design complete
+Architecture design complete
 
 Generated:
 - docs/{project-name}/04-designing/agent-architecture.md
@@ -799,7 +789,7 @@ All artifacts:
 - docs/{project-name}/01-scoping/knowledge-assessment.md
 - docs/{project-name}/02-analysing/requirement-classification.md
 - docs/{project-name}/02-analysing/executive-report.md
-- docs/{project-name}/03-estimating/mvp-estimates.md
+- docs/{project-name}/03-estimating/mvp-scope.md
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md

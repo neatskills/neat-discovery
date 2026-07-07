@@ -1,626 +1,781 @@
 ---
 name: neat-discovery-scoping
-description: Understand project context and scope knowledge sources - establishes project foundation, discovers visible sources, infers invisible knowledge, evaluates access barriers
+description: Scope MVP boundaries from Phase 2 requirements - produces T-shirt size estimates (XS-XXL) to determine MVP core vs deferred features, accounting for technical complexity and risk
 ---
 
-# Discovery Scoping
+# neat-discovery-scoping
 
-Understand project context and scope the knowledge landscape.
+**Role:** You are a Solutions Architect scoping MVP boundaries and sizing requirements for effort and feasibility.
 
-## Role
+## Overview
 
-You are a solution architect who establishes project context and scopes knowledge sources for AI discovery assessment.
+Scope MVP boundaries by sizing requirements (XS-XXL) from Phase 2 analysis, determining what fits in MVP core vs what gets deferred. Account for technical complexity and risk. Make assumptions explicit, express estimates as ranges.
+
+**This is solutioning, not implementation.** Assess feasibility, identify patterns, recommend build/buy, size effort, and draw MVP boundaries.
+
+**Core principle:** Express risk explicitly rather than hiding it.
 
 ## When to Use
 
-Start of AI discovery assessment. Use this skill to:
+After Phase 2 (analysing) is complete. Use this skill to:
 
-- Understand what knowledge exists in the organization
-- Identify access constraints and barriers
-- Assess knowledge quality and gaps
-- Reason about invisible/inaccessible knowledge
+- Scope MVP boundaries by sizing requirements
+- Determine MVP Core vs Deferred features based on effort
+- Provide total effort ranges for scoped buckets
+- Inform executive decision-making on MVP scope and phasing
 
 ## Prerequisites
 
-None - this is Phase 1 of the discovery process.
+**Required from Phase 1:**
 
-## Update Mode
+- `docs/{project-name}/01-assessing/project-context.md`
+- `docs/{project-name}/01-assessing/knowledge-landscape.md`
+- `docs/{project-name}/01-assessing/knowledge-assessment.md`
 
-This skill supports **delta updates** to avoid full regeneration when new information is discovered.
+**Required from Phase 2:**
 
-**Invoke with `--update` flag:** `/neat-discovery-scoping --update`
+- `docs/{project-name}/02-analysing/requirement-classification.md`
 
-**Update mode behavior:**
+**Don't use for:**
 
-- Loads existing files (project-context.md, knowledge-landscape.md, knowledge-assessment.md)
-- Asks: "What new information do you want to add?" (knowledge sources, constraints, context)
-- **Appends** new information to appropriate sections
-- **Does not regenerate** entire document
-- Flags contradictions if detected (doesn't auto-resolve)
-
-**When to use update mode:**
-
-- Phase 3 or 4 reveals new knowledge sources
-- Access constraints change during project
-- New stakeholder information discovered
-- Gaps filled through investigation
-
-**When NOT to use update mode:**
-
-- Starting a new project (use normal mode)
-- Major project pivot (regenerate from scratch)
+- Raw unfiltered requirements (run Phase 2 first)
+- Detailed spec estimation (use planning skills)
+- Time-based estimates (this is relative sizing)
+- Sprint planning with known velocity
 
 ## Process
 
 ### Step 1: Project Selection
 
-Check for existing projects in `docs/` directory:
+List existing projects in `docs/`:
 
 ```bash
 ls -d docs/*/ 2>/dev/null
 ```
 
-**If docs/ is empty or doesn't exist:**
+**If no projects exist:**
 
-- Ask: "What's the project name?"
-- Create `docs/{project-name}/01-scoping/` directory
+- Error: "No projects found. Run /neat-discovery-assessing first."
+- Exit skill
 
 **If projects exist:**
 
-- List projects with numbers
-- Show: `[1] project-a [2] project-b [n] New project`
+- List with numbers: `[1] project-a [2] project-b`
 - Ask user to choose
-- If new: Ask for project name and create `docs/{project-name}/01-scoping/` directory
+- Store selected project name
 
-### Step 2: Check Existing Files
+### Step 2: Load Phase 1 and Phase 2 Outputs
 
-Check if output files exist:
+Load required files:
 
 ```bash
-ls docs/{project-name}/01-scoping/project-context.md 2>/dev/null
-ls docs/{project-name}/01-scoping/knowledge-landscape.md 2>/dev/null
-ls docs/{project-name}/01-scoping/knowledge-assessment.md 2>/dev/null
+cat docs/{project-name}/01-assessing/project-context.md
+cat docs/{project-name}/01-assessing/knowledge-landscape.md
+cat docs/{project-name}/01-assessing/knowledge-assessment.md
+cat docs/{project-name}/02-analysing/requirement-classification.md
 ```
+
+**If files missing:**
+
+- Error: "Required outputs not found. Run /neat-discovery-assessing and /neat-discovery-analysing first."
+- Exit skill
 
 **If files exist:**
 
-- Load all three files
-- Inform user: "Found existing mapping from [date]. I'll merge new information."
-- **Check project-context.md Strategic Context section:**
-  - If contains real data (not placeholder), preserve it
-  - If still placeholder ("Will be updated in Phase 2"), can be overwritten
-- Continue with discovery, merging new insights into existing structure
+- Read and parse all files
+- **From project-context.md:** Scope, constraints, stakeholders, strategic context
+- **From knowledge-landscape.md:** Integration complexity (how many systems?), data availability, knowledge source ownership
+- **From knowledge-assessment.md:** Access constraints (affects risk), quality issues (affects AI complexity), knowledge gaps (increases uncertainty)
+- **From requirement-classification.md:** MVP Core requirements (AI + traditional), Deferred requirements (Phase 2+)
 
-**If files don't exist:**
+**Why knowledge files matter for estimation:**
 
-- Inform user: "Creating fresh knowledge mapping."
-- Continue with discovery
+- **Integration complexity:** More systems to integrate → increases effort
+- **Access constraints:** Permission barriers, technical barriers → adds risk
+- **Knowledge gaps:** Missing data sources → increases uncertainty and risk
+- **Data quality issues:** Poor quality → AI stories become more complex
 
-### Step 3: Project Context Discovery
+### Step 3: Check Existing Scope
 
-Before exploring knowledge sources, establish project understanding:
-
-**About the project:**
-
-- What is {project-name}? What does it do or aim to achieve?
-- What industry or domain does it operate in?
-- What problem is it trying to solve?
-- Who are the key stakeholders? (customers, users, internal teams)
-- **How will we measure success?** (What are the success criteria? Quantifiable metrics?)
-- What's the scope? (single product, platform, initiative, transformation, etc.)
-- Is this a new project or existing one?
-- What's the organizational context? (startup, enterprise division, cross-functional initiative)
-
-**Why this matters:**
-
-- Understanding the project context enables better reasoning about invisible knowledge
-- Industry patterns inform what knowledge sources likely exist
-- Stakeholder mapping guides authority and ownership questions
-- Scope determines complexity of knowledge landscape
-
-Document project context in project-context.md (separate file).
-
-### Step 3A: Identify User Research Artifacts (Optional)
-
-**Ask:** "Do you have any user research from this domain? (interviews, personas, journey maps, usability studies)"
-
-**If yes, ask:**
-
-- What format are they in? (docs, presentations, videos, notes)
-- Where are they stored?
-- Are there key insights we should reference?
-
-**Benefits of user research artifacts:**
-
-- Interview notes reveal pain points and knowledge gaps from user perspective
-- Personas help identify different knowledge needs by user type
-- Journey maps show where knowledge is needed in workflows
-- Usability studies highlight where current knowledge access fails
-
-**How to integrate:**
-
-- Reference in knowledge-landscape.md under "People & Authorities" section
-- Extract key insights for knowledge-assessment.md (user-reported gaps)
-- Link to artifacts: "User research repository: [location]"
-- Extract quotes if available (with permission): "Users reported: '[insight]'"
-
-**If no formal research:**
-
-- Note: "No formal user research conducted yet"
-- Recommend in Phase 2: "Consider lightweight user interviews to validate knowledge gaps"
-
-### Step 4: Knowledge Source Discovery
-
-Interview the user to map visible knowledge sources. Ask focused questions:
-
-**About documents:**
-
-- What documentation exists? (technical docs, policies, procedures, specifications)
-- Where is it stored? (Wiki, SharePoint, Google Drive, local files)
-- Who maintains it?
-
-**About systems:**
-
-- What systems are relevant? (CRM, ERP, databases, APIs)
-- What data do they contain?
-- Who owns each system?
-
-**About people:**
-
-- Who are the knowledge authorities?
-- Which teams own which domains?
-- Are there subject matter experts?
-
-**About flows:**
-
-- How does knowledge move between sources?
-- What triggers knowledge updates?
-- Are there integration points?
-
-### Step 5: Access Constraint Assessment
-
-For each knowledge source identified, assess constraints:
-
-**Permission barriers:**
-
-- Who can access this source?
-- Are there authentication/authorization requirements?
-- Any restricted data?
-
-**Governance constraints:**
-
-- Who is allowed to see this information?
-- Are there compliance requirements (GDPR, HIPAA, etc.)?
-- Data classification levels?
-
-**Technical barriers:**
-
-- Is there an API? How complex?
-- Legacy systems with integration challenges?
-- Data format issues?
-
-**Organizational barriers:**
-
-- Siloed teams controlling access?
-- Conflicting ownership?
-- Political resistance to sharing?
-
-### Step 6: Reason About Invisible Knowledge
-
-Based on what you've learned, infer knowledge that likely exists but isn't visible:
-
-**Apply organizational patterns:**
-
-- CRM system → customer support ticket data likely exists
-- E-commerce platform → order history, inventory data
-- HR system → employee records, performance reviews
-
-**Apply system architecture clues:**
-
-- Public API → backend database with more detailed data
-- Dashboard → underlying metrics/logs exist
-- Report → source data repository exists
-
-**Apply regulatory requirements:**
-
-- Financial services → audit trails must exist
-- Healthcare → patient records, compliance documentation
-- Manufacturing → safety records, quality control data
-
-**Apply organizational structure reasoning:**
-
-- Siloed teams → likely knowledge duplication
-- Multiple departments → fragmented knowledge sources
-- Mergers/acquisitions → legacy system complexity
-
-**Use project context from Step 3 to inform reasoning:**
-
-- Industry norms suggest what knowledge must exist
-- Stakeholder types indicate what data they generate/consume
-- Project scope reveals cross-functional knowledge needs
-
-**Mark all inferred knowledge as "unverified" in the assessment.**
-
-### Step 6A: Prioritize Knowledge Sources
-
-After mapping knowledge sources, prioritize them for AI implementation:
-
-**Priority levels:**
-
-- 🔴 **Critical:** Essential for MVP, blocks AI features if unavailable
-- 🟡 **Important:** Enhances AI quality, but MVP can launch without
-- 🟢 **Nice-to-have:** Improves coverage but not required for pilot
-
-**Prioritization criteria:**
-
-**Business impact:**
-
-- Does this source enable high-value AI capabilities?
-- How many requirements depend on this source?
-- What's the cost of NOT having this source?
-
-**Access feasibility:**
-
-- Can we access this source in MVP timeline?
-- Are access barriers manageable? (low/medium/high difficulty)
-- What's the effort to integrate?
-
-**Data quality:**
-
-- Is the data sufficient for AI reasoning?
-- How complete is the coverage?
-- Is it maintained/updated?
-
-**Prioritization output:**
-
-For each knowledge source in knowledge-landscape.md, add priority flag:
-
-```markdown
-## Knowledge Sources
-
-### Critical Sources 🔴
-- Policy document repository (SharePoint)
-  - Why critical: Enables REQ-003, REQ-007, REQ-012 (core AI features)
-  - Access: Medium difficulty (IT approval needed, 2-week timeline)
-  - Quality: High (maintained, comprehensive)
-
-### Important Sources 🟡
-- Historical case database
-  - Why important: Improves AI answer quality with examples
-  - Access: Low difficulty (read-only API exists)
-  - Quality: Medium (some gaps in older cases)
-
-### Nice-to-Have Sources 🟢
-- Internal wiki
-  - Why nice-to-have: Adds context but often duplicates policy docs
-  - Access: Easy (public within org)
-  - Quality: Low (outdated, inconsistent)
-```
-
-**Use in Phase 2:**
-
-- Critical sources inform feasibility assessment
-- Important sources affect MVP vs deferred decisions
-- Nice-to-have sources are candidates for Phase 2+ enhancement
-
-### Step 7: Quality Assessment
-
-Assess knowledge quality issues:
-
-**Gaps:**
-
-- What knowledge is missing entirely?
-- What questions can't be answered with available sources?
-
-**Contradictions:**
-
-- Do sources conflict with each other?
-- Inconsistent definitions or data?
-
-**Staleness:**
-
-- Is information outdated?
-- How often is it updated?
-- Any maintenance issues?
-
-**IT constraints:**
-
-- System performance issues?
-- Scalability problems?
-- Technical debt affecting access?
-
-### Step 8: Detect Project Complexity
-
-Analyze conversation to determine project complexity:
-
-**Simple project indicators:**
-
-- Single domain/department
-- Small organization (startup, small team)
-- Limited knowledge sources (< 5)
-- Few constraints mentioned
-
-**Complex project indicators:**
-
-- Multiple domains/departments
-- Enterprise scale
-- Many knowledge sources (10+)
-- Significant access constraints
-- Cross-domain integration needs
-
-### Step 9: Propose Document Structure
-
-Based on detected complexity, propose section structure:
-
-**All projects generate 3 files:**
-
-```markdown
-project-context.md:
-- Project Overview (what it is, industry, problem)
-- Stakeholders (key stakeholders, users)
-- Scope & Context (scope, new vs existing, organizational context)
-- Strategic Rationale (why this matters, expected outcomes)
-- Strategic Context (placeholder - will be updated in Phase 2 with timeline/budget/compliance)
-```
-
-**For simple projects:**
-
-```markdown
-knowledge-landscape.md:
-- Knowledge Sources (with priority flags)
-- Systems
-- People & Authorities
-- Knowledge Flows
-
-knowledge-assessment.md:
-- Gaps
-- Access Constraints
-- Quality Issues
-- Known Unknowns
-- Inferred Knowledge (Unverified)
-```
-
-**For complex projects:**
-
-```markdown
-knowledge-landscape.md:
-- Knowledge Sources by Department (with priority flags)
-- System Integration Points
-- Legacy System Constraints
-- Cross-Domain Knowledge Flows
-- Authority Matrix
-- Governance Structure
-
-knowledge-assessment.md:
-- Knowledge Gaps by Domain
-- Access Constraints
-  - Permission Barriers
-  - Governance Requirements
-  - Technical Barriers
-  - Organizational Barriers
-- Quality Issues
-  - Contradictions
-  - Staleness
-  - IT Constraints
-- Known Unknowns
-  - Completeness Uncertainty
-  - Discovery Limitations
-  - Scope Blind Spots
-- Inferred Knowledge (Unverified)
-```
-
-Show proposed structure to user and ask: "Does this structure work, or would you like to adjust?"
-
-Wait for approval or modification.
-
-### Step 10: Generate Output Documents
-
-Generate three markdown files following the approved structure.
-
-**For project-context.md:**
-
-- Project overview (what it is, industry/domain, problem being solved)
-- Key stakeholders (customers, users, internal teams)
-- **Success metrics** (how will we measure success - quantifiable criteria)
-- Scope & context (scope description, new vs existing, organizational context)
-- Strategic rationale (why this matters, expected outcomes)
-- Strategic context (placeholder section - note: "Will be updated in Phase 2 with timeline, budget, compliance constraints")
-- Professional tone
-- Document information from Step 3
-
-**For knowledge-landscape.md:**
-
-- Focus ONLY on knowledge sources (no project context section)
-- Use clear section headings
-- Lists and tables for sources
-- Professional tone
-- Cite conversations where information came from
-
-**For knowledge-assessment.md:**
-
-- Explicit gap identification
-- Categorized constraints
-- Quality issues with examples
-- **Known unknowns** - areas where completeness can't be assessed:
-  - Have we discovered all relevant systems? (e.g., IT portfolio review pending)
-  - Are there shadow IT knowledge sources? (unknown)
-  - Are there undocumented processes or tribal knowledge?
-  - What don't we know about what we don't know?
-- Clearly mark inferred knowledge as "unverified"
-
-**If updating existing files:**
-
-- Preserve existing structure
-- Merge new information into appropriate sections
-- Flag contradictions: "Note: This conflicts with previous information - [old info] vs [new info]. Review needed."
-- Don't auto-resolve conflicts
-
-### Step 11: Document Assumptions
-
-Before writing files, identify key assumptions made during scoping:
-
-**Common Phase 1 assumptions:**
-
-- Stakeholder availability for interviews
-- Access to knowledge sources will be granted
-- Timeline constraints (if mentioned)
-- Organizational support exists
-- Knowledge quality is representative of what was shared
-
-**Create assumptions register:**
+Check if scoping file exists:
 
 ```bash
-# Copy template to project directory (if doesn't exist)
-cp references/assumptions-register.md docs/{project-name}/assumptions-register.md
+ls docs/{project-name}/03-scoping/mvp-scope.md 2>/dev/null
 ```
 
-**Note:** Project-wide artifacts (assumptions-register.md, traceability-matrix.md, risk-register.md,
-change-impact-analysis.md) are stored at project root level (`docs/{project-name}/`), not in phase subdirectories.
+**If file exists:**
 
-Add Phase 1 assumptions with IDs A-001, A-002, etc.:
+- Load existing scope document
+- Inform: "Found existing MVP scope. I'll update based on refined requirements."
 
-- Mark validation status (most will be ⏳ Pending or ⚠️ Unvalidated at this stage)
-- Document impact if assumption is wrong
-- Reference in knowledge-assessment.md where relevant
+**If file doesn't exist:**
 
-**Example assumptions:**
+- Inform: "Creating fresh MVP scope document."
 
-- A-001: "5 SMEs will be available for knowledge interviews" (High impact if wrong)
-- A-002: "SharePoint access can be granted within 2 weeks" (Medium impact if wrong)
-- A-003: "Knowledge base contains 80% of operational knowledge" (High impact if wrong - this is often an inference)
+### Step 4: Estimate MVP Core Requirements
 
-### Step 12: Write Files
+For each MVP Core requirement (from requirement-classification.md):
 
-Write or update files:
+1. Identify requirement details (include REQ-ID from classification)
+2. Estimate using 4-phase process (Parse → Complexity → Risk → Size)
+3. Document assumptions
+4. Note escalation conditions
 
-```bash
-# Create directory if needed
-mkdir -p docs/{project-name}/01-scoping
+**Group estimates:**
 
-# Write files
-# (Use Write tool for project-context.md)
-# (Use Write tool for knowledge-landscape.md)
-# (Use Write tool for knowledge-assessment.md)
-# (Use Write or Edit tool for assumptions-register.md with Phase 1 assumptions)
+- AI Capabilities (non-deterministic requirements)
+- Supporting Layer (deterministic requirements)
+
+**IMPORTANT:** Reference requirement IDs in story titles for traceability:
+
+- Story 1 (REQ-001): Knowledge Extraction from Documents
+- Story 2 (REQ-003): Calculation Inference
+
+### Step 5: Estimate Deferred Requirements
+
+For each Deferred requirement:
+
+1. Estimate using same 4-phase process
+2. Note why deferred (from Phase 2 analysis)
+3. Document assumptions
+
+**If no deferred requirements:**
+
+- Document in mvp-scope.md: "Deferred Features: None - full scope fits in MVP"
+- In Effort Summary table: Show "Deferred: 0 stories | N/A | None"
+
+### Step 6: Detect Patterns
+
+Detect patterns across all requirements (MVP + Deferred):
+
+**Patterns to detect:**
+
+- Auth (3+): Auth0, Firebase
+- Payment (2+): Stripe, PayPal
+- Email (3+): Shared infrastructure
+- File storage (3+): Shared solution
+- Search (2+): Algolia, Elasticsearch
+
+Offer pattern notes when detected with build/buy recommendations.
+
+### Step 7: Synthesize Effort Summary
+
+Calculate totals:
+
+**MVP Core Total:**
+
+- Count by size: X stories at S, Y at M, Z at L
+- Overall assessment: "Medium project" / "Large project" / etc.
+
+**Deferred Total:**
+
+- Count by size
+- Overall assessment
+
+**Full Scope Total (if all built):**
+
+- MVP + Deferred combined estimate
+
+### Step 8: Calculate ROM Cost Estimates
+
+After sizing effort, provide rough order of magnitude (ROM) cost estimates.
+
+**Ask user for team composition assumptions:**
+
+- "What team composition should I assume? (e.g., 2 AI/ML engineers, 2 full-stack, 1 DevOps)"
+- "What hourly/yearly rates should I use? Or should I use industry averages?"
+- "Any infrastructure costs to account for? (LLM API, hosting, third-party services)"
+
+**Calculate ROM based on T-shirt sizes:**
+
+**Rough conversion (story points to weeks):**
+
+- XS: 0.5-1 week
+- S: 1-2 weeks
+- M: 2-4 weeks
+- L: 4-8 weeks
+- XL: 8-16 weeks
+- XXL: 16+ weeks (flag as needing breakdown)
+
+**Team cost calculation:**
+
+- Weekly burn rate = (sum of all salaries/52) or (sum of hourly rates × 40)
+- Project duration = max(parallelizable effort) + sequential dependencies
+- Total labor cost = Weekly burn rate × Project duration
+
+**Infrastructure cost:**
+
+- LLM API: estimate requests/month × cost/request
+- Hosting: cloud compute for AI inference + database + app server
+- Third-party services: Auth, storage, monitoring
+
+**Add buffers:**
+
+- 20-30% for unknowns (higher if more XXL stories or high-risk items)
+- 10-15% for overhead (meetings, planning, deployment)
+
+**Output ROM ranges:**
+
+- **Low estimate:** Assumes all stories hit lower bound, no significant blockers
+- **High estimate:** Assumes stories hit upper bound, some scope creep
+
+**CRITICAL - Assumptions documentation:**
+
+- Document ALL assumptions in ROM section
+- Make it clear this is NOT a formal quote
+- Reference what's excluded (ongoing maintenance, support, change requests)
+- Note that Phase 4 architecture design may reveal cost adjustments
+
+### Step 9: Analyze Dependencies
+
+Identify blocking relationships between requirements.
+
+**Document dependencies in two places:**
+
+1. **traceability-matrix.md** - For requirement tracking (Req ID → Blocks → Blocked By columns)
+2. **mvp-scope.md** - For estimation context (Dependency Map section)
+
+**Look for technical dependencies:**
+
+- Authentication before user features
+- Database schema before data operations
+- Knowledge base before AI features
+- API before integrations
+- Infrastructure before services
+
+**Document prerequisites:**
+
+- "REQ-XXX must be completed before REQ-YYY can start"
+- Use requirement IDs from Phase 2 classification
+
+**Identify parallelizable work:**
+
+- Which requirements have no dependencies and can be built concurrently?
+- Helps inform team sizing and timeline
+
+**Find critical path:**
+
+- Longest sequence of dependent requirements
+- Determines minimum project duration even with infinite team size
+
+**Phasing implications:**
+
+- Foundation requirements (no dependencies) → Phase 1
+- Dependent requirements → Phase 2 or later
+- Helps validate MVP scope from Phase 2
+
+**Add to traceability matrix:**
+
+- Update `docs/{project-name}/traceability-matrix.md` with dependency column
+- Shows: Req ID → Blocks → Blocked By
+
+### Step 10: Propose Document Structure
+
+Show structure:
+
+```markdown
+mvp-scope.md:
+# MVP Scoping: {Project Name}
+
+**Date:** {date}
+**Source:** requirement-classification.md (Phase 2)
+
+## Executive Summary
+- MVP Core: [count] stories → [size assessment]
+- Deferred: [count] stories → [size assessment]
+- Full Scope: [count] stories → [size assessment]
+
+## MVP Core Estimation
+
+### AI Capabilities (Non-Deterministic)
+- Story X: [Size] - [reasoning]
+...
+
+### Supporting Layer Requirements
+- Story Y: [Size] - [reasoning]
+...
+
+**MVP Core Total:** [synthesis]
+
+## Deferred Features
+- Story Z: [Size] - [why deferred] - [reasoning]
+...
+
+**Deferred Total:** [synthesis]
+
+## Pattern Analysis
+[Build/buy recommendations]
+
+## Effort Summary
+[Table: MVP vs Deferred vs Full Scope]
+
+## Dependency Map
+
+**Prerequisites (must be built first):**
+- REQ-001 → REQ-005 (authentication before user profile)
+- REQ-003 → REQ-007, REQ-009 (knowledge base before AI features)
+
+**Blocked relationships:**
+- REQ-012 blocked by REQ-003, REQ-005
+- REQ-015 blocked by REQ-007
+
+**Parallelizable work:**
+- REQ-002, REQ-004, REQ-006 can be built concurrently
+
+**Critical path:**
+- REQ-001 → REQ-003 → REQ-007 → REQ-012 (longest sequence)
+
+**Phasing implications:**
+- Phase 1 must include: [foundation requirements]
+- Phase 2 can add: [dependent features]
+
+## ROM Cost Estimates
+
+**Assumptions:**
+- Team composition: [list roles and rough rates]
+- Timeline: [estimated duration based on effort sizing]
+- Infrastructure costs: [LLM API, hosting, third-party services]
+- Buffers: [overhead, unknowns, contingency]
+
+**MVP Cost Range:** $[low]k - $[high]k
+- Rationale: [explanation of calculation]
+
+**Full Scope Cost Range:** $[low]k - $[high]k (if all deferred features built)
+- Rationale: [explanation]
+
+**Caveats:**
+- Rough Order of Magnitude (ROM) only - NOT a formal quote
+- Assumes team composition as stated above
+- Does not include [what's excluded: e.g., ongoing maintenance, change requests]
+- Subject to validation in Phase 4 (architecture design)
 ```
 
-### Step 13: Confirm Completion and Validation Gate
+Confirm with user: "Does this structure work?"
 
-Inform user of successful completion:
+Wait for approval.
+
+### Pattern Detection & Build vs Buy Analysis
+
+**Patterns to detect:**
+
+Scan requirements for common patterns that have mature SaaS/open-source solutions:
+
+**Infrastructure patterns:**
+
+- **Auth/Identity** (3+ stories): Auth0, Firebase Auth, AWS Cognito, Clerk
+- **Payment** (2+ stories): Stripe, PayPal, Square
+- **Email** (3+ stories): SendGrid, AWS SES, Postmark
+- **File storage** (3+ stories): AWS S3, Cloudinary, Uploadcare
+- **Search** (2+ stories): Algolia, Elasticsearch, Typesense
+- **Monitoring/Analytics** (2+ stories): Datadog, Mixpanel, Amplitude
+- **CMS** (4+ stories): Contentful, Sanity, Strapi
+
+**AI-specific patterns:**
+
+- **Vector database** (1+ story): Pinecone, Weaviate, pgvector, Qdrant
+- **LLM API** (1+ story): OpenAI, Anthropic, Together AI, Fireworks
+- **Document processing** (2+ stories): Unstructured.io, Azure Document Intelligence, AWS Textract
+- **Embedding models** (1+ story): OpenAI, Cohere, SentenceTransformers (OSS)
+
+**Build vs Buy Decision Framework:**
+
+For each detected pattern, analyze:
+
+**1. Effort Impact:**
+
+- Build: {current estimate} (e.g., L + M + M = 3 stories, ~8-14 weeks)
+- Buy: {reduced estimate} (e.g., S for integration = 1-2 weeks)
+- **Savings:** {X weeks reduction}
+
+**2. Cost Comparison:**
+
+- Build: {ROM from labor estimate} (e.g., $50k-$80k for auth system)
+- Buy: {SaaS pricing} (e.g., Auth0 $240/month + $0.05/MAU = ~$5k/year)
+- **Breakeven:** {when build pays off} (e.g., "10+ years at current scale")
+
+**3. Risk Assessment:**
+
+- Build risks: {security, maintenance, expertise, time-to-market}
+- Buy risks: {vendor lock-in, pricing changes, feature limitations}
+- **Recommendation:** {build or buy with rationale}
+
+**4. Strategic Alignment:**
+
+- Is this core to our value proposition? (Build favored)
+- Is this commodity infrastructure? (Buy favored)
+- Do we have unique requirements? (May need build)
+
+**Pattern Analysis Output:**
+
+```markdown
+## Pattern Analysis
+
+### Auth Pattern Detected (3 stories: Login, MFA, User Roles)
+
+**Current Estimate:** L + M + M = 8-14 weeks
+**With Auth0:** S (integration) = 1-2 weeks
+**Effort Savings:** 6-12 weeks
+
+**Cost Comparison:**
+- Build: $60k-$100k labor (ROM from estimates)
+- Auth0: $240/month base + $0.05/MAU ≈ $5k/year
+- Breakeven: 12+ years (not realistic)
+
+**Recommendation:** Buy (Auth0 or similar)
+**Rationale:** Auth is commodity, not our differentiator. SaaS reduces security risk, faster time-to-market, proven at scale.
+
+### Vector Database Pattern Detected (1 story: RAG Knowledge Store)
+
+**Current Estimate:** L = 4-8 weeks
+**With Pinecone:** M (integration + migration) = 2-4 weeks
+**Effort Savings:** 2-4 weeks
+
+**Cost Comparison:**
+- Build: $40k-$60k labor + hosting ($200/month)
+- Pinecone: $70/month starter, scales to $599+/month production
+- Breakeven: ~6 months (reasonable for pilot)
+
+**Recommendation:** Buy for MVP, re-evaluate after pilot
+**Rationale:** Fast to market, proven RAG performance. If scale becomes expensive (>$1k/month), consider pgvector migration in Phase 2.
+```
+
+Offer pattern notes when detected with specific build/buy recommendations and effort impact.
+
+## T-Shirt Size Scale
+
+| Size | Scope | Indicators |
+| ---- | ----- | ---------- |
+| XS | Trivial | Config, copy, single field |
+| S | Small | Simple CRUD, basic form |
+| M | Medium | Multi-component, standard integration |
+| L | Large | Complex feature, multiple subsystems |
+| XL | Very Large | Major cross-system, high risk |
+| XXL | Epic | Multi-team, architectural changes |
+
+Sizes are relative, not time-based.
+
+## The Estimation Process
+
+### Phase 1: Parse Story
+
+Extract: Role, Goal, Benefit (if provided), Implied technical work.
+
+### Phase 2: Assess Technical Complexity
+
+**Low:** Established patterns, single system, minimal logic, standard
+libraries
+
+**High:** Novel algorithms, cross-system coordination, complex rules,
+migrations, performance-critical
+
+Complexity = what needs to be built, independent of team experience.
+
+### Phase 3: Assess Risk
+
+How likely is this story to explode in scope (3x)?
+
+**Low risk:** Well-bounded scope, familiar pattern, clear "done", minimal
+dependencies
+
+**High risk:** Vague requirements, words like
+"integrate/migrate/refactor" without specifics, new tech, external
+dependencies, undefined edge cases/performance/security
+
+**Key questions:**
+
+- Could this be 3x bigger?
+- Hidden dependencies?
+- "Done" clearly defined?
+
+### Phase 4: Synthesize Size & Document
+
+**Decision framework:**
 
 ```text
-✓ Knowledge mapping complete
-
-Generated:
-- docs/{project-name}/01-scoping/project-context.md
-- docs/{project-name}/01-scoping/knowledge-landscape.md
-- docs/{project-name}/01-scoping/knowledge-assessment.md
-- docs/{project-name}/assumptions-register.md (Phase 1 assumptions documented)
-
----
-
-VALIDATION GATE: Review Knowledge Mapping with Stakeholders
-
-Before proceeding to Phase 2 (Requirements Analysis), validate outputs with stakeholders:
-
-Review Checklist:
-□ project-context.md: Accurate project understanding? Missing stakeholders?
-□ knowledge-landscape.md: Complete knowledge source inventory? Missed any systems/documents?
-□ knowledge-assessment.md: Gaps correctly identified? Access constraints accurate?
-
-Questions to Ask Stakeholders:
-1. Did we miss any knowledge sources (systems, documents, people)?
-2. Are the access constraints and quality issues accurate?
-3. Are there any "unknown unknowns" we should flag?
-4. Is the project context description correct?
-
-Validation Options:
-✅ APPROVED: Knowledge mapping complete and accurate → Proceed to /neat-discovery-analysing
-🔄 UPDATE NEEDED: Stakeholders identified gaps → Update scoping outputs, re-validate
-⏸️  HOLD: Need more discovery → Schedule follow-up sessions
-
-Next step (if approved): Run /neat-discovery-analysing to classify requirements
+High Complexity + High Risk → L, XL, or XXL
+High Complexity + Low Risk → M or L  
+Low Complexity + High Risk → M or L
+Low Complexity + Low Risk → XS, S, or M
 ```
 
-## Interview Strategy
+**Output format:**
 
-**Ask questions in focused batches:**
+```markdown
+## Story N: [Title]
 
-- Step 3 (Project Context): 2-3 questions at once, gather comprehensive project understanding
-- Step 4 (Knowledge Sources): Ask about one category at a time (documents, systems, people, flows)
-- Step 5 (Access Constraints): Assess as sources are identified, not separately
+**Size:** M (could be L if scope expands)
 
-**Don't ask all questions at once:**
+**Complexity:** [2-3 sentences]
 
-- Users get overwhelmed by long lists
-- Responses lack depth when questions aren't focused
-- Natural conversation enables follow-up and clarification
+**Risk:** [2-3 sentences on scope explosion]
 
-**Adapt based on responses:**
+**Assumptions:**
+- [key assumption 1]
+- [key assumption 2]
+- [key assumption 3]
 
-- If user provides rich detail, dig deeper
-- If answers are sparse, broaden the question
-- If uncertain, ask for examples or specifics
+**Watch for:** [1-2 specific escalation conditions]
+```
 
-## Output Specifications
+## Quick Reference
 
-### project-context.md (in 01-scoping/)
+| Factor | Impact | Question |
+| ------ | ------ | -------- |
+| Complexity | Base size | How hard is the work? |
+| Risk | Inflates size | How likely is 3x scope expansion? |
+| Scope | Scales size | How many components? |
+| Dependencies | Adds risk | External factors? |
 
-- Project overview (what it is, industry/domain, problem being solved)
-- Key stakeholders (customers, users, internal teams)
-- Scope & context (scope description, new vs existing, organizational context)
-- Strategic rationale (why this matters, expected outcomes)
-- **Purpose:** Project understanding for all phases
+**When info missing:** Make assumptions (document them), express risk,
+identify what would change estimate.
 
-### knowledge-landscape.md (in 01-scoping/)
-
-- Inventory of knowledge sources (documents, systems, databases, people)
-- Knowledge authorities and ownership
-- Knowledge flows between sources
-- Professional markdown formatting
-- **Purpose:** What exists and who owns it
-
-### knowledge-assessment.md (in 01-scoping/)
-
-- Gaps in knowledge
-- Access constraints (permissions, governance, technical, organizational)
-- Quality problems (contradictions, staleness, IT issues)
-- Inferred but unverified knowledge based on patterns
-- **Purpose:** What's wrong or inaccessible
+**Quality:** Maintain rigor for each story, don't copy-paste, monitor
+patterns, be concise (2-3 sentences).
 
 ## Common Mistakes
 
 | Mistake | Rule |
-| --- | --- |
-| Skipping project context discovery | Always establish project understanding before knowledge mapping |
-| Not checking for existing files | Always check and load all three files if present |
-| Putting project context in knowledge-landscape.md | Project context goes in separate project-context.md file |
-| Auto-resolving conflicts | Flag for user review, don't auto-merge contradictions |
-| Skipping complexity detection | Always assess to propose appropriate structure |
-| Forgetting to mark inferred knowledge | Must be clearly labeled "unverified" |
-| Missing user approval on structure | Get explicit confirmation before generating |
-| Asking too many questions at once | Use focused batches, allow natural conversation flow |
+| ----- | --- |
+| Skipping Phase 2 load | Must load requirement-classification.md |
+| Estimating raw requirements | Work from scoped MVP/Deferred buckets |
+| Estimate time | Use relative sizing |
+| Ignore risk | Make it explicit, size up |
+| Over-precision | Express as range |
+| Skip assumptions | List 3-5 key items |
+| Conflate complexity/risk | Separate them |
+| Write paragraphs | 2-3 sentences per section |
+| Copy-paste reasoning | Fresh analysis each story |
+| "This is definitely [size]" | Express risk |
+| "Can't estimate without info" | Make assumptions + caveats |
 
-## Edge Cases
+## Key Principles
 
-**Empty docs/ directory:**
+1. Risk inflates estimates
+2. Separate complexity from risk
+3. Assumptions = documentation
+4. Express risk in size
+5. Be concise (2-3 sentences)
 
-- Skip project selection, go straight to "What's the project name?"
+## Examples
 
-**Partial information:**
+### Example 1: Clear, Bounded Story
 
-- Work with whatever user provides
-- Document assumptions explicitly
-- Mark uncertainties
+**Story:** "As a user, I want to log out of my account"
 
-**User can't answer questions:**
+**Size:** XS
 
-- Document what's unknown
-- Include in gaps section
-- Suggest follow-up investigation
+**Complexity:** Clearing session/token, redirect to login. Standard pattern.
 
-**Conflicting information during update:**
+**Risk:** Well-bounded scope, pattern rarely surprises, clear "done".
 
-- Preserve both versions
-- Add note: "Conflict detected - review needed"
-- Let user decide resolution
+**Assumptions:** Session management exists, simple redirect, no multi-system coordination.
+
+**Watch for:** SSO integration → S.
+
+---
+
+### Example 2: Vague, High Risk
+
+**Story:** "As an admin, I want to generate monthly reports"
+
+**Size:** L (could be M-XL)
+
+**Complexity:** Data aggregation, formatting, async processing. Scales
+with report types and calculations.
+
+**Risk:** Vague—could 3x. "Generate reports" hides edge cases. Missing:
+data, format, calculations, how many types.
+
+**Assumptions:** 5-10 pre-defined types, queryable data, PDF/CSV, async,
+basic calculations.
+
+**Watch for:** User-configurable builder or complex transforms → XL.
+Single simple report → M.
+
+---
+
+### Example 3: New Tech, External Dependency
+
+**Story:** "As a developer, I want to integrate Stripe for payments"
+
+**Size:** L
+
+**Complexity:** Frontend + backend + webhooks. Well-documented but
+requires checkout UI, server processing, webhook handling.
+
+**Risk:** "Integrate" hides scope. Team unfamiliar with Stripe. External
+API adds unknowns. Edge cases (failed payments, webhooks, testing) could
+3x.
+
+**Assumptions:** One-time payments, Stripe Checkout, single currency,
+basic errors, test mode.
+
+**Watch for:** Subscriptions, multi-currency, custom UI,
+refunds/disputes → XL. Consider spike story.
+
+---
+
+### Step 11: Generate Estimation Document
+
+Generate markdown file following approved structure.
+
+**Content guidelines:**
+
+- Clear size with rationale (2-3 sentences per section)
+- Explicit assumptions
+- Risk expressed as size ranges
+- Pattern recommendations with build/buy guidance
+- Professional tone
+- Executive summary for quick scanning
+
+**If updating existing file:**
+
+- Merge new requirements into structure
+- Update estimates based on refined information
+- Flag changes: "Updated: [previous estimate] → [new estimate]. Reason: [rationale]"
+
+### Step 12: Write Files
+
+```bash
+# Create Phase 3 directory
+mkdir -p docs/{project-name}/03-scoping
+
+# Write MVP scope file
+# (Use Write tool for mvp-scope.md with REQ-IDs in story titles)
+
+# Update traceability matrix
+# (Use Edit tool to add columns to docs/{project-name}/traceability-matrix.md)
+# Add: Scoped Story + Size Estimate + Dependencies columns
+# Map: REQ-001 → Story 1 → XL → Blocks: REQ-005, REQ-007
+```
+
+### Step 13: Confirm Completion and Validation Gate
+
+```text
+MVP scoping complete
+
+Generated:
+- docs/{project-name}/03-scoping/mvp-scope.md
+- docs/{project-name}/traceability-matrix.md (updated with sizing and dependencies)
+
+---
+
+VALIDATION GATE 3: Review Scope vs Effort
+
+Review the MVP effort estimate before proceeding to Phase 4 (Designing):
+
+MVP Assessment: {size} project ({timeline estimate})
+Critical Path: {longest dependency chain}
+ROM Cost: ${low}k - ${high}k
+
+Decision Options:
+1. PROCEED: MVP scope and effort are acceptable → Run /neat-discovery-designing
+2. RE-SCOPE: MVP too large → Re-run /neat-discovery-analysing with tighter boundaries
+3. DEFER: Effort exceeds capacity → Pause discovery, revisit later
+
+Recommendation: If MVP estimate > 9 months, consider tightening scope in Phase 2 before designing architecture.
+
+Next step (if approved): Run /neat-discovery-designing to create architecture blueprint
+```
+
+## Output Specifications
+
+### mvp-scope.md (in 03-scoping/)
+
+- Executive summary (MVP vs Deferred vs Full Scope totals)
+- MVP Core sizing (AI + traditional, grouped)
+- Deferred feature sizing
+- Pattern analysis (build/buy recommendations)
+- Effort summary table
+- **Purpose:** Scope MVP boundaries and size requirements for executive decision-making on phasing
+
+## File Format
+
+**Location:** `docs/{project-name}/03-scoping/mvp-scope.md`
+
+**Structure:**
+
+```markdown
+# MVP Scoping: {Project Name}
+
+**Date:** {date}
+**Source:** requirement-classification.md (Phase 2)
+
+## Executive Summary
+
+**MVP Core:** X stories (Y AI, Z traditional) → Medium-Large project
+**Deferred:** A stories → Large additional scope  
+**Full Scope:** B stories → XL total effort
+
+---
+
+## MVP Core Estimation
+
+### AI Capabilities (Non-Deterministic)
+
+#### Story 1: {Title}
+
+**Size:** {size with risk}
+
+**Complexity:** {2-3 sentences}
+
+**Risk:** {2-3 sentences on scope explosion}
+
+**Assumptions:**
+- {key assumption 1}
+- {key assumption 2}
+
+**Watch for:** {1-2 escalation conditions}
+
+---
+
+### Supporting Layer Requirements
+
+#### Story 5: {Title}
+
+**Size:** {size}
+**Complexity:** {2-3 sentences}
+**Risk:** {2-3 sentences}
+**Assumptions:** [list]
+
+---
+
+**MVP Core Total:** 3S + 2M + 2L = Medium-Large project
+
+---
+
+## Deferred Features
+
+#### Story 10: {Title}
+
+**Size:** {size}
+**Why Deferred:** {from Phase 2}
+**Complexity:** {2-3 sentences}
+**Risk:** {2-3 sentences}
+**Assumptions:** [list]
+
+---
+
+**Deferred Total:** 1L + 2XL = Large additional scope
+
+---
+
+## Pattern Analysis
+
+**Auth Pattern** (Stories 1, 3, 5)
+- Recommendation: Use Auth0
+- Impact: Reduces M→S across 3 stories
+- Build/Buy: Buy (Auth0)
+
+---
+
+## Effort Summary
+
+| Scope | Stories | Size Distribution | Assessment |
+|-------|---------|-------------------|------------|
+| MVP Core | X | 3S + 2M + 2L | Medium-Large |
+| Deferred | Y | 1L + 2XL | Large |
+| Full Scope | Z | 3S + 2M + 3L + 2XL | XL |
+
+**Recommendation:** Phased approach - MVP first, evaluate, then deferred features.
+```

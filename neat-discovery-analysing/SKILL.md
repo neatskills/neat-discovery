@@ -1,15 +1,17 @@
 ---
 name: neat-discovery-analysing
-description: Classify requirements as deterministic vs non-deterministic and build strategic business case for AI investments - focuses on qualitative value and feasibility
+description: Classify requirements as deterministic vs non-deterministic and build strategic business case for maximizing value through combined AI agent and application development
 ---
 
-# Discovery Analysing
+# neat-discovery-analysing
 
-Classify requirements and build the business case.
+## Overview
+
+Classify requirements as deterministic vs non-deterministic and build strategic business case for maximizing value through combined AI agent and application development.
 
 ## Role
 
-You are a business analyst who classifies requirements and builds strategic business cases for AI investments.
+**Role:** You are a Business Analyst who classifies requirements and builds strategic business cases for maximizing value through combined AI agent and application development.
 
 ## When to Use
 
@@ -36,7 +38,7 @@ Use after Phase 1 to:
 
 ## Prerequisites
 
-**From Phase 1:** project-context.md, knowledge-landscape.md, knowledge-assessment.md  
+**From Phase 1:** project-context.md, knowledge-landscape.md, knowledge-assessment.md (in 01-assessing/)  
 **From user:** Requirements list, business context (goals, constraints, priorities)
 
 ## Process
@@ -57,14 +59,14 @@ ls -d docs/*/ 2>/dev/null
 Load required files:
 
 ```bash
-cat docs/{project-name}/01-scoping/project-context.md
-cat docs/{project-name}/01-scoping/knowledge-landscape.md
-cat docs/{project-name}/01-scoping/knowledge-assessment.md
+cat docs/{project-name}/01-assessing/project-context.md
+cat docs/{project-name}/01-assessing/knowledge-landscape.md
+cat docs/{project-name}/01-assessing/knowledge-assessment.md
 ```
 
 **If files missing:**
 
-- Error: "Phase 1 outputs not found. Run /neat-discovery-scoping first."
+- Error: "Phase 1 outputs not found. Run /neat-discovery-assessing first."
 - Exit skill
 
 **If files exist:**
@@ -108,7 +110,7 @@ Ask one at a time:
 
 Recommend structure, wait for approval.
 
-### Step 5A: Identify Need for Stakeholder Alignment Brief
+### Step 6: Identify Need for Stakeholder Alignment Brief (Optional)
 
 **Ask:** "Do you need to get buy-in from department heads or team leads (not just executive approval)?"
 
@@ -132,7 +134,7 @@ Recommend structure, wait for approval.
 - **Social proof** - who else already supports this
 - **Generic template** - one brief works for multiple departments (customize benefits section)
 
-### Step 6: Gather Business Context
+### Step 7: Gather Business Context
 
 Ask focused questions about business context:
 
@@ -156,7 +158,7 @@ Ask focused questions about business context:
 
 **IMPORTANT:** After gathering business context, update project-context.md with strategic constraints.
 
-Append to `01-scoping/project-context.md`:
+Append to `01-assessing/project-context.md`:
 
 ```markdown
 ## Strategic Context (Updated from Phase 2)
@@ -186,7 +188,7 @@ Append to `01-scoping/project-context.md`:
 - Phase 4 (Designing) uses compliance/timeline to inform architecture decisions
 - Keeps all project context in one canonical file
 
-### Step 7: Gather Requirements (formerly Step 4)
+### Step 8: Gather Requirements
 
 Ask user for requirements:
 
@@ -202,7 +204,7 @@ Share what you have - it doesn't need to be complete or detailed."
 
 Wait for requirements input.
 
-### Step 8: Classify Each Requirement
+### Step 9: Classify Each Requirement
 
 For each requirement, determine classification:
 
@@ -234,16 +236,18 @@ For each requirement:
 
 **IMPORTANT:** Requirement IDs enable traceability from classification → estimation → architecture.
 Keep IDs stable - if requirements change, update the requirement text but preserve the ID.
+**Never reuse deleted IDs** - if REQ-005 is removed, next new requirement is REQ-N+1, not REQ-005.
 
-### Step 9: Assess Feasibility (Non-Deterministic Requirements)
+### Step 10: Assess Feasibility (Non-Deterministic Requirements)
 
 For each non-deterministic requirement, assess feasibility:
 
-**Knowledge availability (check landscape):**
+**Knowledge availability (check landscape and priority flags from Phase 1):**
 
 - Is relevant knowledge documented?
-- Which sources contain needed information?
+- Which sources contain needed information? (Check knowledge-landscape.md priority flags)
 - Is knowledge sufficient for AI to reason about this?
+- **Critical elements** from Phase 1 should map to high-feasibility requirements
 
 **Access constraints (check assessment):**
 
@@ -263,7 +267,7 @@ Mark each as:
 - Medium feasibility (with caveats)
 - Low feasibility (significant risks)
 
-### Step 9A: Identify Need for Technical Spikes (Optional)
+### Step 11: Identify Need for Technical Spikes (Optional)
 
 For requirements marked as **low feasibility** or **medium feasibility with significant uncertainty**, consider recommending a technical spike.
 
@@ -301,7 +305,7 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 - If spikes deferred: Document assumption in requirement-classification.md, flag risk
 - Spike results feed into Phase 3 with validated complexity
 
-### Step 10: Build Strategic Business Justification (Audience-Specific)
+### Step 12: Build Strategic Business Justification (Audience-Specific)
 
 **Tailor content depth and focus to identified audience from Step 5:**
 
@@ -387,7 +391,7 @@ Why not use traditional approaches:
 - Manual processes: Why they don't scale
 - Partial automation: Why full AI infrastructure is needed
 
-### Step 11: Prioritize Requirements
+### Step 13: Prioritize Requirements
 
 Prioritize non-deterministic requirements:
 
@@ -405,7 +409,7 @@ Create prioritized list:
 3. Medium value + high feasibility (tactical improvements)
 4. Everything else (defer or traditional approach)
 
-### Step 12: Detect Project Complexity
+### Step 14: Detect Project Complexity
 
 Analyze to determine document structure:
 
@@ -423,7 +427,7 @@ Analyze to determine document structure:
 - Complex business context with many constraints
 - Multiple stakeholders with different priorities
 
-### Step 13: Propose Document Structure
+### Step 15: Propose Document Structure
 
 Based on complexity AND audience (from Step 5), propose structure following **audience-specific best practices**.
 
@@ -539,7 +543,7 @@ executive-report.md:
 requirement-classification.md:
 - Strategic Direction (AI-first architectural decision if applicable)
 - Requirements Overview (summary stats: X deterministic, Y non-deterministic)
-- [Group 1]: AI Core Requirements
+- [Group 1]: AI Capabilities (Non-Deterministic Requirements)
   - Each capability with classification, priority, feasibility
 - [Group 2]: Essential Supporting Features
   - Deterministic requirements grouped by function
@@ -602,7 +606,7 @@ executive-report.md:
 ## Scope of AI Opportunity
 - [Solution] MVP: ~X of Y Requirements
 - Strategic decision explanation
-- AI Core (in scope - non-deterministic) - numbered list
+- AI Capabilities (in scope - non-deterministic requirements) - numbered list
 - [Supporting layer] (in scope - deterministic) - numbered list  
 - Deferred (Phase 2+ - Z requirements) - bulleted with why defer
 - Phased Rollout Recommendation
@@ -639,7 +643,7 @@ executive-report.md:
 - Alternative 3: [Name] - When to consider
 [3-4 alternatives max]
 
-**Cross-reference:** See Phase 3 mvp-estimates.md "Pattern Analysis" section for quantitative build/buy recommendations (e.g., Auth0 reduces auth effort from M → S).
+**Cross-reference:** See Phase 3 mvp-scope.md "Pattern Analysis" section for quantitative build/buy recommendations (e.g., Auth0 reduces auth effort from M → S).
 
 ## Recommended Scope and Phasing
 - Phase 1 (MVP): [Scope, AI core, supporting layer, success criteria, decision gate]
@@ -751,7 +755,7 @@ Show to user: "Does this structure work, or would you like to adjust?"
 
 Wait for approval.
 
-### Step 14: Document Assumptions
+### Step 16: Document Assumptions
 
 Before generating final documents, identify key assumptions made during analysis:
 
@@ -765,8 +769,9 @@ Before generating final documents, identify key assumptions made during analysis
 
 **Update assumptions register:**
 
-Load existing assumptions-register.md and add Phase 2 assumptions with next sequential IDs:
+Load existing assumptions-register.md, find highest A-XXX ID from Phase 1, and add Phase 2 assumptions starting at next sequential number:
 
+- Example: If Phase 1 created A-001 to A-005, Phase 2 starts at A-006
 - Reference requirement IDs where applicable (e.g., "A-010: REQ-005 feasibility assumes PDF extraction accuracy >90%")
 - Mark validation status (many will be ⏳ Pending - need technical spike or user research)
 - Document impact if wrong (High/Medium/Low)
@@ -776,7 +781,7 @@ Load existing assumptions-register.md and add Phase 2 assumptions with next sequ
 - If technical spikes recommended, assumptions should reference spike validation
 - Example: "A-011: Real-time RAG performance <2s (⏳ Pending - Spike planned for Week 2)"
 
-### Step 15: Generate Output Documents
+### Step 17: Generate Output Documents
 
 Generate markdown files following approved structure.
 
@@ -802,7 +807,7 @@ Follow these content principles:
 
 - Use bullets and numbered lists for quick navigation
 - Tables for comparisons, effort estimates, success criteria
-- Visual indicators in markdown: ✅ (in scope), ⏸️ (deferred), 🔴 (high risk), 🟡 (medium), 🟢 (low)
+- Visual indicators in markdown: [IN SCOPE], [DEFERRED], [HIGH RISK], [MEDIUM RISK], [LOW RISK]
 - Highlight boxes: Use `>` blockquotes or bold section intros for key insights
 
 **Evidence-based and credible:**
@@ -842,7 +847,7 @@ Follow these content principles:
 - Flag contradictions for user review
 - Don't auto-resolve conflicts
 
-### Step 16: Write Files
+### Step 18: Write Files
 
 **File naming based on audience (from Step 5 and Step 5A):**
 
@@ -874,17 +879,17 @@ Follow these content principles:
 # Create Phase 2 directory
 mkdir -p docs/{project-name}/02-analysing
 
-# Files from Phase 1 are in docs/{project-name}/01-scoping/
+# Files from Phase 1 are in docs/{project-name}/01-assessing/
 # (Use Write tool for requirement-classification.md with IDs)
 # (Use Write tool for traceability-matrix.md)
 # (Use Write tool for [primary-audience].md)
 # (Use Write tool for stakeholder-brief.md if needed)
 ```
 
-### Step 17: Confirm Completion and Validation Gate
+### Step 19: Confirm Completion and Validation Gate
 
 ```text
-✓ Requirement analysis complete
+Requirement analysis complete
 
 Generated:
 - docs/{project-name}/02-analysing/requirement-classification.md
@@ -893,15 +898,15 @@ Generated:
 
 ---
 
-VALIDATION GATE: Approve Requirement Classification Before Estimating
+VALIDATION GATE 2: Approve Requirement Classification
 
 Before proceeding to Phase 3 (Estimating), validate requirement classification with stakeholders:
 
 Review Checklist:
-□ requirement-classification.md: Requirements classified correctly (deterministic vs non-deterministic)?
-□ MVP Core scope: Right features in MVP? Anything missing or should be deferred?
-□ Feasibility assessments: Agree with feasibility ratings (high/medium/low)?
-□ Prioritization: Correct priority order for AI capabilities?
+- requirement-classification.md: Requirements classified correctly (deterministic vs non-deterministic)?
+- MVP Core scope: Right features in MVP? Anything missing or should be deferred?
+- Feasibility assessments: Agree with feasibility ratings (high/medium/low)?
+- Prioritization: Correct priority order for AI capabilities?
 
 Questions to Ask Stakeholders:
 1. Is the MVP scope correct (not too large, not too small)?
@@ -910,14 +915,14 @@ Questions to Ask Stakeholders:
 4. Any requirements we missed or misunderstood?
 
 Validation Options:
-✅ APPROVED: Classification correct, MVP scope approved → Proceed to /neat-discovery-estimating
-🔄 RE-CLASSIFY: Stakeholders request scope changes → Update classification, re-validate
-⏸️  HOLD: Need more requirements discovery → Gather additional requirements
+APPROVED: Classification correct, MVP scope approved → Proceed to /neat-discovery-scoping
+RE-CLASSIFY: Stakeholders request scope changes → Update classification, re-validate
+HOLD: Need more requirements discovery → Gather additional requirements
 
-Recommendation: Do NOT estimate until classification is approved. 
-Estimating wrong scope wastes effort and creates confusion.
+Recommendation: Do NOT scope until classification is approved. 
+Scoping wrong requirements wastes effort and creates confusion.
 
-Next step (if approved): Run /neat-discovery-estimating to size MVP requirements
+Next step (if approved): Run /neat-discovery-scoping to scope and size MVP requirements
 ```
 
 ## Output Specifications
