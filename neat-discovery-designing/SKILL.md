@@ -804,11 +804,21 @@ between discovery and delivery — what the build team needs on day 1 without re
 
 ## What Was Decided
 
-### MVP Scope
-- **{N} requirements in MVP Core** — {size assessment} project
-- **{N} requirements deferred** — {brief note}
-- **Timeline estimate:** {ROM range}
-- **Cost estimate:** ${low}k – ${high}k (ROM)
+### Requirements
+
+**MVP Core ({N} requirements)**
+
+| # | Requirement | Type | Size |
+|---|-------------|------|------|
+| {REQ-001} | {description} | {AI / Traditional / Hybrid} | {S / M / L / XL} |
+
+**Deferred ({N} requirements)**
+
+| # | Requirement | Reason for deferral |
+|---|-------------|---------------------|
+| {REQ-010} | {description} | {e.g., non-blocking for MVP, requires MVP foundation} |
+
+**Estimates:** {ROM range} · ${low}k – ${high}k (ROM)
 
 ### Architecture Pattern
 | Layer | Pattern |
