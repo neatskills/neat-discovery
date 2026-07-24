@@ -34,7 +34,7 @@ After Phase 1 (assessing) is complete — or directly if coming from a vetting b
 - `docs/{project-name}/01-assessing/knowledge-landscape.md`
 - `docs/{project-name}/01-assessing/knowledge-assessment.md`
 
-**Or:** A vetting discovery brief (`docs/{project-name}/discovery-brief.md`) as context substitute.
+**Or:** A vetting handover (`docs/{project-name}/handover.md`) as context substitute.
 
 **From user:** Requirements list (provided in conversation).
 
@@ -79,8 +79,8 @@ cat docs/{project-name}/01-assessing/project-context.md 2>/dev/null
 cat docs/{project-name}/01-assessing/knowledge-landscape.md 2>/dev/null
 cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
 
-# Vetting brief (alternative if Phase 1 not run)
-cat docs/{project-name}/discovery-brief.md 2>/dev/null
+# Vetting handover (alternative if Phase 1 not run)
+cat docs/{project-name}/handover.md 2>/dev/null
 
 # Enterprise analysing output (optional — pre-classifies requirements)
 cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
@@ -93,7 +93,7 @@ cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
 
 **If files exist, extract:**
 
-- **From project-context.md / discovery-brief:** Scope, constraints, stakeholders, strategic context
+- **From project-context.md / vetting handover:** Scope, constraints, stakeholders, strategic context
 - **From knowledge-landscape.md:** Integration complexity, data availability
 - **From knowledge-assessment.md:** Access constraints (affects risk), knowledge gaps (increases uncertainty)
 - **From requirement-classification.md (if present):** Pre-classified requirements — skip Step 2b
