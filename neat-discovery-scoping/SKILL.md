@@ -18,7 +18,7 @@ Account for technical complexity and risk. Make assumptions explicit, express es
 
 ## When to Use
 
-After Phase 1 (assessing) is complete — or directly if coming from a vetting brief with known requirements. Use this skill to:
+After Phase 1 (assessing) is complete — or directly if coming from a user-shared vetting handover with known requirements. Use this skill to:
 
 - Classify requirements as AI / Traditional / Hybrid
 - Scope MVP boundaries by sizing requirements
@@ -34,7 +34,7 @@ After Phase 1 (assessing) is complete — or directly if coming from a vetting b
 - `docs/{project-name}/01-assessing/knowledge-landscape.md`
 - `docs/{project-name}/01-assessing/knowledge-assessment.md`
 
-**Or:** A vetting handover (`docs/{project-name}/handover.md`) as context substitute.
+**Or:** A vetting handover shared by the user (paste contents or file path) as context substitute.
 
 **From user:** Requirements list (provided in conversation).
 
@@ -79,8 +79,8 @@ cat docs/{project-name}/01-assessing/project-context.md 2>/dev/null
 cat docs/{project-name}/01-assessing/knowledge-landscape.md 2>/dev/null
 cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
 
-# Vetting handover (alternative if Phase 1 not run)
-cat docs/{project-name}/handover.md 2>/dev/null
+# Vetting handover: ask user to share if Phase 1 not run
+# "Do you have a handover from neat-util-vetting? If so, please share it."
 
 # Enterprise analysing output (optional — pre-classifies requirements)
 cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
@@ -93,7 +93,7 @@ cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
 
 **If files exist, extract:**
 
-- **From project-context.md / vetting handover:** Scope, constraints, stakeholders, strategic context
+- **From project-context.md / vetting handover (if shared):** Scope, constraints, stakeholders, strategic context
 - **From knowledge-landscape.md:** Integration complexity, data availability
 - **From knowledge-assessment.md:** Access constraints (affects risk), knowledge gaps (increases uncertainty)
 - **From requirement-classification.md (if present):** Pre-classified requirements — skip Step 2b
@@ -654,7 +654,7 @@ patterns, be concise (2-3 sentences).
 
 **No context files exist:**
 
-- If neither Phase 1 outputs nor a discovery brief are found, ask for a brief project description
+- If neither Phase 1 outputs nor a user-shared vetting handover are available, ask for a brief project description
 - Proceed with user-provided context only; note in mvp-scope.md that estimates carry higher uncertainty
 
 **Coming from analysing with pre-classified requirements:**

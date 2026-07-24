@@ -1,6 +1,6 @@
 ---
 name: neat-discovery-assessing
-description: Use at start of discovery for consulting or enterprise projects without prior vetting - establishes project context and maps current state through interview. Skip if a vetting brief exists.
+description: Use at start of discovery for consulting or enterprise projects - establishes project context and maps current state through interview. Ask user upfront if they have a vetting handover to share.
 ---
 
 # neat-discovery-assessing
@@ -12,7 +12,7 @@ Establish project understanding and map current state before scoping begins. Two
 1. **Context establishment** — what the project is, who it's for, why it matters, what success looks like
 2. **Current-state mapping** — what exists that the new thing must work with or build on
 
-Context establishment can be sourced from a vetting discovery brief (if available) or gathered via interview.
+Context establishment can be sourced from a vetting handover (if the user shares one) or gathered via interview.
 Current-state mapping always requires an interview — the questions adapt based on whether this is an enterprise system or a product build.
 
 ## Role
@@ -23,7 +23,7 @@ Current-state mapping always requires an interview — the questions adapt based
 
 Use this skill for consulting or enterprise projects starting discovery without prior vetting.
 
-**Skip this skill entirely if:** A discovery brief from neat-util-vetting exists. Go directly to `/neat-discovery-scoping` — the brief provides sufficient context.
+**Begin by asking:** "Do you have a handover from neat-util-vetting? If so, please share it." If shared → proceed directly to `/neat-discovery-scoping` using it as project context. This skill is not needed.
 
 ## Prerequisites
 

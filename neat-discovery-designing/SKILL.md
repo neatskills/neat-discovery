@@ -91,8 +91,7 @@ cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
 # Enterprise formal classification (load if present — supplements mvp-scope)
 cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
 
-# Vetting handover as fallback context (load if present and Phase 1 not run)
-cat docs/{project-name}/handover.md 2>/dev/null
+# Vetting handover: use if user shared it earlier in this session (conversation context only)
 ```
 
 **If mvp-scope.md missing:**
@@ -100,14 +99,14 @@ cat docs/{project-name}/handover.md 2>/dev/null
 - Error: "Scoping output not found. Run /neat-discovery-scoping first."
 - Exit skill
 
-**If Phase 1 files and vetting handover both missing:**
+**If Phase 1 files are missing and no vetting handover was shared earlier in the session:**
 
 - Warn: "No project context found — architecture decisions will have less context. Proceeding with mvp-scope.md only."
 - Continue
 
 **Once loaded:**
 
-- Use project-context.md (or vetting handover) to understand project goals, stakeholders, success criteria
+- Use project-context.md (or vetting handover if shared earlier in session) to understand project goals, stakeholders, success criteria
 - Read classification from mvp-scope.md (AI / Traditional / Hybrid per requirement)
 - If requirement-classification.md also present, use it to supplement with formal classification detail
 - Load effort estimates and risk flags from mvp-scope.md
@@ -772,6 +771,7 @@ Synthesize all discovery outputs into a single delivery-ready handover document.
 - **Risk-surfacing:** Unvalidated assumptions and critical spikes must be prominent
 - **Pointer-based:** Reference discovery artifacts for detail, don't duplicate them
 - **Concise:** Delivery needs the decisions, the critical path, and the first move
+- **Technology Decisions:** Pull committed build/buy choices from scoping's Pattern Analysis and any technology selections confirmed in the architecture blueprints. Only include decisions made definitive here — not "evaluate X vs Y during planning." Omit the section if none were committed.
 
 **Handover structure:**
 
@@ -808,6 +808,18 @@ Synthesize all discovery outputs into a single delivery-ready handover document.
 - **Ontology:** {YES / NO — one line}
 - **Knowledge system:** {YES / NO — one line}
 - {Other critical decisions}
+
+### Technology Decisions
+
+Committed build/buy choices — only decisions finalised in design, not deferred to planning.
+
+| Concern | Choice | Notes |
+|---------|--------|-------|
+| {e.g., Auth} | {e.g., Auth0} | {one-line rationale} |
+| {e.g., Vector DB} | {e.g., pgvector} | {one-line rationale} |
+| {e.g., LLM provider} | {e.g., Anthropic Claude} | {one-line rationale} |
+
+Omit section if no technology decisions were committed in design.
 
 ---
 
