@@ -1,6 +1,6 @@
 ---
 name: neat-discovery-scoping
-description: Scope MVP boundaries from Phase 2 requirements - produces T-shirt size estimates (XS-XXL) to determine MVP core vs deferred features, accounting for technical complexity and risk
+description: Scope MVP boundaries from a requirements list - classifies each requirement as AI / Traditional / Hybrid, produces T-shirt size estimates (XS-XXL) for MVP core vs deferred features
 ---
 
 # neat-discovery-scoping
@@ -9,7 +9,7 @@ description: Scope MVP boundaries from Phase 2 requirements - produces T-shirt s
 
 ## Overview
 
-Scope MVP boundaries by sizing requirements (XS-XXL) from Phase 2 analysis, determining what fits in MVP core vs what gets deferred. Account for technical complexity and risk. Make assumptions explicit, express estimates as ranges.
+Take a requirements list from the user, classify each requirement as AI / Traditional / Hybrid, size them (XS-XXL), and draw MVP boundaries. Account for technical complexity and risk. Make assumptions explicit, express estimates as ranges.
 
 **This is solutioning, not implementation.** Assess feasibility, identify patterns, recommend build/buy, size effort, and draw MVP boundaries.
 
@@ -17,8 +17,9 @@ Scope MVP boundaries by sizing requirements (XS-XXL) from Phase 2 analysis, dete
 
 ## When to Use
 
-After Phase 2 (analysing) is complete. Use this skill to:
+After Phase 1 (assessing) is complete — or directly if coming from a vetting brief with known requirements. Use this skill to:
 
+- Classify requirements as AI / Traditional / Hybrid
 - Scope MVP boundaries by sizing requirements
 - Determine MVP Core vs Deferred features based on effort
 - Provide total effort ranges for scoped buckets
@@ -26,19 +27,22 @@ After Phase 2 (analysing) is complete. Use this skill to:
 
 ## Prerequisites
 
-**Required from Phase 1:**
+**Required from Phase 1 (if run):**
 
 - `docs/{project-name}/01-assessing/project-context.md`
 - `docs/{project-name}/01-assessing/knowledge-landscape.md`
 - `docs/{project-name}/01-assessing/knowledge-assessment.md`
 
-**Required from Phase 2:**
+**Or:** A vetting discovery brief (`docs/{project-name}/discovery-brief.md`) as context substitute.
 
-- `docs/{project-name}/02-analysing/requirement-classification.md`
+**From user:** Requirements list (provided in conversation).
+
+**Optional — if enterprise analysing was run:**
+
+- `docs/{project-name}/02-analysing/requirement-classification.md` (pre-classifies requirements; skip user classification step if present)
 
 **Don't use for:**
 
-- Raw unfiltered requirements (run Phase 2 first)
 - Detailed spec estimation (use planning skills)
 - Time-based estimates (this is relative sizing)
 - Sprint planning with known velocity
@@ -64,36 +68,65 @@ ls -d docs/*/ 2>/dev/null
 - Ask user to choose
 - Store selected project name
 
-### Step 2: Load Phase 1 and Phase 2 Outputs
+### Step 2: Load Context
 
-Load required files:
+Load available context files:
 
 ```bash
-cat docs/{project-name}/01-assessing/project-context.md
-cat docs/{project-name}/01-assessing/knowledge-landscape.md
-cat docs/{project-name}/01-assessing/knowledge-assessment.md
-cat docs/{project-name}/02-analysing/requirement-classification.md
+# Phase 1 outputs (preferred)
+cat docs/{project-name}/01-assessing/project-context.md 2>/dev/null
+cat docs/{project-name}/01-assessing/knowledge-landscape.md 2>/dev/null
+cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
+
+# Vetting brief (alternative if Phase 1 not run)
+cat docs/{project-name}/discovery-brief.md 2>/dev/null
+
+# Enterprise analysing output (optional — pre-classifies requirements)
+cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
 ```
 
-**If files missing:**
+**If none of the above exist:**
 
-- Error: "Required outputs not found. Run /neat-discovery-assessing and /neat-discovery-analysing first."
-- Exit skill
+- Ask: "Can you describe the project context briefly? (What are we building and for whom?)"
+- Proceed with user-provided context only
 
-**If files exist:**
+**If files exist, extract:**
 
-- Read and parse all files
-- **From project-context.md:** Scope, constraints, stakeholders, strategic context
-- **From knowledge-landscape.md:** Integration complexity (how many systems?), data availability, knowledge source ownership
-- **From knowledge-assessment.md:** Access constraints (affects risk), quality issues (affects AI complexity), knowledge gaps (increases uncertainty)
-- **From requirement-classification.md:** MVP Core requirements (AI + traditional), Deferred requirements (Phase 2+)
+- **From project-context.md / discovery-brief:** Scope, constraints, stakeholders, strategic context
+- **From knowledge-landscape.md:** Integration complexity, data availability
+- **From knowledge-assessment.md:** Access constraints (affects risk), knowledge gaps (increases uncertainty)
+- **From requirement-classification.md (if present):** Pre-classified requirements — skip Step 2b
 
-**Why knowledge files matter for estimation:**
+**Why context matters for estimation:**
 
-- **Integration complexity:** More systems to integrate → increases effort
-- **Access constraints:** Permission barriers, technical barriers → adds risk
-- **Knowledge gaps:** Missing data sources → increases uncertainty and risk
+- **Integration complexity:** More systems → increases effort
+- **Access constraints:** Permission barriers → adds risk
+- **Knowledge gaps:** Missing data sources → increases uncertainty
 - **Data quality issues:** Poor quality → AI stories become more complex
+
+### Step 2b: Collect and Classify Requirements
+
+**If requirement-classification.md was loaded:** Skip this step — use that classification directly.
+
+**Otherwise:**
+
+Ask the user:
+
+> "Please list the requirements or capabilities you want to scope. You can use plain sentences, user stories, or bullet points — any format works."
+
+Once received, classify each requirement as:
+
+| Type | When to use |
+|------|-------------|
+| **AI** | Non-deterministic — needs reasoning, language understanding, judgment, or adaptive behaviour |
+| **Traditional** | Deterministic — CRUD, workflows, forms, reporting, rule-based logic |
+| **Hybrid** | Has both a deterministic shell and an AI-powered core (e.g., a form that triggers an AI analysis) |
+
+Show the classification to the user and ask for confirmation before sizing:
+
+> "Here's how I've classified the requirements — does this look right before we estimate?"
+
+Adjust based on feedback.
 
 ### Step 3: Detect Mode (Update or New)
 
@@ -115,17 +148,19 @@ Re-estimate only affected requirements. Preserve unchanged estimates to maintain
 
 ### Step 4: Estimate MVP Core Requirements
 
-For each MVP Core requirement (from requirement-classification.md):
+For each MVP Core requirement:
 
-1. Identify requirement details (include REQ-ID from classification)
-2. Estimate using 4-phase process (Parse → Complexity → Risk → Size)
-3. Document assumptions
-4. Note escalation conditions
+1. Identify requirement details (include REQ-ID)
+2. Note its classification: **AI / Traditional / Hybrid**
+3. Estimate using 4-phase process (Parse → Complexity → Risk → Size)
+4. Document assumptions
+5. Note escalation conditions
 
-**Group estimates:**
+**Group estimates by classification:**
 
-- AI Capabilities (non-deterministic requirements)
-- Supporting Layer (deterministic requirements)
+- AI Requirements (non-deterministic)
+- Traditional Requirements (deterministic)
+- Hybrid Requirements (both)
 
 **IMPORTANT:** Reference requirement IDs in story titles for traceability:
 
@@ -638,16 +673,16 @@ Generate markdown file following approved structure.
 ### Step 12: Write Files
 
 ```bash
-# Create Phase 3 directory
+# Create Phase 2 directory
 mkdir -p docs/{project-name}/03-scoping
 
 # Write MVP scope file
-# (Use Write tool for mvp-scope.md with REQ-IDs in story titles)
+# (Use Write tool for mvp-scope.md with REQ-IDs in story titles and classification column)
 
 # Update traceability matrix
 # (Use Edit tool to add columns to docs/{project-name}/traceability-matrix.md)
-# Add: Scoped Story + Size Estimate + Dependencies columns
-# Map: REQ-001 → Story 1 → XL → Blocks: REQ-005, REQ-007
+# Add: Classification + Scoped Story + Size Estimate + Dependencies columns
+# Map: REQ-001 → AI → Story 1 → XL → Blocks: REQ-005, REQ-007
 ```
 
 ### Step 13: Confirm Completion and Validation Gate
@@ -657,13 +692,13 @@ MVP scoping complete
 
 Generated:
 - docs/{project-name}/03-scoping/mvp-scope.md
-- docs/{project-name}/traceability-matrix.md (updated with sizing and dependencies)
+- docs/{project-name}/traceability-matrix.md (updated with classification, sizing, and dependencies)
 
 ---
 
-VALIDATION GATE 3: Review Scope vs Effort
+VALIDATION GATE 2: Review Scope vs Effort
 
-Review the MVP effort estimate before proceeding to Phase 4 (Designing):
+Review the MVP effort estimate before proceeding to Phase 3 (Designing):
 
 MVP Assessment: {size} project ({timeline estimate})
 Critical Path: {longest dependency chain}
@@ -671,10 +706,10 @@ ROM Cost: ${low}k - ${high}k
 
 Decision Options:
 1. PROCEED: MVP scope and effort are acceptable → Run /neat-discovery-designing
-2. RE-SCOPE: MVP too large → Re-run /neat-discovery-analysing with tighter boundaries
+2. RE-SCOPE: MVP too large → Revisit requirements list and tighten scope
 3. DEFER: Effort exceeds capacity → Pause discovery, revisit later
 
-Recommendation: If MVP estimate > 9 months, consider tightening scope in Phase 2 before designing architecture.
+Recommendation: If MVP estimate > 9 months, consider tightening scope before designing architecture.
 
 Next step (if approved): Run /neat-discovery-designing to create architecture blueprint
 ```
@@ -683,12 +718,13 @@ Next step (if approved): Run /neat-discovery-designing to create architecture bl
 
 ### mvp-scope.md (in 03-scoping/)
 
+- Requirement classification table (AI / Traditional / Hybrid per requirement)
 - Executive summary (MVP vs Deferred vs Full Scope totals)
-- MVP Core sizing (AI + traditional, grouped)
+- MVP Core sizing (grouped by classification: AI, Traditional, Hybrid)
 - Deferred feature sizing
 - Pattern analysis (build/buy recommendations)
 - Effort summary table
-- **Purpose:** Scope MVP boundaries and size requirements for executive decision-making on phasing
+- **Purpose:** Classify and size requirements for MVP scoping and architecture input
 
 ## File Format
 

@@ -1,25 +1,35 @@
 ---
 name: neat-discovery-analysing
-description: Classify requirements as deterministic vs non-deterministic and build strategic business case for maximizing value through combined AI agent and application development
+description: Optional enterprise phase - build formal business case and ROI model for stakeholder alignment before scoping. Run between assessing and scoping for consulting or enterprise projects.
 ---
 
 # neat-discovery-analysing
 
+> **Optional phase.** For most product builds, requirement classification is handled inline by `/neat-discovery-scoping`. Use this skill only when a formal business case, ROI model, or executive stakeholder report is required before proceeding to scope.
+
 ## Overview
 
-Classify requirements as deterministic vs non-deterministic and build strategic business case for maximizing value through combined AI agent and application development.
+Build a strategic business case and formal requirement classification for enterprise or consulting projects that require stakeholder alignment before investment decisions. Produces formal documentation for executive audiences.
 
 ## Role
 
-**Role:** You are a Business Analyst who classifies requirements and builds strategic business cases for maximizing value through combined AI agent and application development.
+**Role:** You are a Business Analyst who builds strategic business cases and formal requirement classifications for enterprise stakeholder alignment.
 
 ## When to Use
 
-Use after Phase 1 to:
+**Use this skill when:**
 
-- Classify requirements (deterministic vs non-deterministic)
-- Assess AI solution feasibility
-- Build business case and prioritize opportunities
+- An enterprise or consulting project requires formal business justification before scoping
+- Stakeholders need an ROI model or executive report to approve the initiative
+- A formal requirement classification document is required as a deliverable
+
+**Do NOT use this skill when:**
+
+- Building a product where you own the requirements (use `/neat-discovery-scoping` directly)
+- The team already understands the value and just needs scope and architecture
+- Coming from neat-util-vetting (the vetting brief already provides business justification)
+
+**Position in workflow:** Runs after `/neat-discovery-assessing`, before `/neat-discovery-scoping`. Its output (`requirement-classification.md`) is consumed by scoping to skip the inline classification step.
 
 ## Smart Mode Detection
 

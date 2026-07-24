@@ -38,18 +38,18 @@ After Phase 3 (scoping) is complete. Use this skill to:
 
 ## Prerequisites
 
-**Required from Phase 3:**
-
-- `docs/{project-name}/03-scoping/mvp-scope.md`
-
 **Required from Phase 2:**
 
-- `docs/{project-name}/02-analysing/requirement-classification.md`
+- `docs/{project-name}/03-scoping/mvp-scope.md` — provides classified requirements (AI / Traditional / Hybrid) and effort sizing
 
-**Required from Phase 1:**
+**Required from Phase 1 (if run):**
 
 - `docs/{project-name}/01-assessing/knowledge-landscape.md`
 - `docs/{project-name}/01-assessing/knowledge-assessment.md`
+
+**Optional:**
+
+- `docs/{project-name}/02-analysing/requirement-classification.md` — formal classification from enterprise analysing phase (supplements mvp-scope.md if present)
 
 **Assumed:** Executive approval to proceed with design
 
@@ -76,37 +76,40 @@ ls -d docs/*/ 2>/dev/null
 
 ### Step 2: Load Previous Outputs
 
-Load all required files:
+Load files:
 
 ```bash
-cat docs/{project-name}/01-assessing/project-context.md
-cat docs/{project-name}/01-assessing/knowledge-landscape.md
-cat docs/{project-name}/01-assessing/knowledge-assessment.md
-cat docs/{project-name}/02-analysing/requirement-classification.md
+# Required
 cat docs/{project-name}/03-scoping/mvp-scope.md
+
+# Phase 1 context (load if present)
+cat docs/{project-name}/01-assessing/project-context.md 2>/dev/null
+cat docs/{project-name}/01-assessing/knowledge-landscape.md 2>/dev/null
+cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
+
+# Enterprise formal classification (load if present — supplements mvp-scope)
+cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
+
+# Vetting brief as fallback context (load if present and Phase 1 not run)
+cat docs/{project-name}/discovery-brief.md 2>/dev/null
 ```
 
 **If mvp-scope.md missing:**
 
-- Error: "Phase 3 outputs not found. Run /neat-discovery-scoping first."
+- Error: "Scoping output not found. Run /neat-discovery-scoping first."
 - Exit skill
 
-**If requirement-classification.md missing:**
+**If Phase 1 files and discovery brief both missing:**
 
-- Error: "Phase 2 outputs not found. Run /neat-discovery-analysing first."
-- Exit skill
+- Warn: "No project context found — architecture decisions will have less context. Proceeding with mvp-scope.md only."
+- Continue
 
-**If Phase 1 files missing:**
+**Once loaded:**
 
-- Error: "Phase 1 outputs not found. Run /neat-discovery-assessing first."
-- Exit skill
-
-**If all files exist:**
-
-- Use project-context.md to understand project goals, stakeholders, success criteria
-- Parse and summarize key points internally
-- Identify non-deterministic requirements for architecture design
-- Load effort estimates from Phase 3
+- Use project-context.md (or discovery brief) to understand project goals, stakeholders, success criteria
+- Read classification from mvp-scope.md (AI / Traditional / Hybrid per requirement)
+- If requirement-classification.md also present, use it to supplement with formal classification detail
+- Load effort estimates and risk flags from mvp-scope.md
 
 ### Step 3: Extract Estimation Insights
 

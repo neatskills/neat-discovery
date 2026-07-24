@@ -1,25 +1,30 @@
 # neat-discovery
 
-AI discovery framework for **maximizing business value** by strategically balancing AI agent capabilities with application development.
+Discovery framework for understanding what to build, scoping the effort, and designing the architecture — before implementation begins.
 
 ## Overview
 
-Rather than simply assessing "do we need AI?", this framework helps consultants **optimize the blend** of AI agents and applications to deliver maximum value. It guides you through:
+Three phases, each feeding the next:
 
-1. **neat-discovery-assessing** - Create comprehensive project assessment and document current state
-2. **neat-discovery-analysing** - Classify requirements and build business case for value optimization
-3. **neat-discovery-scoping** - Scope MVP boundaries with T-shirt size estimates
-4. **neat-discovery-designing** - Design balanced architecture leveraging both AI agents and applications
+1. **neat-discovery-assessing** - Understand the project: context, current state, constraints
+2. **neat-discovery-scoping** - Scope MVP boundaries with T-shirt estimates and AI vs traditional classification
+3. **neat-discovery-designing** - Design high-level architecture for AI agent and application components
 
-Each skill produces markdown artifacts in `docs/{project-name}/` organized by phase that feed into subsequent phases.
+Each skill produces markdown artifacts in `docs/{project-name}/` organized by phase.
 
-### Why Balance Matters
+### Optional: Business Case Phase
 
-**AI agents excel at:** Non-deterministic tasks, autonomous decision-making, natural language understanding, complex reasoning, adapting to ambiguity
+For enterprise or consulting projects that require formal stakeholder alignment before proceeding:
 
-**Applications excel at:** Deterministic workflows, predictable performance, real-time constraints, regulatory compliance, cost-efficient scale
+- **neat-discovery-analysing** - Build strategic business case and ROI model (runs between assessing and scoping)
 
-**Maximum value comes from:** Strategically combining both — using AI where it multiplies capability, applications where they ensure reliability and cost-effectiveness.
+### Entry Points
+
+The workflow is flexible — you can enter at any phase:
+
+- **Coming from neat-util-vetting:** Start at scoping (assessing context is pre-populated from the discovery brief)
+- **New consulting project:** Start at assessing (full interview)
+- **Greenfield product build with known requirements:** Start at scoping directly
 
 ## Installation
 
@@ -31,9 +36,9 @@ cd neat-discovery/scripts
 This creates symlinks in `~/.claude/skills/`:
 
 - `neat-discovery-assessing`
-- `neat-discovery-analysing`
 - `neat-discovery-scoping`
 - `neat-discovery-designing`
+- `neat-discovery-analysing` (optional — enterprise business case)
 
 ## Usage
 
@@ -43,53 +48,55 @@ This creates symlinks in `~/.claude/skills/`:
 /neat-discovery-assessing
 ```
 
+**Skip if:** Coming from neat-util-vetting (discovery brief pre-populates context) and no existing codebase to map.
+
 **Outputs:**
 
 - `docs/{project-name}/01-assessing/project-context.md` - Project overview, stakeholders, scope, strategic rationale
 - `docs/{project-name}/01-assessing/knowledge-landscape.md` - Architecture, dependencies, knowledge sources, systems
 - `docs/{project-name}/01-assessing/knowledge-assessment.md` - Constraints, quality gaps, complexity analysis
 
-### Phase 2: Analysing
-
-```
-/neat-discovery-analysing
-```
-
-**Prerequisites:** Phase 1 outputs  
-**Inputs:** Requirements list, business context
-
-**Outputs:**
-
-- `docs/{project-name}/02-analysing/requirement-classification.md` - Agent vs app classification with value optimization
-- `docs/{project-name}/02-analysing/executive-report.md` - Strategic business justification and ROI model
-- `docs/{project-name}/02-analysing/stakeholder-brief.md` - Stakeholder alignment (optional)
-
-### Phase 3: Scoping
+### Phase 2: Scoping
 
 ```
 /neat-discovery-scoping
 ```
 
-**Prerequisites:** Phase 1 and Phase 2 outputs  
-**Inputs:** Classified requirements from Phase 2
+**Prerequisites:** Phase 1 outputs (or discovery brief from vetting)  
+**Inputs:** Requirements list from user
 
 **Outputs:**
 
-- `docs/{project-name}/03-scoping/mvp-scope.md` - T-shirt size estimates (XS-XXL) for MVP core vs deferred features
+- `docs/{project-name}/03-scoping/mvp-scope.md` - Requirements classified (AI / Traditional / Hybrid) with T-shirt size estimates (XS-XXL) for MVP core vs deferred
 
-### Phase 4: Designing
+### Phase 3: Designing
 
 ```
 /neat-discovery-designing
 ```
 
-**Prerequisites:** Phase 1, Phase 2, and Phase 3 outputs
+**Prerequisites:** Phase 1 and Phase 2 outputs
 
 **Outputs:**
 
 - `docs/{project-name}/04-designing/agent-architecture.md` - AI agent infrastructure design
 - `docs/{project-name}/04-designing/app-architecture.md` - Application architecture
-- `docs/{project-name}/04-designing/integration-architecture.md` - Integration strategy balancing both approaches
+- `docs/{project-name}/04-designing/integration-architecture.md` - Integration strategy
+
+### Optional: Analysing (Enterprise Business Case)
+
+```
+/neat-discovery-analysing
+```
+
+**When to use:** Enterprise or consulting projects requiring formal business justification before scoping.  
+**Run between:** Assessing and Scoping.
+
+**Outputs:**
+
+- `docs/{project-name}/02-analysing/requirement-classification.md` - Formal AI vs app classification
+- `docs/{project-name}/02-analysing/executive-report.md` - Strategic business justification and ROI model
+- `docs/{project-name}/02-analysing/stakeholder-brief.md` - Stakeholder alignment (optional)
 
 ## Output Structure
 
@@ -102,7 +109,7 @@ docs/
       project-context.md
       knowledge-landscape.md
       knowledge-assessment.md
-    02-analysing/
+    02-analysing/          # optional — enterprise business case only
       requirement-classification.md
       executive-report.md
       stakeholder-brief.md (optional)
@@ -116,10 +123,10 @@ docs/
 
 **Phase folders:**
 
-- `01-assessing/` - Project context, current state, and constraints assessment
-- `02-analysing/` - Requirement classification optimized for value and business case reports
-- `03-scoping/` - MVP boundaries with T-shirt size estimates
-- `04-designing/` - Balanced AI agent and application architecture blueprints
+- `01-assessing/` - Project context, current state, and constraints
+- `02-analysing/` - Enterprise business case (optional, runs after assessing)
+- `03-scoping/` - Requirements classified and sized; MVP vs deferred
+- `04-designing/` - AI agent and application architecture blueprints
 
 ## Contributing
 
