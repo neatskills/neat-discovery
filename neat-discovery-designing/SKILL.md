@@ -91,8 +91,8 @@ cat docs/{project-name}/01-assessing/knowledge-assessment.md 2>/dev/null
 # Enterprise formal classification (load if present — supplements mvp-scope)
 cat docs/{project-name}/02-analysing/requirement-classification.md 2>/dev/null
 
-# Vetting brief as fallback context (load if present and Phase 1 not run)
-cat docs/{project-name}/discovery-brief.md 2>/dev/null
+# Vetting handover as fallback context (load if present and Phase 1 not run)
+cat docs/{project-name}/handover.md 2>/dev/null
 ```
 
 **If mvp-scope.md missing:**
@@ -100,14 +100,14 @@ cat docs/{project-name}/discovery-brief.md 2>/dev/null
 - Error: "Scoping output not found. Run /neat-discovery-scoping first."
 - Exit skill
 
-**If Phase 1 files and discovery brief both missing:**
+**If Phase 1 files and vetting handover both missing:**
 
 - Warn: "No project context found — architecture decisions will have less context. Proceeding with mvp-scope.md only."
 - Continue
 
 **Once loaded:**
 
-- Use project-context.md (or discovery brief) to understand project goals, stakeholders, success criteria
+- Use project-context.md (or vetting handover) to understand project goals, stakeholders, success criteria
 - Read classification from mvp-scope.md (AI / Traditional / Hybrid per requirement)
 - If requirement-classification.md also present, use it to supplement with formal classification detail
 - Load effort estimates and risk flags from mvp-scope.md
@@ -256,6 +256,29 @@ NO if:
 - Update mechanisms (real-time, batch, triggered)
 - Integration with existing sources
 
+### Step 7b: Sub-Agent Review — Architecture Key Decisions
+
+After making the ontology and knowledge system decisions (Steps 6–7), spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge these foundational calls — not to confirm them.
+
+**Blind review:** Pass raw evidence and binary decisions only — do NOT include the reasoning that led to each decision. The sub-agent must independently determine whether the decisions are correct given the evidence.
+
+**Provide the sub-agent with:**
+- The requirement classification summary: AI / Traditional / Hybrid counts and capability descriptions (no reasoning)
+- The knowledge fragmentation facts: how many sources, types, overlap, access patterns (from Step 5)
+- Key findings from Phase 1 knowledge landscape (facts only — no assessment commentary)
+- The ontology decision: YES or NO (the decision only, no rationale)
+- The knowledge system decision: YES or NO (the decision only, no rationale)
+
+**Ask the sub-agent to check:**
+1. Is the ontology decision justified by requirement count and cross-agent concept sharing — or added speculatively? (Warranted only when multiple agents need shared concept definitions or relationship reasoning is required.)
+2. Is the knowledge system decision supported by fragmentation evidence from the Phase 1 landscape — or assumed? (Warranted only when sources are highly fragmented or lack accessible APIs.)
+3. Are there any requirements whose knowledge access patterns weren't considered in these decisions?
+4. Do the decisions leave any XL/XXL estimation risks from scoping unaddressed?
+
+**The sub-agent should return:** A short critique (3–5 bullets). For each finding, state whether it changes the decision or just requires a stronger rationale.
+
+**After receiving results:** Show findings to user. Revise decisions or rationale if needed before proceeding to Step 8.
+
 ### Step 8: Agent Architecture Design
 
 Map requirements to agents, prioritizing high-risk/high-complexity stories.
@@ -300,6 +323,31 @@ For each agent:
 - Which existing systems do agents interact with?
 - API requirements
 - Data format transformations
+
+### Step 8b: Sub-Agent Review — Agent Architecture
+
+After designing the agent architecture, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the design — not to confirm it.
+
+**Blind review:** Pass the architecture decisions and project context only — do NOT include the reasoning behind agent boundary choices or orchestration selection. The sub-agent must independently evaluate whether the architecture is sound.
+
+**Provide the sub-agent with:**
+- Objective: "Challenge this agent architecture — find where boundaries are wrong, coupling is hidden, or risks are unaddressed"
+- The project domain, requirements summary (AI/Traditional/Hybrid counts and capability descriptions), and key constraints
+- The agent inventory: name and purpose for each agent — no boundary justification
+- The orchestration pattern stated as a label (sequential / parallel / hierarchical — no rationale)
+- The high-risk stories (XL, XXL) with Watch-for conditions from scoping (risk context the sub-agent needs)
+- The critical path from the dependency map (the sequence only — no explanation)
+- The ontology and knowledge system decisions (YES/NO only)
+
+**Ask the sub-agent to check:**
+1. Do agent boundaries align with knowledge source groupings from the landscape — or do agents cross knowledge domain boundaries in ways that create tight coupling?
+2. Do the orchestration dependencies in the agent architecture match the critical path from scoping? Any agent dependencies not reflected in the dependency map (or vice versa)?
+3. Are XL/XXL estimation risks from scoping reflected in the agent design with explicit mitigations — or are they silently absorbed into vague agent descriptions?
+4. Is there any agent whose "Reasoning capabilities needed" is described vaguely enough that implementation planning won't know what to build?
+
+**The sub-agent should return:** A short critique (3–5 bullets). For each finding, name the agent and the specific concern.
+
+**After receiving results:** Show findings to user. Revise agent architecture if needed before proceeding to Step 9.
 
 ### Step 9: Knowledge Flow Design
 
@@ -709,7 +757,91 @@ mkdir -p docs/{project-name}/04-designing
 # (Use Write tool for agent-architecture.md)
 # (Use Write tool for app-architecture.md)
 # (Use Write tool for integration-architecture.md)
+
+# Generate handover (project root — spans all phases)
+# (Use Write tool for docs/{project-name}/handover.md — see Step 17b)
 ```
+
+### Step 17b: Generate Handover
+
+Synthesize all discovery outputs into a single delivery-ready handover document. This is the seam between discovery and delivery — what the build team needs on day 1 without re-reading every artifact.
+
+**Content guidelines:**
+
+- **Decision-focused:** State what was decided, not how it was reasoned
+- **Risk-surfacing:** Unvalidated assumptions and critical spikes must be prominent
+- **Pointer-based:** Reference discovery artifacts for detail, don't duplicate them
+- **Concise:** Delivery needs the decisions, the critical path, and the first move
+
+**Handover structure:**
+
+```markdown
+# Discovery Handover: {project-name}
+
+**Discovery completed:** {date}
+**Phases run:** {e.g., vetting → scoping → designing}
+
+---
+
+## Project in One Paragraph
+
+[What it is, who it's for, what problem it solves — 3–4 sentences]
+
+---
+
+## What Was Decided
+
+### MVP Scope
+- **{N} requirements in MVP Core** — {size assessment} project
+- **{N} requirements deferred** — {brief note}
+- **Timeline estimate:** {ROM range}
+- **Cost estimate:** ${low}k – ${high}k (ROM)
+
+### Architecture Pattern
+| Layer | Pattern |
+|-------|---------|
+| AI | {e.g., Single orchestration service with tool-call loop} |
+| App | {e.g., PWA SPA, single Node.js server} |
+| Integration | {e.g., SSE streaming, REST for state reads} |
+
+### Key Architecture Decisions
+- **Ontology:** {YES / NO — one line}
+- **Knowledge system:** {YES / NO — one line}
+- {Other critical decisions}
+
+---
+
+## Critical Path
+
+```text
+{REQ-013} → {REQ-012} → {REQ-001} → {REQ-002} → ... → first shippable
+```
+
+**First move:** {What delivery must do first and why}
+
+---
+
+## Open Risks and Assumptions
+
+| # | Risk / Assumption | Impact if wrong | Status |
+|---|------------------|-----------------|--------|
+| 1 | {e.g., API spike unvalidated} | Blocks core architecture | ⚠️ Unvalidated |
+| 2 | {e.g., Timeline assumes part-time} | ROM cost doubles | ⚠️ Unvalidated |
+
+---
+
+## Discovery Artifacts
+
+| Artifact | Location | What it contains |
+|----------|----------|-----------------|
+| MVP scope | `03-scoping/mvp-scope.md` | Requirements, sizes, dependencies, ROM |
+| Agent architecture | `04-designing/agent-architecture.md` | AI components, orchestration |
+| App architecture | `04-designing/app-architecture.md` | Frontend, backend, deployment |
+| Integration architecture | `04-designing/integration-architecture.md` | Data flows, error handling |
+| Traceability matrix | `traceability-matrix.md` | Requirements → decisions |
+```
+
+**Note:** Store at project root — `docs/{project-name}/handover.md` — not inside any phase folder.
 
 ### Step 18: Confirm Completion
 
@@ -720,8 +852,9 @@ Generated:
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
+- docs/{project-name}/handover.md ← delivery entry point
 
-Discovery process complete. High-level architecture defined for implementation planning.
+Discovery process complete.
 
 All artifacts:
 - docs/{project-name}/01-assessing/project-context.md
@@ -733,6 +866,7 @@ All artifacts:
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
+- docs/{project-name}/handover.md ← delivery entry point
 ```
 
 ## Output Specifications

@@ -302,6 +302,27 @@ For each element in current-state.md, add priority flag:
 - Important elements affect MVP vs deferred decisions
 - Nice-to-have elements are candidates for Phase 2+ enhancement
 
+### Step 7b: Sub-Agent Review — Prioritisation
+
+Spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the priority classification — not to confirm it.
+
+**Blind review:** Pass decisions and facts only — do NOT include the rationale or reasoning behind the priority flags. The sub-agent must form its own independent judgment.
+
+**Provide the sub-agent with:**
+- The project goal, domain, and success metrics from Step 3 (context only — no session reasoning)
+- The full list of current-state elements with their Critical / Important / Nice-to-have flags — flags only, not the reasons they were assigned
+- The list of access constraints by element (what is constrained, not the assessment reasoning)
+
+**Ask the sub-agent to check:**
+1. Does every Critical element trace to a specific downstream requirement or AI capability it enables? Any Critical flags without a traceable purpose?
+2. Are any Nice-to-have elements actually access-constrained Criticals — important in value but hard to access, not truly low priority?
+3. Could any shadow IT systems or undocumented knowledge sources plausibly be absent from this inventory?
+4. Do the priority flags align with the success metrics identified in Step 3?
+
+**The sub-agent should return:** A short critique (3–5 bullets). For each finding, state the element, the suggested reclassification, and why.
+
+**After receiving results:** Show findings to user. If reclassifications are recommended, ask: "Would you like to adjust any priority flags before the quality assessment?" Wait for response before proceeding to Step 8.
+
 ### Step 8: Quality Assessment
 
 Assess current state quality issues:
@@ -427,6 +448,29 @@ knowledge-assessment.md:
 Show proposed structure to user and ask: "Does this structure work, or would you like to adjust?"
 
 Wait for approval or modification.
+
+### Step 10b: Sub-Agent Review — Assessment Completeness
+
+Before generating output documents, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the assessment's completeness — not to confirm it.
+
+**Blind review:** Pass inventory and findings only — do NOT include the reasoning behind gap selection or quality assessments. The sub-agent must independently identify what's missing or understated.
+
+**Provide the sub-agent with:**
+- Objective: "Challenge this project assessment — find what is missing, understated, or overlooked"
+- Project context: domain, stakeholders, and success metrics (background only — no session reasoning)
+- The inventory of current-state elements with priority flags — flags only, not the reasoning behind them
+- The list of access constraints by category — what is constrained, not the rationale for each assessment
+- The list of quality issues and gaps — stated as facts, not with the justification that identified them
+
+**Ask the sub-agent to check:**
+1. Are any gaps understated relative to what the landscape reveals? (Things that seem fine but represent actually missing information)
+2. Does the known-unknowns coverage go beyond content gaps — does it address completeness uncertainty (whole categories of systems or sources that might not have been discovered)?
+3. Are the success metrics from Step 3 concrete enough for Phase 3 (scoping) to use as scoping criteria — or are they too vague?
+4. Is anything in the landscape that looks routine at first glance actually a higher-risk dependency than currently flagged?
+
+**The sub-agent should return:** A short critique (3–5 bullets), each noting whether the finding warrants a document addition or just a review note.
+
+**After receiving results:** Show findings to user. Ask: "Would you like to adjust the assessment before writing the documents?" Wait for response before proceeding to Step 11.
 
 ### Step 11: Generate Output Documents
 

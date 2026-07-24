@@ -245,6 +245,27 @@ For each requirement:
 Keep IDs stable - if requirements change, update the requirement text but preserve the ID.
 **Never reuse deleted IDs** - if REQ-005 is removed, next new requirement is REQ-N+1, not REQ-005.
 
+### Step 9b: Sub-Agent Review — Requirement Classification
+
+After classifying all requirements, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the deterministic / non-deterministic calls — not to confirm them.
+
+**Blind review:** Pass requirement text and classification labels only — do NOT include the rationale for each classification. The sub-agent must independently assess whether each label is correct.
+
+**Provide the sub-agent with:**
+- Project context: domain, stakeholders, constraints (background only — no session reasoning)
+- The knowledge landscape: what sources exist, their quality, and access constraints
+- Each requirement: ID, full text, and classification label (deterministic / non-deterministic) — with NO rationale attached
+
+**Ask the sub-agent to check:**
+1. Could any requirement classified as deterministic require judgment at edge cases — making it actually Hybrid or non-deterministic?
+2. Are Hybrid requirements identified as such, rather than forced into one bucket?
+3. Is any requirement classified as non-deterministic actually a fixed business rule that could be handled deterministically?
+4. Does the classification rationale reference the knowledge landscape (available sources, quality, access) — or is it purely based on the requirement text alone?
+
+**The sub-agent should return:** A short critique (3–5 bullets). For each finding, cite the Req ID, the current classification, and the suggested change with reasoning.
+
+**After receiving results:** Show findings to user. If any reclassifications are accepted, update the requirement list before proceeding to Step 10.
+
 ### Step 10: Assess Feasibility (Non-Deterministic Requirements)
 
 For each non-deterministic requirement, assess feasibility:
@@ -273,6 +294,27 @@ Mark each as:
 - High feasibility
 - Medium feasibility (with caveats)
 - Low feasibility (significant risks)
+
+### Step 10b: Sub-Agent Review — Feasibility Assessment
+
+After assessing feasibility for all non-deterministic requirements, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the ratings — not to confirm them.
+
+**Blind review:** Pass requirement text and rating labels only — do NOT include the rationale for each rating. The sub-agent must independently assess feasibility given the available evidence.
+
+**Provide the sub-agent with:**
+- Objective: "Challenge these feasibility ratings — find where they are optimistic, unsupported, or misaligned with the evidence"
+- The knowledge landscape: what sources exist, their quality, access constraints, and priority flags (Critical / Important / Nice-to-have)
+- Each non-deterministic requirement: ID, full text, and feasibility rating (High / Medium / Low) — with NO rationale attached
+
+**Ask the sub-agent to check:**
+1. Is any feasibility rating correlated with client enthusiasm or strategic importance rather than evidence of data availability and access? (High-value requirements that lack knowledge sources should be Medium or Low, not High.)
+2. Do Low feasibility ratings name specific blockers (missing data, access denial, unclear scope) rather than vague uncertainty?
+3. Do the Phase 1 access constraints (permission barriers, technical barriers) appear in the feasibility rationale for affected requirements?
+4. Are there requirements where the feasibility rating conflicts with the Phase 1 priority flag? (e.g. a Critical element rated Low feasibility — this tension needs to be explicitly surfaced, not silently resolved.)
+
+**The sub-agent should return:** A short critique (3–5 bullets). For each finding, cite the Req ID and the specific concern.
+
+**After receiving results:** Show findings to user. If any ratings are revised, update the feasibility assessment before proceeding to Step 11.
 
 ### Step 11: Identify Need for Technical Spikes (Optional)
 
