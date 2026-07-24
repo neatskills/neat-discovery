@@ -142,7 +142,7 @@ From `mvp-scope.md`, extract critical insights that inform architecture:
 **Effort-Driven Constraints:**
 
 - Stories estimated as XL/XXL need careful architecture (no over-engineering S stories)
-- Build/buy decisions reduce complexity (Auth0 reduces auth story from M → S)
+- Build/buy decisions reduce complexity (e.g., a managed auth service reduces an auth story from M → S)
 
 Summarize findings internally for use in architecture decisions.
 
@@ -444,7 +444,7 @@ Define ownership and accountability:
 - SSO integration approach (validate with existing identity provider)
 - Role-based access pattern (how roles map to permissions)
 - Session vs token strategy trade-offs
-- **Build/buy from Phase 3:** e.g., "Use Auth0" (already decided)
+- **Build/buy from Phase 3:** e.g., "Use [chosen auth service]" (already decided) — reference whatever was decided in Phase 3 pattern analysis
 - **Defer to planning:** Specific protocols (SAML vs OIDC), token formats
 
 **File Storage Architecture:**
@@ -475,52 +475,29 @@ Define ownership and accountability:
 
 Design how AI components and traditional components work together.
 
-**Critical Integration Points:**
+**Identify integration points:**
 
-#### 1. Document Upload → AI Processing Flow
+Review the agent architecture (Step 8) and application architecture (Step 11) side by side. An integration point exists wherever a traditional component triggers or consumes an AI component, or vice versa. List them — typically 2–5 for a focused MVP.
 
-- User uploads documents via traditional web app
-- Web app saves files to object storage
-- Trigger AI processing: Synchronous or asynchronous?
-  - Sync: User waits, simple but slow
-  - Async: Background job queue (Celery, RabbitMQ, SQS, Redis Queue)
-- AI agent processes documents → generates markdown
-- Store markdown, update SQL metadata
-- Notify user when complete (WebSocket, polling, notification system)
+**For each integration point, define:**
 
-#### 2. Markdown Editor → AI Assistance Flow
+- **Trigger:** What initiates the interaction? (user action, system event, scheduled job, state change)
+- **Sync or async:** Does the user wait for the result, or is it processed in the background? Async suits long-running AI operations; sync suits fast, on-demand responses.
+- **Data flow:** What goes in, what comes out, what gets stored and where?
+- **Streaming:** If the AI response is long or progressive, define the streaming mechanism (SSE, WebSocket, chunked transfer).
+- **Error handling:** AI timeouts (typically 10–60s), retry strategy (idempotent, exponential backoff), fallback behaviour so users can proceed when AI is unavailable.
+- **Permission context:** How is the user's identity and access scope passed to the AI component to enforce scoped retrieval or generation?
 
-- User edits markdown in traditional web app
-- AI suggestions on-demand (calculate inference, summarization)
-- API design: Web backend → AI service (REST, gRPC, direct SDK call)
-- Streaming responses for long-running AI operations
-- Error handling when AI service unavailable or times out
-
-#### 3. Approval Workflow → Vector DB Indexing Flow
-
-- Traditional workflow engine changes project status to "Approved"
-- Trigger event: Database trigger, event bus, polling
-- AI service indexes markdown + documents into vector DB
-- Update search index status in SQL
-- Handle failures gracefully (retry logic, dead letter queue)
-
-#### 4. RAG Search Flow
-
-- User query via traditional web UI
-- Web backend forwards query to AI service (RAG endpoint)
-- AI service retrieves from vector DB + generates response
-- Stream results back to user (Server-Sent Events, WebSocket, chunked transfer)
-- Permission enforcement: Pass user context to AI service for scoped retrieval
-- Caching strategy for common queries
+**Cross-cutting concerns:**
 
 <!-- markdownlint-disable MD013 -->
 | Concern | Key decisions |
 | --- | --- |
-| **API Contract** | One endpoint per integration point (process-documents, generate-markdown, infer-calculation, search, find-similar, index-project); define sync vs async per endpoint |
-| **Error Handling** | AI timeouts 10-60s; idempotent retries with exponential backoff; fallback so users can proceed when AI is down |
-| **Performance** | Async processing for slow AI ops; cache calculation inference for similar inputs; rate-limit LLM calls |
-| **Security** | Inter-service auth (API key / OAuth / mTLS); HTTPS everywhere; redact PII before external LLM calls; pass user context for scoped retrieval |
-| **Deployment** | AI as separate microservice; define co-located vs separate; health checks and circuit breakers |
+| **API Contract** | One endpoint per integration point; define sync vs async, request/response shape per endpoint |
+| **Error Handling** | AI timeouts 10–60s; idempotent retries with exponential backoff; fallback so users can proceed when AI is down |
+| **Performance** | Async for slow AI ops; cache repeated AI calls where inputs are stable; rate-limit LLM calls |
+| **Security** | Inter-service auth (API key / OAuth / mTLS); HTTPS everywhere; redact PII before external LLM calls; pass user context for permission enforcement |
+| **Deployment** | AI as separate service or co-located — decide based on scale and team; health checks and circuit breakers required |
 <!-- markdownlint-enable MD013 -->
 
 ### Step 13: Technology Pattern Validation
@@ -534,25 +511,24 @@ Design how AI components and traditional components work together.
 - SPA framework needed (decide specific one during planning: React/Vue/Angular)
 - State management approach (evaluate Redux vs simpler alternatives)
 - Component library (assess accessibility requirements)
-- **Build/buy from Phase 3:** e.g., "Use TipTap for markdown editing" (already decided)
+- **Build/buy from Phase 3:** e.g., "Use [chosen component or library]" (already decided) — reference whatever was decided in Phase 3 pattern analysis
 
 **Backend pattern:**
 
 - API-first architecture (REST/GraphQL/gRPC - decide protocol during planning)
 - Background job processing needed (evaluate queue vs cron patterns)
 - Language/framework choice deferred to planning (align with team skills)
-- **Build/buy from Phase 3:** e.g., "Use Auth0 for authentication" (already decided)
+- **Build/buy from Phase 3:** e.g., "Use [chosen auth service] for authentication" (already decided) — reference whatever was decided in Phase 3 pattern analysis
 
 **Database pattern:**
 
 - Relational database required (PostgreSQL recommended for JSON + vector support)
-- Vector storage needed for AI features (validate pgvector feasibility vs dedicated DB)
+- Vector storage: only if AI requirements involve semantic search or retrieval — validate whether it's actually needed given the project's AI patterns
 - **Risk:** Vector search at scale - plan load testing during implementation
 
 **Defer to implementation planning:** specific framework/library versions, detailed API contracts, vendor selection within categories, performance optimization strategies.
 
-**Vector DB guidance:** pgvector for small-medium scale (one less service); managed (Pinecone/Weaviate) for large scale.
-If choosing differently from Phase 3 estimation → document rationale.
+**Vector DB choice:** Evaluate based on scale projections, operational complexity tolerance, and integration with existing infrastructure from Phase 1 assessment. If choosing differently from Phase 3 estimation → document rationale.
 
 **LLM Provider criteria:** context window (32k+ minimum), structured output support, cost, latency. Defer specific provider selection to planning.
 
@@ -588,7 +564,7 @@ For each high-risk story (XL, XXL) from Step 3, define architectural mitigation 
    - Show traceability: Estimation Risk → Architectural Choice → Rationale
    - Example: "Calculation inference (XL risk) → Robust validation workflow → User can review/edit AI suggestions before approval"
 
-**Output:** Internal mapping table to reference when generating blueprints (Step 17).
+**Output:** Internal mapping table to reference when generating blueprints (Step 16).
 
 ### Step 15: Detect Architecture Complexity
 
@@ -643,7 +619,7 @@ Analyze to determine document structure:
 - Executive Summary
 - System Overview
 - Estimation-Informed Design Decisions
-  - Build/buy decisions from pattern analysis (Auth0, TipTap, etc.)
+  - Build/buy decisions from pattern analysis (whatever was decided in Phase 3 pattern analysis)
   - Effort-driven architecture choices
   - Risk mitigations for traditional components
 - Frontend Architecture
@@ -683,10 +659,8 @@ Analyze to determine document structure:
   - Performance constraints from high-complexity stories
   - Build/buy decisions for integration components (message queues)
 - Critical Integration Points
-  1. Document Upload → AI Processing Flow
-  2. Markdown Editor → AI Assistance Flow
-  3. Approval Workflow → Vector DB Indexing Flow
-  4. RAG Search Flow
+  - {N} integration points identified from agent + app architectures
+  - Each: trigger, sync/async decision, data flow, streaming, error handling, permission context
 - API Contract Design
   - Endpoint specifications
   - Request/response formats
@@ -824,8 +798,8 @@ between discovery and delivery — what the build team needs on day 1 without re
 | Layer | Pattern |
 |-------|---------|
 | AI | {e.g., Single orchestration service with tool-call loop} |
-| App | {e.g., PWA SPA, single Node.js server} |
-| Integration | {e.g., SSE streaming, REST for state reads} |
+| App | {e.g., SPA + API server, or server-rendered monolith} |
+| Integration | {e.g., streaming for long AI responses, REST for data reads} |
 
 ### Key Architecture Decisions
 - **Ontology:** {YES / NO — one line}
@@ -836,8 +810,8 @@ between discovery and delivery — what the build team needs on day 1 without re
 
 | Concern | Choice | Status | Notes |
 |---------|--------|--------|-------|
-| {e.g., Auth} | {e.g., Auth0} | Committed | {one-line rationale} |
-| {e.g., Vector DB} | {e.g., pgvector} | Committed | {one-line rationale} |
+| {e.g., Auth} | {e.g., chosen auth solution} | Committed | {one-line rationale} |
+| {e.g., AI infrastructure} | {e.g., chosen vector store or retrieval approach} | Committed | {one-line rationale} |
 | {e.g., SPA framework} | {e.g., React or Vue} | Deferred to planning | {one-line rationale} |
 
 ---

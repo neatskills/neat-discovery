@@ -355,7 +355,7 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 | Req ID | Uncertainty | Spike Goal | Approach | Duration |
 |--------|-------------|------------|----------|----------|
 | REQ-005 | PDF extraction accuracy | Can we extract tables from scanned PDFs? | Test 3 libraries (pdfplumber, Camelot, Tabula) on sample docs | 2 days |
-| REQ-012 | Real-time performance | Can RAG respond in <2 seconds with 100-doc corpus? | Benchmark Pinecone vs pgvector with sample queries | 1 day |
+| REQ-012 | [specific uncertainty] | [specific question to answer] | [concrete validation approach] | 1 day |
 ```
 
 **Impact on workflow:**
@@ -594,7 +594,7 @@ Executive Summary content (in order):
 - **Recommendation** — first sentence, direct investment ask
 - **Strategic Problem** — 2-3 sentences, enterprise-scale failure mode
 - **Solution** — 2-3 sentences, what it does and how
-- **Business Case** — 3-row table (Enterprise Metric | Old Way | AI-First Way | Strategic Benefit; rows: Speed to Value, OpEx Avoidance, Asset Utilization)
+- **Business Case** — 3-row table (Enterprise Metric | Old Way | AI-First Way | Strategic Benefit; rows: derive from this project's key value drivers — e.g., speed to capability, cost avoidance, risk reduction — choose what's most relevant)
 - **Scope** — Building ✅ (CRITICAL/ESSENTIAL items) vs Deferring ⏸️
 - **Pilot Proposal** — duration · scope · proof metric · decision gate
 - **Risk Mitigation** — if pilot fails, data dependency, technical delivery
@@ -614,11 +614,11 @@ Appendix sections: Enterprise Bottleneck · Solution Approach · Use Case Exampl
 **3. Business Case (Enterprise Metrics):**
 
 Always a 4-column table: Enterprise Metric | Old Way | AI-First Way | Strategic Benefit
-Standard rows: Speed to Value · OpEx Avoidance · Asset Utilization
+Rows: derive 3 rows from this project's key value drivers — what matters most to this organization (e.g., speed to capability, cost avoidance, risk reduction, competitive advantage) — do not use generic rows
 
 **4. Scope Framing (Lean Execution):**
 
-Open with: "We are avoiding the trap of a bloated, multi-year IT implementation."
+Frame scope to emphasize lean execution — what is being deliberately excluded and why, tailored to this project's specific risk context. Do not use a pre-written opening line.
 Building ✅: AI Core capabilities (CRITICAL) + minimal infrastructure (ESSENTIAL)
 Deferring ⏸️: Complex features with rationale (contradicts lean approach)
 

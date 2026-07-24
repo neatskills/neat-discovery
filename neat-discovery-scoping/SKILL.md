@@ -496,30 +496,30 @@ For each detected pattern, analyze:
 ### Auth Pattern Detected (3 stories: Login, MFA, User Roles)
 
 **Current Estimate:** L + M + M = 8-14 weeks
-**With Auth0:** S (integration) = 1-2 weeks
+**With [chosen auth service]:** S (integration) = 1-2 weeks
 **Effort Savings:** 6-12 weeks
 
 **Cost Comparison:**
 - Build: $60k-$100k labor (ROM from estimates)
-- Auth0: $240/month base + $0.05/MAU ≈ $5k/year
-- Breakeven: 12+ years (not realistic)
+- [chosen auth service]: [verify current pricing]
+- Breakeven: [calculate based on current pricing]
 
-**Recommendation:** Buy (Auth0 or similar)
+**Recommendation:** Buy ([chosen auth service])
 **Rationale:** Auth is commodity, not our differentiator. SaaS reduces security risk, faster time-to-market, proven at scale.
 
 ### Vector Database Pattern Detected (1 story: RAG Knowledge Store)
 
 **Current Estimate:** L = 4-8 weeks
-**With Pinecone:** M (integration + migration) = 2-4 weeks
+**With [chosen vector service]:** M (integration + migration) = 2-4 weeks
 **Effort Savings:** 2-4 weeks
 
 **Cost Comparison:**
-- Build: $40k-$60k labor + hosting ($200/month)
-- Pinecone: $70/month starter, scales to $599+/month production
-- Breakeven: ~6 months (reasonable for pilot)
+- Build: $40k-$60k labor + hosting
+- [chosen vector service]: [verify current pricing]
+- Breakeven: [calculate based on current pricing and scale projections]
 
 **Recommendation:** Buy for MVP, re-evaluate after pilot
-**Rationale:** Fast to market, proven RAG performance. If scale becomes expensive (>$1k/month), consider pgvector migration in Phase 2.
+**Rationale:** Fast to market, proven performance. Re-evaluate at scale if operational costs exceed build alternative.
 ```
 
 Offer pattern notes when detected with specific build/buy recommendations and effort impact.
@@ -749,7 +749,7 @@ Generate markdown file following approved structure.
 ### Step 12: Write Files
 
 ```bash
-# Create Phase 2 directory
+# Create Phase 3 directory
 mkdir -p docs/{project-name}/03-scoping
 
 # Write MVP scope file
@@ -764,7 +764,6 @@ MVP scoping complete
 
 Generated:
 - docs/{project-name}/03-scoping/mvp-scope.md
-- docs/{project-name}/traceability-matrix.md (updated with classification, sizing, and dependencies)
 
 ---
 
@@ -872,9 +871,9 @@ Next step (if approved): Run /neat-discovery-designing to create architecture bl
 ## Pattern Analysis
 
 **Auth Pattern** (Stories 1, 3, 5)
-- Recommendation: Use Auth0
+- Recommendation: Use [chosen auth service]
 - Impact: Reduces M→S across 3 stories
-- Build/Buy: Buy (Auth0)
+- Build/Buy: Buy ([chosen auth service])
 
 ---
 
