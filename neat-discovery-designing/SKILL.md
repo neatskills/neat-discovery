@@ -768,7 +768,7 @@ mkdir -p docs/{project-name}/04-designing
 # (Use Write tool for integration-architecture.md)
 
 # Generate handover (project root — spans all phases)
-# (Use Write tool for docs/{project-name}/handover.md — see Step 17b)
+# (Use Write tool for docs/{project-name}/handover-{project-name}.md — see Step 17b)
 ```
 
 ### Step 17b: Generate Handover
@@ -861,7 +861,7 @@ between discovery and delivery — what the build team needs on day 1 without re
 | Integration architecture | `04-designing/integration-architecture.md` | Data flows, error handling |
 ```
 
-**Note:** Store at project root — `docs/{project-name}/handover.md` — not inside any phase folder.
+**Note:** Store at project root — `docs/{project-name}/handover-{project-name}.md` — not inside any phase folder.
 
 ### Step 18: Confirm Completion
 
@@ -872,7 +872,7 @@ Generated:
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
-- docs/{project-name}/handover.md ← delivery entry point
+- docs/{project-name}/handover-{project-name}.md ← delivery entry point
 
 Discovery process complete.
 
@@ -886,7 +886,7 @@ All artifacts:
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
-- docs/{project-name}/handover.md ← delivery entry point
+- docs/{project-name}/handover-{project-name}.md ← delivery entry point
 ```
 
 ## Output Specifications
