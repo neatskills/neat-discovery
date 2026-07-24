@@ -46,8 +46,8 @@ This creates symlinks in `~/.claude/skills/`:
 **Outputs:**
 
 - `docs/{project-name}/01-assessing/project-context.md` - Project overview, stakeholders, scope, strategic rationale
-- `docs/{project-name}/01-assessing/current-state.md` - Architecture, dependencies, knowledge sources, systems
-- `docs/{project-name}/01-assessing/assessment.md` - Constraints, quality gaps, complexity analysis
+- `docs/{project-name}/01-assessing/knowledge-landscape.md` - Architecture, dependencies, knowledge sources, systems
+- `docs/{project-name}/01-assessing/knowledge-assessment.md` - Constraints, quality gaps, complexity analysis
 
 ### Phase 2: Analysing
 
@@ -90,7 +90,6 @@ This creates symlinks in `~/.claude/skills/`:
 - `docs/{project-name}/04-designing/agent-architecture.md` - AI agent infrastructure design
 - `docs/{project-name}/04-designing/app-architecture.md` - Application architecture
 - `docs/{project-name}/04-designing/integration-architecture.md` - Integration strategy balancing both approaches
-- `docs/{project-name}/04-designing/value-optimization.md` - How the balance maximizes business value
 
 ## Output Structure
 
@@ -101,8 +100,8 @@ docs/
   {project-name}/
     01-assessing/
       project-context.md
-      current-state.md
-      assessment.md
+      knowledge-landscape.md
+      knowledge-assessment.md
     02-analysing/
       requirement-classification.md
       executive-report.md
@@ -113,7 +112,6 @@ docs/
       agent-architecture.md
       app-architecture.md
       integration-architecture.md
-      value-optimization.md
 ```
 
 **Phase folders:**

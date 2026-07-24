@@ -788,11 +788,12 @@ Generated:
 Discovery process complete. High-level architecture defined for implementation planning.
 
 All artifacts:
-- docs/{project-name}/01-scoping/knowledge-landscape.md
-- docs/{project-name}/01-scoping/knowledge-assessment.md
+- docs/{project-name}/01-assessing/project-context.md
+- docs/{project-name}/01-assessing/knowledge-landscape.md
+- docs/{project-name}/01-assessing/knowledge-assessment.md
 - docs/{project-name}/02-analysing/requirement-classification.md
 - docs/{project-name}/02-analysing/executive-report.md
-- docs/{project-name}/03-estimating/mvp-scope.md
+- docs/{project-name}/03-scoping/mvp-scope.md
 - docs/{project-name}/04-designing/agent-architecture.md
 - docs/{project-name}/04-designing/app-architecture.md
 - docs/{project-name}/04-designing/integration-architecture.md
