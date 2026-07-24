@@ -20,11 +20,11 @@ For enterprise or consulting projects that require formal stakeholder alignment 
 
 ### Entry Points
 
-The workflow is flexible — you can enter at any phase:
-
-- **Coming from neat-util-vetting:** Start at scoping (assessing context is pre-populated from the discovery brief)
-- **New consulting project:** Start at assessing (full interview)
-- **Greenfield product build with known requirements:** Start at scoping directly
+| Starting point | Begin at |
+|---|---|
+| Coming from neat-util-vetting | **Scoping** — skip assessing and analysing entirely |
+| New consulting or enterprise project | **Assessing** — full context + current-state interview |
+| Known requirements, no prior vetting | **Scoping** — provide context in conversation |
 
 ## Installation
 

@@ -1,6 +1,6 @@
 ---
 name: neat-discovery-assessing
-description: Use at start of discovery to understand project context and document current state - accepts a vetting discovery brief as input if available, otherwise interviews from scratch
+description: Use at start of discovery for consulting or enterprise projects without prior vetting - establishes project context and maps current state through interview. Skip if a vetting brief exists.
 ---
 
 # neat-discovery-assessing
@@ -20,13 +20,9 @@ Context establishment can be sourced from a vetting discovery brief (if availabl
 
 ## When to Use
 
-Start of discovery. Use this skill when:
+Use this skill for consulting or enterprise projects starting discovery without prior vetting.
 
-- Starting a new project without prior vetting
-- A vetting brief exists but current-state still needs to be mapped
-- Updating an existing assessment with new information
-
-**Skip this skill if:** A vetting brief exists AND the project is purely greenfield (no existing codebase or systems to map). Go directly to `/neat-discovery-scoping`.
+**Skip this skill entirely if:** A discovery brief from neat-util-vetting exists. Go directly to `/neat-discovery-scoping` — the brief provides sufficient context.
 
 ## Prerequisites
 
