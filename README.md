@@ -21,7 +21,7 @@ For enterprise or consulting projects that require formal stakeholder alignment 
 ### Entry Points
 
 | Starting point | Begin at |
-|---|---|
+| --- | --- |
 | Coming from neat-util-vetting | **Scoping** — skip assessing and analysing entirely |
 | New consulting or enterprise project | **Assessing** — full context + current-state interview |
 | Known requirements, no prior vetting | **Scoping** — provide context in conversation |
@@ -44,7 +44,7 @@ This creates symlinks in `~/.claude/skills/`:
 
 ### Phase 1: Assessing
 
-```
+```text
 /neat-discovery-assessing
 ```
 
@@ -58,7 +58,7 @@ This creates symlinks in `~/.claude/skills/`:
 
 ### Phase 2: Scoping
 
-```
+```text
 /neat-discovery-scoping
 ```
 
@@ -71,7 +71,7 @@ This creates symlinks in `~/.claude/skills/`:
 
 ### Phase 3: Designing
 
-```
+```text
 /neat-discovery-designing
 ```
 
@@ -85,7 +85,7 @@ This creates symlinks in `~/.claude/skills/`:
 
 ### Optional: Analysing (Enterprise Business Case)
 
-```
+```text
 /neat-discovery-analysing
 ```
 
@@ -102,7 +102,7 @@ This creates symlinks in `~/.claude/skills/`:
 
 Each project creates a phase-based directory structure under `docs/`:
 
-```
+```text
 docs/
   {project-name}/
     01-assessing/

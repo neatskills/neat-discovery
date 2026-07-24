@@ -12,7 +12,8 @@ Establish project understanding and map current state before scoping begins. Two
 1. **Context establishment** — what the project is, who it's for, why it matters, what success looks like
 2. **Current-state mapping** — what exists that the new thing must work with or build on
 
-Context establishment can be sourced from a vetting discovery brief (if available) or gathered via interview. Current-state mapping always requires an interview — the questions adapt based on whether this is an enterprise system or a product build.
+Context establishment can be sourced from a vetting discovery brief (if available) or gathered via interview.
+Current-state mapping always requires an interview — the questions adapt based on whether this is an enterprise system or a product build.
 
 ## Role
 
@@ -59,34 +60,7 @@ ls -d docs/*/ 2>/dev/null
 - Ask user to choose
 - If new: Ask for project name and create `docs/{project-name}/01-assessing/` directory
 
-### Step 1b: Check for Vetting Discovery Brief
-
-Before asking any project questions, check for a discovery brief from vetting:
-
-```bash
-ls docs/{project-name}/discovery-brief.md 2>/dev/null || ls docs/*/discovery-brief.md 2>/dev/null | head -1
-```
-
-**If a discovery brief is found:**
-
-- Read it fully
-- Inform the user: "Found a discovery brief from vetting — I'll use it to pre-populate project context and only ask about gaps."
-- Extract and store internally:
-  - Project Context (what, industry, problem, positioning)
-  - Stakeholders (target customer, end user, key partners)
-  - Success Criteria
-  - Initial Capability Areas
-  - Assumption Status (Contradicted / Validated / Plausible / Unvalidated)
-  - Constraints
-  - Open Questions
-- **Skip Step 3** (Project Context Assessment) — use brief instead
-- In Step 12 (Assumptions Register): seed with the brief's Assumption Status entries, marking their source as "from vetting"
-
-**If no discovery brief exists:**
-
-- Proceed with full interview from Step 3 onward
-
-### Step 1c: Establish Project Context (Enterprise or Product Build?)
+### Step 1b: Establish Project Context (Enterprise or Product Build?)
 
 Ask once, early:
 
@@ -101,7 +75,7 @@ Store the answer as `{project-type}` — it controls which current-state questio
 Apply the pattern with these values:
 
 | Parameter | Value |
-|-----------|-------|
+| --- | --- |
 | Phase folder | `01-assessing/` |
 | Artifact type | `assessment` |
 | Update action | `append new information` |
@@ -110,7 +84,8 @@ Apply the pattern with these values:
 
 **Special consideration for Update mode:**
 
-When loading `project-context.md`, preserve Phase 2-owned Strategic Context section if it contains real data (timeline, budget, compliance). If still placeholder ("Will be updated in Phase 2"), it will be overwritten when Phase 2 runs.
+When loading `project-context.md`, preserve Phase 2-owned Strategic Context section if it contains real data (timeline, budget, compliance).
+If still placeholder ("Will be updated in Phase 2"), it will be overwritten when Phase 2 runs.
 
 ### Step 3: Project Context Assessment
 
@@ -167,32 +142,38 @@ Document project context in project-context.md (separate file).
 
 ### Step 5: Current State Assessment
 
-Interview the user to understand what exists that the new thing must work with or build on. Use the question track matching `{project-type}` from Step 1c.
+Interview the user to understand what exists that the new thing must work with or build on. Use the question track matching `{project-type}` from Step 1b.
 
 ---
 
 **Track A — Enterprise / Consulting project:**
 
 *About architecture:*
+
 - What's the current system architecture? (monolith, microservices, hybrid)
 - What are the main components/services and how do they interact?
 - Are there architecture diagrams?
 
 *About dependencies:*
+
 - What external systems does the project depend on?
 - What internal systems/services are dependencies? Any third-party integrations or APIs?
 
 *About knowledge sources:*
+
 - What documentation exists? (technical docs, policies, procedures, specifications)
 - Where is knowledge stored? (Wiki, SharePoint, Google Drive, local files) Who maintains it?
 
 *About systems and data:*
+
 - What systems are relevant? (CRM, ERP, databases, APIs) Who owns each?
 
 *About people:*
+
 - Who are the knowledge authorities? Which teams own which domains? Any subject matter experts?
 
 *About flows:*
+
 - How does information/data move between systems? What triggers updates or changes?
 
 ---
@@ -200,23 +181,28 @@ Interview the user to understand what exists that the new thing must work with o
 **Track B — Product build:**
 
 *About the existing codebase (if any):*
+
 - Is there existing code to build on, or is this greenfield?
 - If existing: What's the repo structure? Main modules or services?
 - What language/framework/runtime?
 
 *About dependencies and integrations:*
+
 - What external APIs or services does it call or will it call?
 - Any third-party SDKs, libraries, or platforms central to the product?
 
 *About existing user workflows:*
+
 - How do users interact with the product today (if it exists)?
 - What manual steps or workarounds exist that the product should replace?
 
 *About data and state:*
+
 - Where is state stored today? (files, database, local storage, cloud)
 - What data does the product own vs consume from outside?
 
 *About scripts and tooling:*
+
 - Are there existing scripts, utilities, or automation that the new build should reuse?
 
 ---
@@ -564,11 +550,13 @@ Questions to Ask Stakeholders:
 4. Is the project context description correct?
 
 Validation Options:
-APPROVED: Project assessment complete and accurate → Proceed to /neat-discovery-analysing
+APPROVED: Project assessment complete and accurate → Choose next step:
+  - Enterprise/consulting project needing formal business case → Run /neat-discovery-analysing
+  - Direct to MVP scoping (no formal business case needed) → Run /neat-discovery-scoping
 UPDATE NEEDED: Stakeholders identified gaps → Update assessment, re-validate
 HOLD: Need more discovery → Schedule follow-up sessions
 
-Next step (if approved): Run /neat-discovery-analysing to classify requirements
+Next step (if approved): Run /neat-discovery-analysing (enterprise) or /neat-discovery-scoping (direct)
 ```
 
 ## Interview Strategy

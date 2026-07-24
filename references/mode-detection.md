@@ -8,7 +8,7 @@ Any skill that produces output files that might need updating in later phases.
 
 ## How It Works
 
-**Auto-detect existing files → Ask user to choose → Execute chosen mode**
+Auto-detect existing files → Ask user to choose → Execute chosen mode
 
 ## Implementation
 
@@ -26,7 +26,7 @@ ls docs/{project-name}/{phase-folder}/*.md 2>/dev/null
 
 Ask user to choose approach:
 
-```
+```text
 Found existing {artifact-type} from [date].
 
 [1] Update it ({update-action})
@@ -36,6 +36,7 @@ Choose [1]:
 ```
 
 **User chooses [1] Update:**
+
 - Load existing files
 - Ask: "What new information do you want to add?" (or phase-specific question)
 - **Append/refine** new information to appropriate sections
@@ -43,6 +44,7 @@ Choose [1]:
 - Flag contradictions if detected (don't auto-resolve)
 
 **User chooses [2] Regenerate:**
+
 - Inform: "Starting fresh {artifact-type}."
 - Proceed with full process
 - Overwrite all files
@@ -57,7 +59,7 @@ Choose [1]:
 Replace placeholders with skill-specific values:
 
 | Placeholder | Example (Assessing) | Example (Analysing) | Example (Scoping) |
-|-------------|---------------------|---------------------|-------------------|
+| --- | --- | --- | --- |
 | `{phase-folder}` | `01-assessing` | `02-analysing` | `03-scoping` |
 | `{artifact-type}` | `assessment` | `analysis` | `MVP scope` |
 | `{update-action}` | `append new information` | `add new requirements` | `re-estimate based on refined requirements` |

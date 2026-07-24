@@ -9,7 +9,8 @@ description: Scope MVP boundaries from a requirements list - classifies each req
 
 ## Overview
 
-Take a requirements list from the user, classify each requirement as AI / Traditional / Hybrid, size them (XS-XXL), and draw MVP boundaries. Account for technical complexity and risk. Make assumptions explicit, express estimates as ranges.
+Take a requirements list from the user, classify each requirement as AI / Traditional / Hybrid, size them (XS-XXL), and draw MVP boundaries.
+Account for technical complexity and risk. Make assumptions explicit, express estimates as ranges.
 
 **This is solutioning, not implementation.** Assess feasibility, identify patterns, recommend build/buy, size effort, and draw MVP boundaries.
 
@@ -117,7 +118,7 @@ Ask the user:
 Once received, classify each requirement as:
 
 | Type | When to use |
-|------|-------------|
+| --- | --- |
 | **AI** | Non-deterministic — needs reasoning, language understanding, judgment, or adaptive behaviour |
 | **Traditional** | Deterministic — CRUD, workflows, forms, reporting, rule-based logic |
 | **Hybrid** | Has both a deterministic shell and an AI-powered core (e.g., a form that triggers an AI analysis) |
@@ -135,7 +136,7 @@ Adjust based on feedback.
 Apply the pattern with these values:
 
 | Parameter | Value |
-|-----------|-------|
+| --- | --- |
 | Phase folder | `03-scoping/` |
 | Artifact type | `MVP scope` |
 | Update action | `re-estimate based on refined requirements` |
@@ -584,6 +585,35 @@ patterns, be concise (2-3 sentences).
 | "This is definitely [size]" | Express risk |
 | "Can't estimate without info" | Make assumptions + caveats |
 
+## Edge Cases
+
+**All requirements are deterministic:**
+
+- Classify all as Traditional, still generate mvp-scope.md
+- Conclude: "No AI infrastructure needed — traditional development is sufficient"
+- Proceed with sizing and MVP boundaries as normal
+
+**No deferred requirements:**
+
+- Document: "Deferred Features: None — full scope fits in MVP"
+- Effort Summary table: Show "Deferred: 0 stories | N/A | None"
+
+**Single XXL requirement:**
+
+- Flag as needing decomposition before estimating
+- Ask user to break it into smaller capabilities
+- Provide a rough XXL estimate with caveat: "Needs spike or breakdown before commitment"
+
+**No context files exist:**
+
+- If neither Phase 1 outputs nor a discovery brief are found, ask for a brief project description
+- Proceed with user-provided context only; note in mvp-scope.md that estimates carry higher uncertainty
+
+**Coming from analysing with pre-classified requirements:**
+
+- Skip Step 2b — use requirement-classification.md directly
+- Reference Req IDs in story titles for traceability
+
 ## Key Principles
 
 1. Risk inflates estimates
@@ -680,8 +710,10 @@ mkdir -p docs/{project-name}/03-scoping
 # (Use Write tool for mvp-scope.md with REQ-IDs in story titles and classification column)
 
 # Update traceability matrix
-# (Use Edit tool to add columns to docs/{project-name}/traceability-matrix.md)
-# Add: Classification + Scoped Story + Size Estimate + Dependencies columns
+# If docs/{project-name}/traceability-matrix.md exists (created by analysing phase):
+#   (Use Edit tool to add columns: Classification + Scoped Story + Size Estimate + Dependencies)
+# If file does not exist (analysing was skipped):
+#   (Use Write tool to create traceability-matrix.md with all columns from scratch)
 # Map: REQ-001 → AI → Story 1 → XL → Blocks: REQ-005, REQ-007
 ```
 

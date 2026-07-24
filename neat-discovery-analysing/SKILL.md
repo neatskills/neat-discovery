@@ -5,11 +5,13 @@ description: Optional enterprise phase - build formal business case and ROI mode
 
 # neat-discovery-analysing
 
-> **Optional phase.** For most product builds, requirement classification is handled inline by `/neat-discovery-scoping`. Use this skill only when a formal business case, ROI model, or executive stakeholder report is required before proceeding to scope.
+> **Optional phase.** For most product builds, requirement classification is handled inline by `/neat-discovery-scoping`.
+> Use this skill only when a formal business case, ROI model, or executive stakeholder report is required before proceeding to scope.
 
 ## Overview
 
-Build a strategic business case and formal requirement classification for enterprise or consulting projects that require stakeholder alignment before investment decisions. Produces formal documentation for executive audiences.
+Build a strategic business case and formal requirement classification for enterprise or consulting projects that require
+stakeholder alignment before investment decisions. Produces formal documentation for executive audiences.
 
 ## Role
 
@@ -29,7 +31,8 @@ Build a strategic business case and formal requirement classification for enterp
 - The team already understands the value and just needs scope and architecture
 - Coming from neat-util-vetting (the vetting brief already provides business justification)
 
-**Position in workflow:** Runs after `/neat-discovery-assessing`, before `/neat-discovery-scoping`. Its output (`requirement-classification.md`) is consumed by scoping to skip the inline classification step.
+**Position in workflow:** Runs after `/neat-discovery-assessing`, before `/neat-discovery-scoping`.
+Its output (`requirement-classification.md`) is consumed by scoping to skip the inline classification step.
 
 ## Smart Mode Detection
 
@@ -86,7 +89,7 @@ cat docs/{project-name}/01-assessing/knowledge-assessment.md
 Apply the pattern with these values:
 
 | Parameter | Value |
-|-----------|-------|
+| --- | --- |
 | Phase folder | `02-analysing/` |
 | Artifact type | `analysis` |
 | Update action | `add new requirements` |
@@ -188,7 +191,7 @@ Append to `01-assessing/project-context.md`:
 
 **Why this matters:**
 
-- Phase 3 (Estimating) uses constraints to inform effort estimates
+- Phase 3 (Scoping) uses constraints to inform effort estimates
 - Phase 4 (Designing) uses compliance/timeline to inform architecture decisions
 - Keeps all project context in one canonical file
 
@@ -305,7 +308,7 @@ For requirements marked as **low feasibility** or **medium feasibility with sign
 
 **Impact on workflow:**
 
-- If spikes approved: Pause before Phase 3 (Estimating), run spikes, update feasibility
+- If spikes approved: Pause before Phase 3 (Scoping), run spikes, update feasibility
 - If spikes deferred: Document assumption in requirement-classification.md, flag risk
 - Spike results feed into Phase 3 with validated complexity
 
@@ -358,7 +361,7 @@ Focus on qualitative strategic value, NOT financial ROI or quantitative effort e
 **IMPORTANT - Effort Estimates:**
 
 - **DO NOT include quantitative effort estimates** (hours, months, team size) in executive report
-- Phase 3 (Estimating) will produce detailed T-shirt sizing and ROM cost estimates (see Step 7A)
+- Phase 3 (Scoping) will produce detailed T-shirt sizing and ROM cost estimates
 - If asked about effort, respond qualitatively: "This is a substantial investment requiring dedicated AI/ML capability"
 - Executive approval should be contingent on Phase 3 effort validation
 - **Rationale:** Phase 2 focuses on qualitative strategic value. Quantitative ROM cost estimates are deferred to Phase 3 (after T-shirt sizing) to ensure accuracy.
@@ -526,207 +529,53 @@ This report focuses on [business case / stakeholder benefits / implementation pl
 
 **Enterprise Executive Report Patterns:**
 
-When writing for C-suite/VPs/Global leadership, use these framing patterns:
+When writing for C-suite/VPs/Global leadership, apply these five patterns:
 
-**1. Two-Page Executive Summary Structure (REQUIRED for Enterprise Audiences):**
+**1. Two-Page Executive Summary (REQUIRED for Enterprise):**
 
-Based on 2026 best practices: executives judge documents by visual density before reading a word. Keep to 2 pages maximum.
+Structure: Header block → 2-page Executive Summary → Appendix (full detail)
 
-```markdown
-# [Project] Executive Report: [Title]
+Header block fields: Date · Organization · Strategic Goal · Audience · Decision Requested
 
-**Date:** [Date]  
-**Organization:** [Org]  
-**Strategic Goal:** [One-line org mandate]  
-**Prepared For:** [C-suite titles]  
-**Decision Requested:** [Investment approval / Pilot authorization / Budget allocation]
+Executive Summary content (in order):
 
----
+- **Recommendation** — first sentence, direct investment ask
+- **Strategic Problem** — 2-3 sentences, enterprise-scale failure mode
+- **Solution** — 2-3 sentences, what it does and how
+- **Business Case** — 3-row table (Enterprise Metric | Old Way | AI-First Way | Strategic Benefit; rows: Speed to Value, OpEx Avoidance, Asset Utilization)
+- **Scope** — Building ✅ (CRITICAL/ESSENTIAL items) vs Deferring ⏸️
+- **Pilot Proposal** — duration · scope · proof metric · decision gate
+- **Risk Mitigation** — if pilot fails, data dependency, technical delivery
+- **Next Step** — specific funding ask; link to Appendix for full analysis
 
-## Executive Summary
+Appendix sections: Enterprise Bottleneck · Solution Approach · Use Case Examples · Risk Scenarios · Alternatives · Technical Feasibility
 
-**Recommendation:** Invest in [Platform] [MVP/pilot]. [One sentence: why this addresses strategic goal]
+**2. Problem Statement (Enterprise Framing):**
 
-**Strategic Problem:** [2-3 sentences: Enterprise-level failure mode—what's broken at organizational scale]
+- Title: "The [Strategic Disconnect / Enterprise Bottleneck]" — organizational scale, not individual
+- Core Problem: Enterprise is blind to X / Cannot scale Y / Knowledge trapped
+- Frame as: organizational capability gap, NOT technology/budget/individual problem
+- Without AI: global blindness · reinventing wheels · SME bottleneck · capital waste
+- With AI: global sharing · scales without headcount · transforms isolated → enterprise standards
+- Use Case: show GLOBAL impact across sites (before/after), not individual efficiency
 
-**Solution:** [Platform] is an AI-powered [intelligence layer/knowledge synthesis platform] that [how it removes organizational friction in 2-3 sentences].
+**3. Business Case (Enterprise Metrics):**
 
-**Business Case:**
+Always a 4-column table: Enterprise Metric | Old Way | AI-First Way | Strategic Benefit
+Standard rows: Speed to Value · OpEx Avoidance · Asset Utilization
 
-| Enterprise Metric | Old Way | AI-First Way | Strategic Benefit |
-|-------------------|---------|--------------|-------------------|
-| **Speed to Value** | [Blocked/slow] | [Enabled/fast] | [Capability unlock] |
-| **OpEx Avoidance** | [Hire specialists] | [AI scales without headcount] | Capital Efficiency |
-| **Asset Utilization** | [Duplicate spending] | [Discover & reuse] | Accelerated Execution |
+**4. Scope Framing (Lean Execution):**
 
-**Scope (Lean Execution):**
+Open with: "We are avoiding the trap of a bloated, multi-year IT implementation."
+Building ✅: AI Core capabilities (CRITICAL) + minimal infrastructure (ESSENTIAL)
+Deferring ⏸️: Complex features with rationale (contradicts lean approach)
 
-We are avoiding bloated IT programs. [Platform] is a lean, high-impact intelligence layer.
+**5. Recommendation Structure:**
 
-**Building (MVP):**
-- ✅ [AI capability 1] (CRITICAL - [value])
-- ✅ [AI capability 2] (CRITICAL - [value])
-- ✅ [Minimal infrastructure] (ESSENTIAL)
-
-**Deferring (Rapid deployment):**
-- ⏸️ [Complex feature type] (contradicts lean approach)
-
-**Pilot Proposal:**
-
-- **Duration:** [90 days typical]
-- **Scope:** [Deploy to N sites/teams]
-- **Prove:** [AI quality metric - e.g., >85% extraction accuracy]
-- **Measure:** [Adoption metric, reuse instances]
-- **Decision Gate:** Validate quality + adoption → Scale / iterate / cancel
-
-**Risk Mitigation:**
-
-- **If pilot fails:** [Minimal sunk cost, decision gate limits exposure]
-- **Data quality dependency:** [Seed with curated examples, user validation workflow]
-- **Technical delivery:** [Use managed services, proven patterns]
-
-**Next Step:** Approve seed funding for 90-day pilot. [Specific $ if known, or "budget TBD pending Phase 3 estimation"]
-
----
-
-**For full analysis:** See Appendix (supporting detail for stakeholders who need depth)
-
----
-
-## Appendix
-
-[Full sections for those who need detail - this is where 8-10 pages of supporting content goes]
-
-### A. The Enterprise Bottleneck (Detail)
-[Full problem analysis]
-
-### B. The [Solution] Approach (Detail)
-[Technical approach, how it works]
-
-### C. Enterprise Use Case Examples
-[Concrete examples with before/after]
-
-### D. Risk Assessment (Scenarios)
-[Full scenario analysis]
-
-### E. Alternatives Considered
-[Why other approaches won't work]
-
-### F. Technical Feasibility
-[Architecture considerations, if needed for technical stakeholders]
-```
-
-**Key Pattern Changes from Research:**
-
-- **Lead with recommendation** (first sentence of Executive Summary)
-- **Visual density matters** (use tables, bullets, white space)
-- **2 pages for decision** (executives won't read 10+ pages)
-- **Appendix for depth** (those who need detail can dive in)
-- **Clear ask** (specific pilot scope, metrics, budget)
-
-**2. Problem Statement Pattern (Enterprise Framing):**
-
-Use this for "Why This Matters" / "The Strategic Disconnect" sections:
-
-```markdown
-## [Number]. The [Strategic Disconnect / Enterprise Bottleneck]
-
-[Organization-level description - what's broken at scale]
-
-**The Core Problem:** [Enterprise is blind to X / Cannot scale Y without Z / Knowledge trapped and lost]
-
-**This is not** a technology problem, budget constraint, or individual pain point.
-**This is** an organizational capability gap / systemic scaling bottleneck.
-
-**Without AI (Enterprise-Level Consequences):**
-- [Global blindness - enterprise can't see local wins]
-- [Reinventing the wheel - sites solve same problem independently]
-- [SME bottleneck - can't validate/scale without hiring expensive specialists]
-- [Capital waste - paying twice for same solution]
-
-**With AI (Enterprise Capability Unlock):**
-- [Global knowledge sharing - local wins become enterprise intelligence]
-- [Scales without headcount - AI validates, no SME army needed]
-- [Transforms isolated work → enterprise standards]
-
-### Enterprise Use Case: [Concrete Domain Example]
-
-[Show GLOBAL impact across sites/regions, NOT individual efficiency]
-
-**Before (Old Way):**
-- [Site A achieves optimization win]
-- [Knowledge stays in local documents]
-- [Site B tackles same problem 6 months later, starts from scratch]
-- [Enterprise pays twice - duplicate vendor research, duplicate implementation]
-
-**After ([Platform] Way):**
-- [Site A uploads project documents]
-- [AI extracts methodology, validates approach]
-- [Globally searchable - any site queries platform]
-- [Site B discovers proven solution, replicates with exact blueprint]
-```
-
-**3. Business Case Structure (Enterprise Metrics):**
-
-```markdown
-## [Number]. The Business Case & Strategic ROI
-
-| Enterprise Metric | The "Old Way" (Form-Based/Manual) | The [Platform] Way (AI-First) | Strategic Benefit |
-|-------------------|-----------------------------------|-------------------------------|-------------------|
-| **Speed to Value** | [Manual entry → low adoption → incomplete data] | [Document upload → AI validation → integrates with workflow] | **High Compliance**: Captures real-time data with zero pushback |
-| **OpEx Avoidance** | [Hire ESG analysts/SMEs per site] | [AI infers calculations; validated projects become templates] | **Capital Efficiency**: Scales global ESG intelligence without expanding specialized payroll |
-| **Asset Utilization** | [Knowledge localized; wasted capital on duplicate research] | [AI-powered semantic search connects users to proven solutions] | **Accelerated Execution**: Stop paying to solve same problem twice |
-```
-
-**4. Scope Framing (Lean Execution Pattern):**
-
-```markdown
-## [Number]. Scope & Lean Execution Plan
-
-We are avoiding the trap of building a bloated, multi-year IT implementation.
-
-**[Platform] is designed as:** A lean, high-impact [intelligence layer / knowledge synthesis platform / institutional memory system].
-
-### What We Are Building (MVP Focus)
-
-**[AI Core / Intelligence Engine / Synthesis Capability]:**
-1. ✅ **[Capability 1]:** [Description] (CRITICAL - [strategic value])
-2. ✅ **[Capability 2]:** [Description] (HIGH - [strategic value])
-
-**[Thin Supporting Layer / Minimal Infrastructure]:**
-1. ✅ **[Infrastructure 1]:** [What's needed] (ESSENTIAL - [why])
-
-### What We Are Deliberately Deferring (To Ensure Rapid Deployment)
-
-- ⏸️ **Complex [feature type]:** [Why this contradicts lean approach / bloats timeline]
-- ⏸️ **[Another feature]:** [Why defer to post-pilot]
-
-**Why defer:** Contradicts AI-first lean approach. Can be captured in [flexible format] initially. Add iteratively based on pilot feedback—don't build until users ask.
-```
-
-**5. Recommendation Structure (Enterprise Action Pattern):**
-
-```markdown
-## [Number]. Executive Recommendation
-
-[One-sentence investment ask - be direct]
-
-**Why This Matters:**
-
-[Connect to strategic org goal - ESG targets, competitive position, governance. 2-3 sentences.]
-
-**Proposed Next Step:**
-
-Greenlight [seed funding / pilot program / MVP development] for [duration - typically 90 days].
-
-**Pilot Scope:**
-- **Deploy to:** [Cross-functional group of N sites / specific business unit / targeted use case]
-- **Prove:** [Data extraction accuracy / AI quality metric / methodology inference capability]
-- **Measure:** [User adoption rate / knowledge reuse instances / efficiency gain]
-- **Demonstrate:** [Immediate ROI metric / strategic unlock / capability proof to Executive Committee]
-
-**Decision Gate:** [When complete, what gets decided - scale globally / iterate scope / cancel if pilot fails]
-```
+- One-sentence investment ask (direct)
+- Why This Matters: connect to strategic org goal (2-3 sentences)
+- Pilot Scope: deploy to X · prove Y · measure Z · demonstrate W
+- Decision Gate: what gets decided at completion (scale / iterate / cancel)
 
 **For simple projects (< 10 requirements):**
 
@@ -770,327 +619,48 @@ executive-report.md:
 
 ```markdown
 requirement-classification.md:
-- Strategic Direction (AI-first architectural decision if applicable)
-- Requirements Overview (summary stats: X deterministic, Y non-deterministic)
-- [Group 1]: AI Capabilities (Non-Deterministic Requirements)
-  - Each capability with classification, priority, feasibility
-- [Group 2]: Essential Supporting Features
-  - Deterministic requirements grouped by function
-- [Group 3]: Deferred Features
-  - Deferred to Phase 2+ based on MVP prioritization
-- Feasibility Assessment (consolidated, not per-requirement)
-- Prioritization Matrix (tiered: MVP / Phase 2 / Deferred)
+- Strategic Direction
+- Requirements Overview (X deterministic, Y non-deterministic)
+- AI Capabilities (non-deterministic, with classification/priority/feasibility)
+- Essential Supporting Features (deterministic, grouped by function)
+- Deferred Features (Phase 2+)
+- Feasibility Assessment (consolidated)
+- Prioritization Matrix (MVP / Phase 2 / Deferred)
 - Dependencies
 - Recommendations
 
-executive-report.md:
-# [Project] Executive Report: [Title]
-**Metadata block**
-
-## Executive Summary
-- Strategic Decision statement (what this project IS and IS NOT)
-- Core Insight (the fundamental problem)
-- Proposed Approach (high-level solution)
-- Why This Matters (comparison: without AI vs with AI)
-- Scope Recommendation (MVP focus + what's deferred)
-- Business Value bullets
-- Final Recommendation
-
-## Why [Specific Problem/Approach] Is Needed
-[Use project-specific title that captures the core problem/insight]
-[Examples: "Why Document Extraction Solves the Knowledge Gap", "Why Rules-Based Systems Can't Handle This"]
-[Consolidate 2-3 challenges into ONE cohesive narrative]
-- Challenge 1: [Core problem with comparison: traditional vs AI-enabled]
-- Challenge 2: [Secondary problem]
-- Challenge 3: [Tertiary problem]
-[Each challenge: problem → why traditional fails → what AI enables]
-
-## What Becomes Possible
-[Consolidate capabilities + competitive advantages + efficiency gains]
-- Capability 1: [Transformation description with before/after comparison]
-- Capability 2: [Another capability]
-- Competitive Advantages (2-3 bullets max)
-- Efficiency Gains (table: metric, without AI, with AI, impact)
-
-## Competitive Landscape (Optional)
-
-**Note:** Include this section only if competitive intelligence is available or relevant to the decision.
-
-**What competitors are doing:**
-- Competitor A: [Their AI approach, if known]
-- Competitor B: [Their AI approach, if known]
-- Industry trend: [General market movement toward AI in this domain]
-
-**Our position:**
-- First-mover advantage: [If we're ahead]
-- Fast-follower opportunity: [If we're catching up]
-- Differentiation: [How our approach differs]
-
-**Risk of inaction:**
-- Competitive gap: [What happens if we don't invest while competitors do]
-- Market expectation: [Customer/partner expectations shifting toward AI capabilities]
-
-**Sources:** [Cite where competitive intel came from - user research, public announcements, industry reports]
-
-## Scope of AI Opportunity
-- [Solution] MVP: ~X of Y Requirements
-- Strategic decision explanation
-- AI Capabilities (in scope - non-deterministic requirements) - numbered list
-- [Supporting layer] (in scope - deterministic) - numbered list  
-- Deferred (Phase 2+ - Z requirements) - bulleted with why defer
-- Phased Rollout Recommendation
-  - Phase 1 (MVP): scope, capabilities, why this scope, success criteria
-  - Phase 2 (Post-Pilot): iterative enhancements, principle
-
-## Tradeoffs and Risks
-[Decision-focused, not exhaustive scenarios]
-- Tradeoff 1: [AI complexity vs traditional simplicity - why AI worth it]
-- Tradeoff 2: [Another key tradeoff]
-- Risk: [Primary risk + impact + mitigation]
-- Risk: [Secondary risk + mitigation]
-[Keep to 2-3 pages max]
-
-## Risk Assessment
-[3 scenarios, but CONCISE - not multi-paragraph each]
-- Scenario 1: Do Nothing / Traditional Approach
-  - What happens (consequences bullets)
-  - When this makes sense (one sentence)
-- Scenario 2: [Solution] Investment Fails
-  - What could go wrong (bullets)
-  - Mitigation (bullets)
-- Scenario 3: [Solution] Investment Succeeds
-  - Strategic outcomes (bullets)
-  - Business impact (bullets)
-
-## Alternatives Considered
-
-**Note:** This is a preliminary qualitative analysis. Phase 3 (Estimating) will provide quantitative build/buy recommendations based on effort impact and pattern analysis.
-
-[Brief - 1 page max. Show you considered them, don't deep-dive]
-- Alternative 1: [Name] - Why it won't work (3-4 bullets)
-- Alternative 2: [Name] - Why incomplete
-- Alternative 3: [Name] - When to consider
-[3-4 alternatives max]
-
-**Cross-reference:** See Phase 3 mvp-scope.md "Pattern Analysis" section for quantitative build/buy recommendations (e.g., Auth0 reduces auth effort from M → S).
-
-## Recommended Scope and Phasing
-- Phase 1 (MVP): [Scope, AI core, supporting layer, success criteria, decision gate]
-- Phase 2: [Add based on feedback - bulleted conditions, principle]
-- Long-Term: [Enhancement areas]
-
-## Conclusion
-- The core insight (summary box)
-- [Solution] solves this (how)
-- Recommended scope (MVP + defer)
-- Why this is the right approach (5 numbered reasons)
-- The strategic unlock (highlight box)
-- Decision point (3 options: invest / alternative / do nothing)
-- Recommendation (highlight box with next steps)
+executive-report.md sections:
+- Executive Summary (strategic decision, core insight, approach, scope, recommendation)
+- Why [Specific Problem] Is Needed (project-specific title; 2-3 challenges: problem → why traditional fails → what AI enables)
+- What Becomes Possible (capabilities + competitive advantages + efficiency gains in one section)
+- Competitive Landscape (optional — only if competitive intel is available)
+- Scope of AI Opportunity (MVP vs deferred, phased rollout)
+- Tradeoffs and Risks (2-3 tradeoffs; 3-scenario Risk Assessment in bullets, not prose)
+- Alternatives Considered (1 page max; cross-reference mvp-scope.md Pattern Analysis for quantitative)
+- Recommended Scope and Phasing (Phase 1 MVP · Phase 2 · Long-Term)
+- Conclusion (core insight → decision options → recommendation with next steps)
 ```
-
-**Key differences from previous approach:**
-
-- **Consolidate subsections:** "Why AI Is Needed" has 3 challenges in ONE section, not 3 separate sections
-- **Cut redundancy:** Don't repeat same examples across "Capabilities" and "Competitive Advantages" and "Efficiency"—merge into "What Becomes Possible"
-- **Tighten risk analysis:** Risk Assessment is 3 scenarios in bullets, not multi-paragraph narratives
-- **Briefer alternatives:** Show you considered them (1 page), don't analyze each exhaustively
-- **Bottom Line:** Single-page decision summary (optional but powerful)
 
 ---
 
 **For operational stakeholder report (if identified in Step 6):**
 
+Header: Audience · Purpose (operational impact) · link to executive-report.md for strategic context
+
 ```markdown
-operational-report.md:
-# [Project] Operational Report: [Title]
-
-**Date:** [Date]  
-**Audience:** Department Heads, Operations Managers, Team Leads  
-**Purpose:** Operational impact, departmental benefits, implementation guidance  
-**Strategic Context:** See executive-report.md for business case and investment decision
-
----
-
-## Overview
-
-[2-3 paragraphs: What this platform does, why it matters operationally, who it affects]
-
-**For strategic business case and investment decision:** See executive-report.md
-
-This report focuses on operational impact: how [Platform] works in practice, what changes for your teams, benefits by department, and implementation support.
-
----
-
-## How It Works (Operational Detail)
-
-[Moved from executive report appendix - detailed operational flow]
-
-### Step 1: [Process step]
-[What users do, what happens, screenshots/examples if helpful]
-
-### Step 2: [Process step]
-[Detailed workflow, edge cases, what to expect]
-
-### Step 3: [Process step]
-[Validation, approval, how knowledge becomes discoverable]
-
----
-
-## Operational Use Cases
-
-### Use Case 1: [Concrete example - specific department/workflow]
-
-**Current state (before [Platform]):**
-- [Pain point 1 - operational friction]
-- [Pain point 2 - duplicate work, knowledge loss]
-- [Impact on department]
-
-**Future state (with [Platform]):**
-- [How workflow changes]
-- [Operational improvement]
-- [Time/effort saved, quality improvement]
-
-### Use Case 2: [Another department/workflow]
-[Same structure]
-
----
-
-## Departmental Benefits
-
-### For [Department 1 - e.g., Facilities Operations]
-
-**Benefits:**
-1. [Specific operational improvement for facilities teams]
-2. [Pain point solved - e.g., reduce duplicate vendor research]
-3. [Strategic advantage - e.g., share best practices globally]
-
-**What changes for your team:**
-- [Workflow change 1]
-- [New responsibility/capability]
-
-**Support provided:**
-- [Training, tools, help we'll provide]
-
-### For [Department 2 - e.g., Sustainability Coordinators]
-
-[Same structure - 3-5 benefits, what changes, support]
-
-### For [Department 3 - e.g., IT/Digital]
-
-[Same structure]
-
----
-
-## Change Management & Adoption
-
-### Training & Onboarding
-
-**For pilot participants:**
-- [Training timeline, duration, format]
-- [What they'll learn]
-- [Ongoing support available]
-
-**For broader rollout (post-pilot):**
-- [Scaled training approach]
-- [Self-service resources]
-
-### Workflow Changes
-
-**What stays the same:**
-- [Reassure - document creation process unchanged]
-- [No disruption to existing tools]
-
-**What's new:**
-- [Upload step - how long it takes]
-- [Validation step - what users review]
-- [Discovery capability - how teams search]
-
-**Time investment:**
-- **Pilot phase:** [X hours for initial training, Y hours ongoing per month]
-- **Steady state:** [Z minutes per project submission]
-
----
-
-## Implementation Support
-
-### What We'll Handle (So Departments Don't Have To)
-
-- [Infrastructure setup, integration work]
-- [SSO configuration, RBAC setup]
-- [Training material creation]
-- [Help desk support during pilot]
-
-### What We Need From Departments
-
-**Phase 1 (Pilot - 90 days):**
-
-**[Department 1]:**
-- [Specific ask 1]: ~[X hours] - [When needed]
-- [Specific ask 2]: ~[Y hours] - [When needed]
-
-**[Department 2]:**
-- [Specific asks with time bounds]
-
-**If pilot succeeds → Phase 2:**
-- [What ongoing involvement looks like]
-- [Exit option if doesn't work for a department]
-
----
-
-## Coalition Building
-
-### Early Support
-
-**CRITICAL:** Only include if you have REAL stakeholder quotes from actual conversations. Otherwise, use placeholder.
-
-**If you have real endorsements:**
-- **[Department/Name]:** "[Actual quote from stakeholder conversation]"
-
-**If no endorsements yet:**
-- **Stakeholder engagement pending:** Initial conversations scheduled with [list departments]. This section will be updated after feedback is collected.
-
-### How Departments Get Credit
-
-[Recognition matters to operational leaders]
-- [Where contributions will be visible - exec presentations, company-wide comms]
-- [How success gets attributed to participating teams]
-- [Impact on department reputation/standing]
-
----
-
-## Risk Mitigation (For Operational Stakeholders)
-
-### If This Initiative Fails
-
-[How we protect department goals/roadmaps]
-- [Pilot bounded at 90 days - limited exposure]
-- [No disruption to existing workflows during pilot]
-- [Decision gate - departments can exit if not working]
-
-### If Timelines Slip
-
-[Fallback plan that doesn't impact departments]
-
-### If Scope Changes
-
-[How we'll communicate and adjust asks from departments]
-
----
-
-## Next Steps
-
-1. **[Date]:** [Initial engagement - lightweight, not full commitment]
-2. **[Date]:** [Decision point with clear exit option]
-3. **[Date]:** [If yes, what happens next - pilot kickoff]
-
-**Questions or concerns?** [Contact person + method]
-
----
-
-**For strategic business case:** See executive-report.md  
-**For technical architecture:** See technical-analysis.md (if applicable)
+operational-report.md sections:
+- Overview (what it does, who it affects; reference executive-report.md for business case)
+- How It Works (detailed operational flow — moved from exec appendix)
+- Operational Use Cases (before/after per department workflow)
+- Departmental Benefits (per team: 3-5 benefits · workflow changes · support provided)
+- Change Management & Adoption (training plan · what stays same / what's new · time investment)
+- Implementation Support (what we handle · specific asks from each dept with time bounds)
+- Coalition Building (real quotes ONLY — never fabricate; if none, use placeholder; credit/recognition)
+- Risk Mitigation (pilot bounded · no disruption during pilot · decision gate / exit option)
+- Next Steps (dated milestones)
 ```
+
+**Key constraint:** NEVER fabricate stakeholder quotes. If no real endorsements, use: "Stakeholder engagement pending: [details]"
 
 ---
 
@@ -1243,7 +813,7 @@ Generated:
 
 VALIDATION GATE 2: Approve Requirement Classification
 
-Before proceeding to Phase 3 (Estimating), validate requirement classification with stakeholders:
+Before proceeding to Phase 3 (Scoping), validate requirement classification with stakeholders:
 
 Review Checklist:
 - requirement-classification.md: Requirements classified correctly (deterministic vs non-deterministic)?
@@ -1314,7 +884,8 @@ Next step (if approved): Run /neat-discovery-scoping to scope and size MVP requi
 - **Purpose:** Operational alignment and coalition building (get buy-in from peer stakeholders)
 - **Length:** 8-10 pages
 - **Focus:** Operational impact, departmental benefits, implementation detail, change management
-- **Content:** How it works in practice, detailed use cases, workflow changes, training needs, what you'll handle vs what departments provide, credit/recognition, risk mitigation for operational teams
+- **Content:** How it works in practice, detailed use cases, workflow changes, training needs,
+  what you'll handle vs what departments provide, credit/recognition, risk mitigation for operational teams
 - **Tone:** Operational depth, benefit-forward, collaborative, addresses "how this affects my day-to-day work"
 - **References:** Points to executive-report.md for strategic business case (doesn't duplicate it)
 - **Note:** Operational report contains detail moved from executive report appendix (keeps executive report at 2 pages)

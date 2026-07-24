@@ -28,6 +28,7 @@ After Phase 3 (scoping) is complete. Use this skill to:
 ## What This Is NOT
 
 **Don't do in discovery design:**
+
 - ❌ Choose specific frameworks/libraries (React vs Vue, Django vs Flask)
 - ❌ Design detailed APIs, schemas, or data models
 - ❌ Make build vs buy decisions (already decided in Phase 3)
@@ -38,7 +39,7 @@ After Phase 3 (scoping) is complete. Use this skill to:
 
 ## Prerequisites
 
-**Required from Phase 2:**
+**Required from Phase 3 (Scoping):**
 
 - `docs/{project-name}/03-scoping/mvp-scope.md` — provides classified requirements (AI / Traditional / Hybrid) and effort sizing
 
@@ -153,7 +154,7 @@ Summarize findings internally for use in architecture decisions.
 Apply the pattern with these values:
 
 | Parameter | Value |
-|-----------|-------|
+| --- | --- |
 | Phase folder | `04-designing/` |
 | Artifact type | `architecture` |
 | Update action | `refine based on new insights` |
@@ -455,51 +456,15 @@ Design how AI components and traditional components work together.
 - Permission enforcement: Pass user context to AI service for scoped retrieval
 - Caching strategy for common queries
 
-**API Contract Design:**
-
-- Document processing API: `POST /ai/process-documents` (async job)
-- Markdown generation API: `POST /ai/generate-markdown`
-- Calculation inference API: `POST /ai/infer-calculation`
-- RAG search API: `POST /ai/search` (streaming response)
-- Similarity matching API: `POST /ai/find-similar`
-- Vector indexing API: `POST /ai/index-project` (triggered by approval)
-
-**Error Handling Strategy:**
-
-- AI service timeouts (LLM calls can take 10-60 seconds)
-- Partial failures (document processed but indexing failed)
-- Retry logic (idempotent operations, exponential backoff)
-- Fallback behavior (user can proceed without AI if service down)
-- Error logging and alerting
-
-**Performance Considerations:**
-
-- AI operations are slow (10s-60s for document processing)
-- Asynchronous processing required for good UX
-- Caching AI responses where possible (calculation inference for similar projects)
-- Rate limiting AI API calls (cost and quota management)
-
-**Security & Privacy:**
-
-- Authentication between web app and AI service (API keys, OAuth, mutual TLS)
-- Data encryption in transit (HTTPS, TLS)
-- PII/sensitive data handling (redaction before sending to external LLM APIs)
-- Permission context passed from web app to AI service (user ID, roles, accessible projects)
-
-**Technology Choices:**
-
-- Message queue: RabbitMQ, AWS SQS, Azure Service Bus, Redis Queue, Celery
-- Event bus: Kafka, AWS EventBridge, Azure Event Grid (if event-driven architecture)
-- API protocol: REST (simple), gRPC (performance), GraphQL (flexible queries)
-- Streaming: Server-Sent Events, WebSocket, HTTP chunked transfer encoding
-- Communication pattern: Direct HTTP calls, message queue, event-driven
-
-**Deployment Considerations:**
-
-- AI service as separate microservice (scalable, isolates Agent infrastructure)
-- Co-located vs separate deployment (same cluster vs separate cluster)
-- Network latency between web app and AI service
-- Health checks and circuit breakers (prevent cascading failures)
+<!-- markdownlint-disable MD013 -->
+| Concern | Key decisions |
+| --- | --- |
+| **API Contract** | One endpoint per integration point (process-documents, generate-markdown, infer-calculation, search, find-similar, index-project); define sync vs async per endpoint |
+| **Error Handling** | AI timeouts 10-60s; idempotent retries with exponential backoff; fallback so users can proceed when AI is down |
+| **Performance** | Async processing for slow AI ops; cache calculation inference for similar inputs; rate-limit LLM calls |
+| **Security** | Inter-service auth (API key / OAuth / mTLS); HTTPS everywhere; redact PII before external LLM calls; pass user context for scoped retrieval |
+| **Deployment** | AI as separate microservice; define co-located vs separate; health checks and circuit breakers |
+<!-- markdownlint-enable MD013 -->
 
 ### Step 13: Technology Pattern Validation
 
@@ -508,65 +473,33 @@ Design how AI components and traditional components work together.
 **Discovery-level guidance (defer specifics to planning):**
 
 **Frontend pattern:**
+
 - SPA framework needed (decide specific one during planning: React/Vue/Angular)
 - State management approach (evaluate Redux vs simpler alternatives)
 - Component library (assess accessibility requirements)
 - **Build/buy from Phase 3:** e.g., "Use TipTap for markdown editing" (already decided)
 
 **Backend pattern:**
+
 - API-first architecture (REST/GraphQL/gRPC - decide protocol during planning)
 - Background job processing needed (evaluate queue vs cron patterns)
 - Language/framework choice deferred to planning (align with team skills)
 - **Build/buy from Phase 3:** e.g., "Use Auth0 for authentication" (already decided)
 
 **Database pattern:**
+
 - Relational database required (PostgreSQL recommended for JSON + vector support)
 - Vector storage needed for AI features (validate pgvector feasibility vs dedicated DB)
 - **Risk:** Vector search at scale - plan load testing during implementation
 
-**Defer to implementation planning:**
-- Specific framework/library versions
-- Detailed API contracts and schemas
-- Vendor selection (within build/buy categories)
-- Performance optimization strategies
-- Managed: Pinecone (easy, expensive), Weaviate (flexible), Qdrant (open-source option)
-- Self-hosted: pgvector (PostgreSQL extension - same DB as SQL metadata), Chroma (lightweight)
-- Default: pgvector if small-medium scale (one less service), Pinecone/Weaviate if large scale
-- **If choosing differently from estimation** → document rationale
+**Defer to implementation planning:** specific framework/library versions, detailed API contracts, vendor selection within categories, performance optimization strategies.
 
-**LLM Provider:**
+**Vector DB guidance:** pgvector for small-medium scale (one less service); managed (Pinecone/Weaviate) for large scale.
+If choosing differently from Phase 3 estimation → document rationale.
 
-- OpenAI: GPT-4, GPT-4 Turbo (excellent quality, structured output)
-- Anthropic: Claude 3 Opus/Sonnet (long context, strong reasoning)
-- Google: Gemini 1.5 Pro (very long context, cost-effective)
-- Criteria: Context window (32k+ minimum), structured output support, cost, latency
+**LLM Provider criteria:** context window (32k+ minimum), structured output support, cost, latency. Defer specific provider selection to planning.
 
-**Message Queue:**
-
-- Redis Queue / Bull (lightweight, Node.js)
-- Celery + RabbitMQ (Python standard)
-- AWS SQS (managed, serverless)
-- Azure Service Bus (managed, Microsoft stack)
-
-**Object Storage:**
-
-- AWS S3 (standard)
-- Azure Blob Storage (Microsoft stack)
-- Google Cloud Storage (GCP)
-- MinIO (self-hosted S3-compatible)
-
-**Deployment:**
-
-- Containerization: Docker
-- Orchestration: Kubernetes (large scale), Docker Compose (small scale), managed services (AWS ECS, Azure Container Apps, Google Cloud Run)
-- Cloud provider: AWS (most popular), Azure (Microsoft stack), GCP (data science tools)
-
-**Observability:**
-
-- Logging: Elasticsearch + Kibana, Datadog, CloudWatch, Azure Monitor
-- Metrics: Prometheus + Grafana, Datadog, CloudWatch
-- Tracing: Jaeger, OpenTelemetry, Datadog APM
-- Error tracking: Sentry, Rollbar, Bugsnag
+**Other deferred choices (decide in planning, aligned with team stack):** message queue · object storage · cloud provider · observability stack
 
 ### Step 14: Map Estimation Risks to Architecture Mitigations
 
@@ -804,7 +737,7 @@ All artifacts:
 
 ## Output Specifications
 
-**Discovery-level design = High-level patterns + Feasibility + Risks + Trade-offs**
+Discovery-level design = High-level patterns + Feasibility + Risks + Trade-offs
 
 ### agent-architecture.md (in 04-designing/)
 
