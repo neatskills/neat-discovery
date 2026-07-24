@@ -23,7 +23,8 @@ Current-state mapping always requires an interview — the questions adapt based
 
 Use this skill for consulting or enterprise projects starting discovery without prior vetting.
 
-**Begin by asking:** "Do you have a handover from neat-util-vetting? If so, please share it." If shared → proceed directly to `/neat-discovery-scoping` using it as project context. This skill is not needed.
+**Begin by asking:** "Do you have a handover from neat-util-vetting? If so, please share it."
+If shared → proceed directly to `/neat-discovery-scoping` using it as project context. This skill is not needed.
 
 ## Prerequisites
 
@@ -309,11 +310,13 @@ Spawn a skeptical sub-agent (`run_in_background: false`) to independently challe
 **Blind review:** Pass decisions and facts only — do NOT include the rationale or reasoning behind the priority flags. The sub-agent must form its own independent judgment.
 
 **Provide the sub-agent with:**
+
 - The project goal, domain, and success metrics from Step 3 (context only — no session reasoning)
 - The full list of current-state elements with their Critical / Important / Nice-to-have flags — flags only, not the reasons they were assigned
 - The list of access constraints by element (what is constrained, not the assessment reasoning)
 
 **Ask the sub-agent to check:**
+
 1. Does every Critical element trace to a specific downstream requirement or AI capability it enables? Any Critical flags without a traceable purpose?
 2. Are any Nice-to-have elements actually access-constrained Criticals — important in value but hard to access, not truly low priority?
 3. Could any shadow IT systems or undocumented knowledge sources plausibly be absent from this inventory?
@@ -321,7 +324,8 @@ Spawn a skeptical sub-agent (`run_in_background: false`) to independently challe
 
 **The sub-agent should return:** A short critique (3–5 bullets). For each finding, state the element, the suggested reclassification, and why.
 
-**After receiving results:** Show findings to user. If reclassifications are recommended, ask: "Would you like to adjust any priority flags before the quality assessment?" Wait for response before proceeding to Step 8.
+**After receiving results:** Show findings to user. If reclassifications are recommended, ask:
+"Would you like to adjust any priority flags before the quality assessment?" Wait for response before proceeding to Step 8.
 
 ### Step 8: Quality Assessment
 
@@ -453,9 +457,11 @@ Wait for approval or modification.
 
 Before generating output documents, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the assessment's completeness — not to confirm it.
 
-**Blind review:** Pass inventory and findings only — do NOT include the reasoning behind gap selection or quality assessments. The sub-agent must independently identify what's missing or understated.
+**Blind review:** Pass inventory and findings only — do NOT include the reasoning behind gap selection or
+quality assessments. The sub-agent must independently identify what's missing or understated.
 
 **Provide the sub-agent with:**
+
 - Objective: "Challenge this project assessment — find what is missing, understated, or overlooked"
 - Project context: domain, stakeholders, and success metrics (background only — no session reasoning)
 - The inventory of current-state elements with priority flags — flags only, not the reasoning behind them
@@ -463,6 +469,7 @@ Before generating output documents, spawn a skeptical sub-agent (`run_in_backgro
 - The list of quality issues and gaps — stated as facts, not with the justification that identified them
 
 **Ask the sub-agent to check:**
+
 1. Are any gaps understated relative to what the landscape reveals? (Things that seem fine but represent actually missing information)
 2. Does the known-unknowns coverage go beyond content gaps — does it address completeness uncertainty (whole categories of systems or sources that might not have been discovered)?
 3. Are the success metrics from Step 3 concrete enough for Phase 3 (scoping) to use as scoping criteria — or are they too vague?
@@ -533,8 +540,8 @@ Before writing files, identify key assumptions made during assessment:
 cp references/assumptions-register.md docs/{project-name}/assumptions-register.md
 ```
 
-**Note:** Project-wide artifacts (assumptions-register.md, traceability-matrix.md, risk-register.md,
-change-impact-analysis.md) are stored at project root level (`docs/{project-name}/`), not in phase subdirectories.
+**Note:** Project-wide artifacts (assumptions-register.md, risk-register.md, change-impact-analysis.md)
+are stored at project root level (`docs/{project-name}/`), not in phase subdirectories.
 
 Add Phase 1 assumptions with IDs A-001, A-002, etc.:
 

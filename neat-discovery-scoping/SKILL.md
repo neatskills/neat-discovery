@@ -185,15 +185,18 @@ For each Deferred requirement:
 
 After estimating all MVP Core and Deferred requirements, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the estimates — not to confirm them.
 
-**Blind review:** Pass requirement text, classifications, and sizes only — do NOT include the complexity reasoning, risk reasoning, or assumptions that produced each size. The sub-agent must independently assess the estimates.
+**Blind review:** Pass requirement text, classifications, and sizes only — do NOT include the complexity reasoning,
+risk reasoning, or assumptions that produced each size. The sub-agent must independently assess the estimates.
 
 **Provide the sub-agent with:**
+
 - The project domain, scale, and key constraints (context only)
 - All requirements with their full text and classification (AI / Traditional / Hybrid)
 - Each story's T-shirt size (XS/S/M/L/XL/XXL) and Watch-for conditions — but NOT the reasoning that produced the size
 - The MVP Core / Deferred split (which requirements are in each bucket, not why)
 
 **Ask the sub-agent to check:**
+
 1. Are any XXL stories present that should have been flagged for decomposition instead of estimated whole?
 2. Is each story's complexity and risk reasoning independent — no copy-paste reasoning between stories?
 3. Do AI stories carry appropriately higher uncertainty than Traditional stories of similar apparent scope?
@@ -290,9 +293,11 @@ After sizing effort, provide rough order of magnitude (ROM) cost estimates.
 
 After calculating ROM estimates, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the cost model — not to confirm it.
 
-**Blind review:** Pass the numbers and structure only — do NOT include the methodology explanation or the reasoning behind duration and buffer choices. The sub-agent must independently validate the cost model.
+**Blind review:** Pass the numbers and structure only — do NOT include the methodology explanation or the reasoning
+behind duration and buffer choices. The sub-agent must independently validate the cost model.
 
 **Provide the sub-agent with:**
+
 - Objective: "Challenge this ROM cost estimate — find what's wrong, missing, or understated"
 - Team composition and rates (facts only)
 - The story size distribution (XS/S/M/L/XL/XXL counts for MVP and Deferred)
@@ -302,6 +307,7 @@ After calculating ROM estimates, spawn a skeptical sub-agent (`run_in_background
 - Buffer percentage and the low/high ROM ranges (numbers only, no rationale)
 
 **Ask the sub-agent to check:**
+
 1. Does the duration assumption follow the critical path (not a sum of all story effort)? Sequential dependencies constrain duration regardless of team size.
 2. Are LLM API and AI infrastructure costs (embeddings, vector DB if applicable) included — or only labour and hosting?
 3. Is the buffer percentage justified by the proportion of XL/XXL stories? More high-risk stories warrant a higher buffer (30%+).
@@ -315,10 +321,7 @@ After calculating ROM estimates, spawn a skeptical sub-agent (`run_in_background
 
 Identify blocking relationships between requirements.
 
-**Document dependencies in two places:**
-
-1. **traceability-matrix.md** - For requirement tracking (Req ID → Blocks → Blocked By columns)
-2. **mvp-scope.md** - For estimation context (Dependency Map section)
+**Document dependencies in mvp-scope.md** (Dependency Map section):
 
 **Look for technical dependencies:**
 
@@ -348,11 +351,6 @@ Identify blocking relationships between requirements.
 - Foundation requirements (no dependencies) → Phase 1
 - Dependent requirements → Phase 2 or later
 - Helps validate MVP scope from Phase 2
-
-**Add to traceability matrix:**
-
-- Update `docs/{project-name}/traceability-matrix.md` with dependency column
-- Shows: Req ID → Blocks → Blocked By
 
 ### Step 10: Propose Document Structure
 
@@ -757,12 +755,6 @@ mkdir -p docs/{project-name}/03-scoping
 # Write MVP scope file
 # (Use Write tool for mvp-scope.md with REQ-IDs in story titles and classification column)
 
-# Update traceability matrix
-# If docs/{project-name}/traceability-matrix.md exists (created by analysing phase):
-#   (Use Edit tool to add columns: Classification + Scoped Story + Size Estimate + Dependencies)
-# If file does not exist (analysing was skipped):
-#   (Use Write tool to create traceability-matrix.md with all columns from scratch)
-# Map: REQ-001 → AI → Story 1 → XL → Blocks: REQ-005, REQ-007
 ```
 
 ### Step 13: Confirm Completion and Validation Gate

@@ -257,11 +257,14 @@ NO if:
 
 ### Step 7b: Sub-Agent Review — Architecture Key Decisions
 
-After making the ontology and knowledge system decisions (Steps 6–7), spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge these foundational calls — not to confirm them.
+After making the ontology and knowledge system decisions (Steps 6–7), spawn a skeptical
+sub-agent (`run_in_background: false`) to independently challenge these foundational calls — not to confirm them.
 
-**Blind review:** Pass raw evidence and binary decisions only — do NOT include the reasoning that led to each decision. The sub-agent must independently determine whether the decisions are correct given the evidence.
+**Blind review:** Pass raw evidence and binary decisions only — do NOT include the reasoning that led to each
+decision. The sub-agent must independently determine whether the decisions are correct given the evidence.
 
 **Provide the sub-agent with:**
+
 - The requirement classification summary: AI / Traditional / Hybrid counts and capability descriptions (no reasoning)
 - The knowledge fragmentation facts: how many sources, types, overlap, access patterns (from Step 5)
 - Key findings from Phase 1 knowledge landscape (facts only — no assessment commentary)
@@ -269,8 +272,11 @@ After making the ontology and knowledge system decisions (Steps 6–7), spawn a 
 - The knowledge system decision: YES or NO (the decision only, no rationale)
 
 **Ask the sub-agent to check:**
-1. Is the ontology decision justified by requirement count and cross-agent concept sharing — or added speculatively? (Warranted only when multiple agents need shared concept definitions or relationship reasoning is required.)
-2. Is the knowledge system decision supported by fragmentation evidence from the Phase 1 landscape — or assumed? (Warranted only when sources are highly fragmented or lack accessible APIs.)
+
+1. Is the ontology decision justified by requirement count and cross-agent concept sharing — or added speculatively?
+   (Warranted only when multiple agents need shared concept definitions or relationship reasoning is required.)
+2. Is the knowledge system decision supported by fragmentation evidence from the Phase 1 landscape — or assumed?
+   (Warranted only when sources are highly fragmented or lack accessible APIs.)
 3. Are there any requirements whose knowledge access patterns weren't considered in these decisions?
 4. Do the decisions leave any XL/XXL estimation risks from scoping unaddressed?
 
@@ -327,9 +333,12 @@ For each agent:
 
 After designing the agent architecture, spawn a skeptical sub-agent (`run_in_background: false`) to independently challenge the design — not to confirm it.
 
-**Blind review:** Pass the architecture decisions and project context only — do NOT include the reasoning behind agent boundary choices or orchestration selection. The sub-agent must independently evaluate whether the architecture is sound.
+**Blind review:** Pass the architecture decisions and project context only — do NOT include the reasoning
+behind agent boundary choices or orchestration selection. The sub-agent must independently evaluate
+whether the architecture is sound.
 
 **Provide the sub-agent with:**
+
 - Objective: "Challenge this agent architecture — find where boundaries are wrong, coupling is hidden, or risks are unaddressed"
 - The project domain, requirements summary (AI/Traditional/Hybrid counts and capability descriptions), and key constraints
 - The agent inventory: name and purpose for each agent — no boundary justification
@@ -339,6 +348,7 @@ After designing the agent architecture, spawn a skeptical sub-agent (`run_in_bac
 - The ontology and knowledge system decisions (YES/NO only)
 
 **Ask the sub-agent to check:**
+
 1. Do agent boundaries align with knowledge source groupings from the landscape — or do agents cross knowledge domain boundaries in ways that create tight coupling?
 2. Do the orchestration dependencies in the agent architecture match the critical path from scoping? Any agent dependencies not reflected in the dependency map (or vice versa)?
 3. Are XL/XXL estimation risks from scoping reflected in the agent design with explicit mitigations — or are they silently absorbed into vague agent descriptions?
@@ -763,7 +773,8 @@ mkdir -p docs/{project-name}/04-designing
 
 ### Step 17b: Generate Handover
 
-Synthesize all discovery outputs into a single delivery-ready handover document. This is the seam between discovery and delivery — what the build team needs on day 1 without re-reading every artifact.
+Synthesize all discovery outputs into a single delivery-ready handover document. This is the seam
+between discovery and delivery — what the build team needs on day 1 without re-reading every artifact.
 
 **Content guidelines:**
 
@@ -771,7 +782,9 @@ Synthesize all discovery outputs into a single delivery-ready handover document.
 - **Risk-surfacing:** Unvalidated assumptions and critical spikes must be prominent
 - **Pointer-based:** Reference discovery artifacts for detail, don't duplicate them
 - **Concise:** Delivery needs the decisions, the critical path, and the first move
-- **Technology Decisions:** Pull committed build/buy choices from scoping's Pattern Analysis and any technology selections confirmed in the architecture blueprints. Only include decisions made definitive here — not "evaluate X vs Y during planning." Omit the section if none were committed.
+- **Technology Decisions:** Include ALL technology decisions — both committed choices and decisions
+  explicitly deferred to planning. The delivery team needs the full picture: what's settled and what
+  they still have to decide. A handover showing only committed choices creates a false sense of completeness.
 
 **Handover structure:**
 
@@ -811,23 +824,19 @@ Synthesize all discovery outputs into a single delivery-ready handover document.
 
 ### Technology Decisions
 
-Committed build/buy choices — only decisions finalised in design, not deferred to planning.
-
-| Concern | Choice | Notes |
-|---------|--------|-------|
-| {e.g., Auth} | {e.g., Auth0} | {one-line rationale} |
-| {e.g., Vector DB} | {e.g., pgvector} | {one-line rationale} |
-| {e.g., LLM provider} | {e.g., Anthropic Claude} | {one-line rationale} |
-
-Omit section if no technology decisions were committed in design.
+| Concern | Choice | Status | Notes |
+|---------|--------|--------|-------|
+| {e.g., Auth} | {e.g., Auth0} | Committed | {one-line rationale} |
+| {e.g., Vector DB} | {e.g., pgvector} | Committed | {one-line rationale} |
+| {e.g., SPA framework} | {e.g., React or Vue} | Deferred to planning | {one-line rationale} |
 
 ---
 
 ## Critical Path
 
-```text
+~~~~
 {REQ-013} → {REQ-012} → {REQ-001} → {REQ-002} → ... → first shippable
-```
+~~~~
 
 **First move:** {What delivery must do first and why}
 
@@ -850,7 +859,6 @@ Omit section if no technology decisions were committed in design.
 | Agent architecture | `04-designing/agent-architecture.md` | AI components, orchestration |
 | App architecture | `04-designing/app-architecture.md` | Frontend, backend, deployment |
 | Integration architecture | `04-designing/integration-architecture.md` | Data flows, error handling |
-| Traceability matrix | `traceability-matrix.md` | Requirements → decisions |
 ```
 
 **Note:** Store at project root — `docs/{project-name}/handover.md` — not inside any phase folder.
