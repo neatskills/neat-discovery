@@ -60,8 +60,9 @@ ls -d docs/*/ 2>/dev/null
 
 **If no projects exist:**
 
-- Error: "No projects found. Run /neat-discovery-assessing first."
-- Exit skill
+- Ask: "No existing projects found. Do you have a vetting handover to share? If so, please share it and I'll proceed directly. Otherwise, run /neat-discovery-assessing first to establish project context."
+- If handover shared → proceed with it as context substitute, skip to Step 2b
+- If not → exit skill
 
 **If projects exist:**
 
@@ -767,7 +768,7 @@ Generated:
 
 ---
 
-VALIDATION GATE 2: Review Scope vs Effort
+VALIDATION GATE 3: Review Scope vs Effort
 
 Review the MVP effort estimate before proceeding to Phase 3 (Designing):
 
